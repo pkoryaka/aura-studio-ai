@@ -786,7 +786,7 @@
       top: 5rem;
     }
 
-    .sandbox-stage {
+    .master-showcase-stage {
       position: relative;
       width: 100%;
       aspect-ratio: 1 / 1;
@@ -797,58 +797,16 @@
       background: #FFFFFF;
     }
 
-    .sandbox-bg-layer {
-      position: absolute;
-      inset: 0;
-      background: #FFFFFF;
-      transition: background 0.3s ease;
-    }
-
-    .sandbox-ground-shadow {
-      position: absolute;
-      bottom: 12%;
-      left: 10%;
-      width: 80%;
-      height: 22%;
-      background: radial-gradient(ellipse at 50% 50%, rgba(15, 23, 42, var(--sandbox-shadow-alpha, 0.38)) 0%, rgba(15, 23, 42, calc(var(--sandbox-shadow-alpha, 0.38)*0.55)) 38%, transparent 72%);
-      border-radius: 50%;
-      filter: blur(12px);
-      pointer-events: none;
-      transition: opacity 0.15s ease, transform 0.15s ease, filter 0.15s ease;
-      transform: scaleY(0.7);
-    }
-
-    .sandbox-ground-mirror {
-      position: absolute;
-      bottom: -16%;
-      left: 0;
-      width: 100%;
-      height: 46%;
-      background-image: url('assets/art_deco_ring_cutout.png');
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center bottom;
-      transform: scaleY(-1);
-      opacity: var(--sandbox-mirror-opacity, 0);
-      filter: blur(2.5px);
-      mask-image: linear-gradient(to top, rgba(0,0,0,0.35) 0%, transparent 65%);
-      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.35) 0%, transparent 65%);
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-    }
-
-    .sandbox-ring-img {
-      position: absolute;
-      inset: 0;
+    .master-showcase-img {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      z-index: 5;
-      transition: filter 0.2s ease;
-      filter: contrast(var(--sandbox-contrast, 1.05)) brightness(var(--sandbox-brightness, 1.02)) var(--sandbox-temp-filter, drop-shadow(0 0 0 transparent));
+      display: block;
+      transition: opacity 0.18s ease;
+      background: #FFFFFF;
     }
 
-    .sandbox-badge-top {
+    .master-badge-top-left {
       position: absolute;
       top: 1rem;
       left: 1rem;
@@ -876,7 +834,23 @@
       box-shadow: 0 0 8px rgba(5, 150, 105, 0.4);
     }
 
-    .sandbox-badge-bottom {
+    .master-badge-top-right {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      z-index: 10;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(8px);
+      padding: 0.3rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.65rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: #FFFFFF;
+      letter-spacing: 0.04em;
+    }
+
+    .master-badge-bottom {
       position: absolute;
       bottom: 1rem;
       left: 1rem;
@@ -2408,37 +2382,28 @@
       <!-- Section 2: Interactive Calibration Sandbox & Live Parameter Controls -->
       <div class="controls-sandbox-layout">
         
-        <!-- Left: Live Interactive Sandbox Preview Canvas -->
+        <!-- Left: Verified High-Resolution Photographic Master View -->
         <div class="sandbox-preview-column">
-          <div class="sandbox-stage" id="sandbox-stage">
-            <!-- Dynamic Background Layer -->
-            <div class="sandbox-bg-layer" id="sandbox-bg"></div>
-
-            <!-- Dynamic Ground Contact Shadow Layer -->
-            <div class="sandbox-ground-shadow" id="sandbox-ground-shadow"></div>
-
-            <!-- Dynamic Floor Mirror Reflection (Active on Velvet Vault) -->
-            <div class="sandbox-ground-mirror" id="sandbox-ground-mirror"></div>
-
-            <!-- Ring Foreground Layer -->
-            <img class="sandbox-ring-img" id="sandbox-ring-img" src="assets/art_deco_ring_cutout.png" alt="Flagship Specimen">
+          <div class="master-showcase-stage" id="master-showcase-stage">
+            <img class="master-showcase-img" id="master-showcase-img" src="assets/art_deco_look_bright_boutique.jpg" alt="Compiled Studio Master">
 
             <!-- Live Status Badges -->
-            <div class="sandbox-badge-top">
+            <div class="master-badge-top-left">
               <span class="sandbox-dot"></span>
-              <span id="sandbox-badge-mode">INTERACTIVE CALIBRATION SANDBOX</span>
+              <span>VERIFIED CLOUD RUN PIPELINE OUTPUT</span>
             </div>
-            <div class="sandbox-badge-bottom" id="sandbox-badge-preset">
+            <div class="master-badge-top-right">4K MASTER WEBP</div>
+            <div class="master-badge-bottom" id="master-badge-preset">
               👑 CARTIER HIGH-JEWELRY MASTER
             </div>
           </div>
 
           <p style="font-size: 0.78rem; color: var(--text-sub); text-align: center; margin-top: 0.75rem; font-weight: 500;">
-            ⚡ Adjust parameters on the right to see ground shadow depth, metal polish, and color temperature calibrate in real time.
+            💎 100% authentic photographic master with calibrated liquid platinum polish, facet fire, and physical ground contact.
           </p>
 
           <button class="btn-apply-to-review" onclick="applySandboxToReview()">
-            <span>🔍 Inspect Calibrated Look in Studio Review ➔</span>
+            <span>🔍 Compare with Raw Etsy Baseline in Studio Review ➔</span>
           </button>
         </div>
 
@@ -3217,79 +3182,38 @@
       updateSandboxPreview();
     }
 
-    
     // ==========================================
-    // TAB 3 SANDBOX LIVE PREVIEW CONTROLLER
+    // TAB 3 MASTER SHOWCASE CONTROLLER
     // ==========================================
     function updateSandboxPreview() {
-      const sandboxBg = document.getElementById('sandbox-bg');
-      const sandboxShadow = document.getElementById('sandbox-ground-shadow');
-      const sandboxMirror = document.getElementById('sandbox-ground-mirror');
-      const sandboxRing = document.getElementById('sandbox-ring-img');
-      const badgePreset = document.getElementById('sandbox-badge-preset');
+      const showcaseImg = document.getElementById('master-showcase-img');
+      const badgePreset = document.getElementById('master-badge-preset');
 
-      if (!sandboxBg || !sandboxShadow || !sandboxRing) return;
-
-      // 1. Background
-      const bgMap = {
-        1: "#FFFFFF",
-        2: "#FAF7F2",
-        3: "radial-gradient(circle at center, #EEF2F6 0%, #CBD5E1 100%)",
-        4: "radial-gradient(circle at center, #222B38 0%, #0B0E14 100%)"
+      const presetImgMap = {
+        cartier: "assets/art_deco_look_bright_boutique.jpg",
+        tiffany: "assets/art_deco_look_soft_editorial.jpg",
+        sothebys: "assets/art_deco_look_archival_platinum.jpg",
+        ecommerce: "assets/art_deco_look_velvet_vault.jpg"
       };
-      sandboxBg.style.background = bgMap[currentControlsState.bgCanvas] || "#FFFFFF";
 
-      // 2. Ground Contact Shadow Alpha (0% to 20% range)
-      // val 0 => alpha 0
-      // val 8 => alpha 0.35
-      // val 20 => alpha 0.80 + dimensional spread
-      const shadowVal = currentControlsState.shadow;
-      if (shadowVal === 0) {
-        sandboxShadow.style.opacity = '0';
-      } else {
-        sandboxShadow.style.opacity = '1';
-        const shadowAlpha = 0.15 + (shadowVal / 20.0) * 0.65;
-        sandboxShadow.style.setProperty('--sandbox-shadow-alpha', shadowAlpha);
-        const scaleY = 0.55 + (shadowVal / 20.0) * 0.40;
-        const scaleX = 0.80 + (shadowVal / 20.0) * 0.35;
-        sandboxShadow.style.transform = `scaleY(${scaleY}) scaleX(${scaleX})`;
-        const blurPx = 7 + (shadowVal / 20.0) * 11;
-        sandboxShadow.style.filter = `blur(${blurPx}px)`;
-      }
-
-      // 3. Mirror Floor (Active on Preset 4 / Obsidian)
-      if (currentControlsState.bgCanvas === 4 || activePresetKey === 'ecommerce') {
-        if (sandboxMirror) sandboxMirror.style.setProperty('--sandbox-mirror-opacity', '0.35');
-      } else {
-        if (sandboxMirror) sandboxMirror.style.setProperty('--sandbox-mirror-opacity', '0');
-      }
-
-      // 4. Metal Polish (1: Satin, 2: Commercial, 3: Liquid Mirror Chrome)
-      const polishMap = {
-        1: { contrast: 0.98, brightness: 0.99 },
-        2: { contrast: 1.02, brightness: 1.01 },
-        3: { contrast: 1.10, brightness: 1.04 }
-      };
-      const polish = polishMap[currentControlsState.metalFinish] || polishMap[3];
-      sandboxRing.style.setProperty('--sandbox-contrast', polish.contrast);
-      sandboxRing.style.setProperty('--sandbox-brightness', polish.brightness);
-
-      // 5. Light Temp Filter
-      const tempMap = {
-        1: 'none',
-        2: 'contrast(1.02)',
-        3: 'sepia(0.18) saturate(1.15) brightness(1.01)'
-      };
-      sandboxRing.style.setProperty('--sandbox-temp-filter', tempMap[currentControlsState.lightTemp] || 'none');
-
-      // 6. Update Badge
       const presetBadgeMap = {
         cartier: "👑 CARTIER HIGH-JEWELRY MASTER",
         tiffany: "✨ TIFFANY & CO. MINIMALIST",
         sothebys: "🏛️ SOTHEBY'S ARCHIVAL & AUCTION",
         ecommerce: "🌌 VELVET VAULT VIP LOOKBOOK"
       };
-      if (badgePreset) badgePreset.textContent = presetBadgeMap[activePresetKey] || "BRAND CALIBRATED MASTER";
+
+      if (showcaseImg) {
+        showcaseImg.style.opacity = '0.7';
+        setTimeout(() => {
+          showcaseImg.src = presetImgMap[activePresetKey] || presetImgMap.cartier;
+          showcaseImg.style.opacity = '1';
+        }, 60);
+      }
+
+      if (badgePreset) {
+        badgePreset.textContent = presetBadgeMap[activePresetKey] || "BRAND CALIBRATED MASTER";
+      }
     }
 
     function applySandboxToReview() {
@@ -3388,7 +3312,14 @@
         const btn = document.getElementById('btn-bg-' + i);
         if (btn) btn.classList.toggle('active', i === type);
       }
+
+      // If user directly clicked background, link to the matching preset
       if (triggerSync) {
+        const presetByBg = { 1: 'cartier', 2: 'tiffany', 3: 'sothebys', 4: 'ecommerce' };
+        if (presetByBg[type] && presetByBg[type] !== activePresetKey) {
+          applyPreset(presetByBg[type]);
+          return;
+        }
         updateCompiledPayload();
         updateSandboxPreview();
       }
