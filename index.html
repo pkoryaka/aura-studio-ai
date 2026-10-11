@@ -346,9 +346,9 @@
       border-radius: var(--radius-lg);
       padding: 1.25rem 1.75rem;
       display: grid;
-      grid-template-columns: 84px 1.5fr 1fr 1fr auto;
+      grid-template-columns: 80px minmax(320px, 3.2fr) minmax(130px, 1fr) minmax(160px, 1.2fr) auto;
       align-items: center;
-      gap: 1.5rem;
+      gap: 1.75rem;
       box-shadow: var(--shadow-sm);
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -369,6 +369,7 @@
       align-items: center;
       justify-content: center;
       border: 1px solid var(--border-subtle);
+      flex-shrink: 0;
     }
 
     .item-thumb-box img {
@@ -377,34 +378,78 @@
       object-fit: contain;
     }
 
+    .item-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      min-width: 0;
+    }
+
     .item-meta h3 {
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       font-weight: 700;
       color: var(--text-main);
-      margin-bottom: 0.25rem;
       letter-spacing: -0.01em;
+      line-height: 1.25;
+      margin: 0;
     }
 
     .item-meta p {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
+      line-height: 1.4;
+      margin: 0;
     }
 
     .item-tag-row {
       display: flex;
+      flex-wrap: wrap;
+      align-items: center;
       gap: 0.45rem;
-      margin-top: 0.45rem;
+      margin-top: 0.35rem;
     }
 
     .pill-tag {
-      font-size: 0.68rem;
-      font-family: 'JetBrains Mono', monospace;
-      padding: 0.15rem 0.55rem;
+      font-size: 0.72rem;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      padding: 0.22rem 0.65rem;
       border-radius: 999px;
       background: var(--bg-subtle);
       border: 1px solid var(--border-subtle);
       color: var(--text-muted);
       font-weight: 500;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      line-height: 1.25;
+    }
+
+    .item-meta-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      white-space: nowrap;
+    }
+
+    .stat-caption {
+      font-size: 0.68rem;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .stat-reading {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .stat-reading.passed {
+      color: var(--accent-emerald);
+      font-weight: 700;
     }
 
     .btn-action-primary {
@@ -421,6 +466,8 @@
       gap: 0.5rem;
       transition: all 0.2s;
       box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .btn-action-primary:hover {
@@ -1601,20 +1648,20 @@
             <h3>Old European With Blue Sapphire Baguette Ring</h3>
             <p>SKU: <code>AURA-DEC-01</code> • Platinum 950 Filigree Mount</p>
             <div class="item-tag-row">
-              <span class="pill-tag">3 Angles (3/4, Profile, Under-Gallery)</span>
+              <span class="pill-tag">3 Multi-View Angles</span>
               <span class="pill-tag">Royal Blue Sapphire</span>
-              <a href="https://www.etsy.com/listing/4432433810/old-european-with-blue-sapphire-baguette" target="_blank" rel="noopener noreferrer" class="pill-tag prov-source-link" style="color: #2563EB; background: #EFF6FF; border: 1px solid #BFDBFE;">
-                <span>🛒 Raw Baseline: Etsy Estate Listing ↗</span>
+              <a href="https://www.etsy.com/listing/4432433810/old-european-with-blue-sapphire-baguette" target="_blank" rel="noopener noreferrer" class="pill-tag prov-source-link">
+                <span>🛒 Etsy Baseline Listing ↗</span>
               </a>
             </div>
           </div>
-          <div>
-            <div style="font-size: 0.7rem; color: var(--text-sub); text-transform: uppercase; font-weight: 600;">QC Status</div>
-            <div style="font-size: 0.85rem; font-weight: 700; color: var(--accent-emerald);">✓ 100% Geometry Passed</div>
+          <div class="item-meta-stat">
+            <div class="stat-caption">QC Status</div>
+            <div class="stat-reading passed">✓ 100% Geometry Passed</div>
           </div>
-          <div>
-            <div style="font-size: 0.7rem; color: var(--text-sub); text-transform: uppercase; font-weight: 600;">Shopify Target</div>
-            <div style="font-size: 0.85rem; font-weight: 600;">Online Storefront (Published)</div>
+          <div class="item-meta-stat">
+            <div class="stat-caption">Shopify Target</div>
+            <div class="stat-reading">Online Storefront (Published)</div>
           </div>
           <div>
             <button class="btn-action-primary" onclick="loadSpecimenAndReview('art_deco')">
@@ -1632,20 +1679,20 @@
             <h3>Circa 1930s Vintage Style Ring</h3>
             <p>SKU: <code>AURA-SOL-02</code> • Hand-Carved Wheat Filigree</p>
             <div class="item-tag-row">
-              <span class="pill-tag">3 Angles (Left 3/4, Profile, Right 3/4)</span>
-              <span class="pill-tag">Calibre Sapphire Accents</span>
-              <a href="https://www.etsy.com/listing/1665306321/circa-1930s-vintage-style-ring-old" target="_blank" rel="noopener noreferrer" class="pill-tag prov-source-link" style="color: #2563EB; background: #EFF6FF; border: 1px solid #BFDBFE;">
-                <span>🛒 Raw Baseline: Etsy Estate Listing ↗</span>
+              <span class="pill-tag">3 Multi-View Angles</span>
+              <span class="pill-tag">Wheat Filigree Platinum</span>
+              <a href="https://www.etsy.com/listing/1665306321/circa-1930s-vintage-style-ring-old" target="_blank" rel="noopener noreferrer" class="pill-tag prov-source-link">
+                <span>🛒 Etsy Baseline Listing ↗</span>
               </a>
             </div>
           </div>
-          <div>
-            <div style="font-size: 0.7rem; color: var(--text-sub); text-transform: uppercase; font-weight: 600;">QC Status</div>
-            <div style="font-size: 0.85rem; font-weight: 700; color: var(--accent-emerald);">✓ Sub-Pixel Alpha Feather</div>
+          <div class="item-meta-stat">
+            <div class="stat-caption">QC Status</div>
+            <div class="stat-reading passed">✓ Sub-Pixel Alpha Feather</div>
           </div>
-          <div>
-            <div style="font-size: 0.7rem; color: var(--text-sub); text-transform: uppercase; font-weight: 600;">Shopify Target</div>
-            <div style="font-size: 0.85rem; font-weight: 600;">Bridal Ring Collection</div>
+          <div class="item-meta-stat">
+            <div class="stat-caption">Shopify Target</div>
+            <div class="stat-reading">Bridal Ring Collection</div>
           </div>
           <div>
             <button class="btn-action-primary" onclick="loadSpecimenAndReview('solitaire')">
@@ -1663,19 +1710,20 @@
             <h3>4.60 Crt Natural Ethiopian Black Opal</h3>
             <p>SKU: <code>AURA-OPL-03</code> • Oval Cabochon Specimen</p>
             <div class="item-tag-row">
-              <span class="pill-tag">3 Variations (Vertical Amber, Fiery, Electric)</span>
-              <a href="https://www.etsy.com/listing/4591160154/460-crtnatural-ethiopian-black-opal" target="_blank" rel="noopener noreferrer" class="pill-tag prov-source-link" style="color: #2563EB; background: #EFF6FF; border: 1px solid #BFDBFE;">
-                <span>🛒 Raw Baseline: Etsy Mineral Listing ↗</span>
+              <span class="pill-tag">3 Spectral Lighting Angles</span>
+              <span class="pill-tag">Play-of-Color Preserved</span>
+              <a href="https://www.etsy.com/listing/4591160154/460-crtnatural-ethiopian-black-opal" target="_blank" rel="noopener noreferrer" class="pill-tag prov-source-link">
+                <span>🛒 Etsy Baseline Listing ↗</span>
               </a>
             </div>
           </div>
-          <div>
-            <div style="font-size: 0.7rem; color: var(--text-sub); text-transform: uppercase; font-weight: 600;">QC Status</div>
-            <div style="font-size: 0.85rem; font-weight: 700; color: var(--accent-emerald);">✓ Spectral Fidelity Verified</div>
+          <div class="item-meta-stat">
+            <div class="stat-caption">QC Status</div>
+            <div class="stat-reading passed">✓ Spectral Fidelity Verified</div>
           </div>
-          <div>
-            <div style="font-size: 0.7rem; color: var(--text-sub); text-transform: uppercase; font-weight: 600;">Shopify Target</div>
-            <div style="font-size: 0.85rem; font-weight: 600;">Rare Gemstone Vault</div>
+          <div class="item-meta-stat">
+            <div class="stat-caption">Shopify Target</div>
+            <div class="stat-reading">Rare Gemstone Vault</div>
           </div>
           <div>
             <button class="btn-action-primary" onclick="loadSpecimenAndReview('opal')">
