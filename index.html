@@ -1467,7 +1467,7 @@
         </div>
       </a>
 
-      <!-- 4 Navigation Tabs -->
+      <!-- 3 Product Navigation Tabs -->
       <nav class="tab-nav">
         <button class="nav-btn active" onclick="switchTab('catalog')" id="tab-btn-catalog">
           <span>📦</span>
@@ -1482,18 +1482,10 @@
           <span>🎛️</span>
           <span>Studio Controls</span>
         </button>
-        <button class="nav-btn" onclick="switchTab('telemetry')" id="tab-btn-telemetry">
-          <span>📈</span>
-          <span>Architecture & ROI</span>
-        </button>
       </nav>
 
       <!-- Status & Cloud Proof -->
       <div class="header-actions">
-        <a href="deck.html" class="btn-deck-link" title="View 7-Slide Executive Deck">
-          <span>📊</span>
-          <span>Presentation Deck</span>
-        </a>
         <div class="status-pill">
           <span class="status-dot"></span>
           <span>Cloud Run us-central1 (28ms)</span>
@@ -1974,79 +1966,6 @@
     "status": "COMPILED_AND_PROTECTED"
   }
 }</pre>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================================================
-         TAB 4: ARCHITECTURE & ROI TELEMETRY
-         ======================================================== -->
-    <section id="pane-telemetry" class="pane">
-      <h2 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--text-main);">Systems Architecture & Telemetry</h2>
-      <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 2rem;">
-        Production Google Cloud Platform serverless infrastructure paired with autonomous Shopify Admin GraphQL publishing.
-      </p>
-
-      <!-- Architecture Diagrams Grid -->
-      <div class="arch-grid">
-        <div class="arch-card">
-          <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-main);">4-Stage Cloud Pipeline Blueprint</h3>
-          <p style="font-size: 0.8rem; color: var(--text-muted);">Event-driven dataflow from GCS Bucket trigger to Shopify Admin API.</p>
-          <div class="arch-img-frame expandable-visual" onclick="openStudioLightboxImage('assets/2_aura_architecture_blueprint.jpg', '4-Stage Cloud Pipeline Blueprint', 'GCS Eventarc ➔ Vertex AI Gemini 2.5 ➔ Cloud Run ➔ Shopify Admin GraphQL', event)" title="Click to Expand Full Screen">
-            <img src="assets/2_aura_architecture_blueprint.jpg" alt="Systems Blueprint">
-            <button class="expand-cue-pill" onclick="openStudioLightboxImage('assets/2_aura_architecture_blueprint.jpg', '4-Stage Cloud Pipeline Blueprint', 'GCS Eventarc ➔ Vertex AI Gemini 2.5 ➔ Cloud Run ➔ Shopify Admin GraphQL', event)" title="Expand Full Screen">
-              <span>⛶</span>
-              <span>Expand Full Screen</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="arch-card">
-          <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-main);">GCP Cloud Run Production Console</h3>
-          <p style="font-size: 0.8rem; color: var(--text-muted);">Real container service handling asynchronous GPU inference and Eventarc hooks.</p>
-          <div class="arch-img-frame expandable-visual" onclick="openStudioLightboxImage('assets/6_gcp_cloud_run_console.jpg', 'GCP Cloud Run Production Console', 'us-central1 Asynchronous Microservice Telemetry & Concurrency Autoscaling', event)" title="Click to Expand Full Screen">
-            <img src="assets/6_gcp_cloud_run_console.jpg" alt="Cloud Run Console">
-            <button class="expand-cue-pill" onclick="openStudioLightboxImage('assets/6_gcp_cloud_run_console.jpg', 'GCP Cloud Run Production Console', 'us-central1 Asynchronous Microservice Telemetry & Concurrency Autoscaling', event)" title="Expand Full Screen">
-              <span>⛶</span>
-              <span>Expand Full Screen</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Interactive ROI Simulator -->
-      <div class="roi-box">
-        <div>
-          <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--text-main);">Interactive ROI & OPEX Simulator</h3>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">
-            Calculate immediate studio savings by replacing manual $25-$40/SKU Photoshop retouching with Aura Studio AI.
-          </p>
-
-          <div class="range-group">
-            <label>
-              <span>Monthly Catalog Ingestion Volume:</span>
-              <span id="label-volume" style="color: var(--accent-blue); font-weight: 700;">400 SKUs</span>
-            </label>
-            <input type="range" id="input-volume" min="50" max="2000" step="25" value="400" oninput="calculateROI()">
-          </div>
-
-          <div class="range-group">
-            <label>
-              <span>Current Manual Retouch Cost per SKU ($):</span>
-              <span id="label-cost" style="color: var(--accent-blue); font-weight: 700;">$28.00</span>
-            </label>
-            <input type="range" id="input-cost" min="10" max="60" step="1" value="28" oninput="calculateROI()">
-          </div>
-        </div>
-
-        <div class="roi-display">
-          <div style="font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; color: var(--text-sub); font-weight: 700;">
-            Projected Annual OPEX Savings
-          </div>
-          <div class="roi-num" id="roi-savings">$124,800</div>
-          <p style="font-size: 0.82rem; color: var(--text-muted); font-weight: 500;">
-            Replaces 48-hour studio queue with instant 34s cloud publication.
-          </p>
         </div>
       </div>
     </section>
