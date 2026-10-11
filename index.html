@@ -577,6 +577,243 @@
       font-weight: 700;
     }
 
+    /* Studio Tune-Up Look Profiles Bar */
+    .studio-looks-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .studio-looks-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.65rem;
+    }
+
+    .studio-looks-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .studio-looks-badge {
+      font-size: 0.68rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: var(--accent-blue);
+      background: var(--accent-blue-light);
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid var(--accent-blue-border);
+    }
+
+    .looks-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.6rem;
+    }
+
+    .look-btn {
+      background: var(--bg-subtle);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 0.5rem 0.6rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      text-align: left;
+    }
+
+    .look-btn img {
+      width: 38px;
+      height: 38px;
+      border-radius: 6px;
+      object-fit: cover;
+      border: 1px solid var(--border-subtle);
+      flex-shrink: 0;
+      background: #FFFFFF;
+    }
+
+    .look-btn-info {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .look-btn-name {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .look-btn-desc {
+      font-size: 0.66rem;
+      color: var(--text-sub);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .look-btn:hover {
+      border-color: var(--border-strong);
+      background: #FFFFFF;
+      transform: translateY(-1px);
+    }
+
+    .look-btn.active {
+      background: var(--accent-blue-light);
+      border-color: var(--accent-blue);
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.18);
+    }
+
+    .look-btn.active .look-btn-name {
+      color: var(--accent-blue);
+      font-weight: 800;
+    }
+
+    /* Quick View Navigation below slider */
+    .quick-view-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-top: 0.85rem;
+    }
+
+    .quick-view-btn {
+      padding: 0.45rem 0.95rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: #FFFFFF;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.18s;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .quick-view-btn:hover {
+      border-color: var(--accent-blue);
+      color: var(--accent-blue);
+    }
+
+    .quick-view-btn.active {
+      background: var(--accent-blue);
+      border-color: var(--accent-blue);
+      color: #FFFFFF;
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+    }
+
+    /* Live Studio Fine-Tune Box in Inspector */
+    .studio-tuneup-box {
+      margin-top: 1.25rem;
+      padding: 1rem;
+      background: var(--bg-subtle);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .tuneup-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.85rem;
+    }
+
+    .tuneup-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .tuneup-reset-btn {
+      background: transparent;
+      border: none;
+      color: var(--accent-blue);
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .tuneup-slider-group {
+      margin-bottom: 0.75rem;
+    }
+
+    .tuneup-slider-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .tuneup-slider-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .tuneup-range {
+      width: 100%;
+      accent-color: var(--accent-blue);
+      cursor: pointer;
+    }
+
+    .preset-preview-btn {
+      margin-top: 0.65rem;
+      padding: 0.35rem 0.65rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+      background: #FFFFFF;
+      color: var(--accent-blue);
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: all 0.18s;
+    }
+
+    .preset-preview-btn:hover {
+      background: var(--accent-blue);
+      color: #FFFFFF;
+      border-color: var(--accent-blue);
+    }
+
+    @media (max-width: 900px) {
+      .looks-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 550px) {
+      .looks-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+
     /* Draggable Split Comparison Frame */
     .slider-stage {
       position: relative;
@@ -599,6 +836,8 @@
       height: 100%;
       object-fit: contain;
       background: #FFFFFF;
+      transition: opacity 0.18s ease;
+      filter: contrast(var(--live-contrast, 1)) brightness(var(--live-brightness, 1));
     }
 
     /* Before Image (Foreground Clamped) */
@@ -1761,6 +2000,47 @@
             <!-- Dynamically populated -->
           </div>
 
+          <!-- Studio Aesthetic Calibration & Look Profiles (Live Real-Time Tuning) -->
+          <div class="studio-looks-card" id="studio-looks-card">
+            <div class="studio-looks-header">
+              <div class="studio-looks-title">
+                <span>🎨</span>
+                <span>Studio Aesthetic Calibration (Live Real-Time Tuning)</span>
+              </div>
+              <span class="studio-looks-badge">Instant Look Profile Sync</span>
+            </div>
+            <div class="looks-grid">
+              <button class="look-btn active" id="look-btn-bright_boutique" onclick="selectStudioLook('bright_boutique')">
+                <img src="assets/art_deco_look_bright_boutique.jpg" alt="Bright Boutique">
+                <div class="look-btn-info">
+                  <span class="look-btn-name">Bright Boutique</span>
+                  <span class="look-btn-desc">Pure White #FFFFFF</span>
+                </div>
+              </button>
+              <button class="look-btn" id="look-btn-soft_editorial" onclick="selectStudioLook('soft_editorial')">
+                <img src="assets/art_deco_look_soft_editorial.jpg" alt="Soft Editorial">
+                <div class="look-btn-info">
+                  <span class="look-btn-name">Soft Editorial</span>
+                  <span class="look-btn-desc">Warm Ivory Bridal</span>
+                </div>
+              </button>
+              <button class="look-btn" id="look-btn-archival_platinum" onclick="selectStudioLook('archival_platinum')">
+                <img src="assets/art_deco_look_archival_platinum.jpg" alt="Archival Platinum">
+                <div class="look-btn-info">
+                  <span class="look-btn-name">Archival Platinum</span>
+                  <span class="look-btn-desc">Cool Gray Vignette</span>
+                </div>
+              </button>
+              <button class="look-btn" id="look-btn-velvet_vault" onclick="selectStudioLook('velvet_vault')">
+                <img src="assets/art_deco_look_velvet_vault.jpg" alt="Velvet Vault">
+                <div class="look-btn-info">
+                  <span class="look-btn-name">Velvet Vault</span>
+                  <span class="look-btn-desc">Midnight Obsidian</span>
+                </div>
+              </button>
+            </div>
+          </div>
+
           <!-- Draggable Split Comparison Frame -->
           <div class="slider-stage" id="slider-container">
             <!-- Master Image (Background / Right) -->
@@ -1787,9 +2067,20 @@
             </button>
           </div>
 
-          <!-- Prompt Hint -->
-          <p style="font-size: 0.8rem; color: var(--text-sub); text-align: center; margin-top: 0.85rem; font-weight: 500;">
-            ↔ Drag the blue center divider to inspect metal mirror polish, facet fire, and pure solid white isolation against the unretouched Etsy estate baseline.
+          <!-- Quick-View Mode Controls & Interaction Hint -->
+          <div class="quick-view-bar">
+            <button class="quick-view-btn" id="qv-raw" onclick="setQuickView('raw')" title="View 100% Unedited Raw Etsy Baseline">
+              <span>⏮</span> 100% Raw Baseline
+            </button>
+            <button class="quick-view-btn active" id="qv-split" onclick="setQuickView('split')" title="Compare 50/50 Split View">
+              <span>◀ 50/50 Split ▶</span>
+            </button>
+            <button class="quick-view-btn" id="qv-master" onclick="setQuickView('master')" title="View 100% Retouched AI Master">
+              100% AI Master <span>⏭</span>
+            </button>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-sub); text-align: center; margin-top: 0.65rem; font-weight: 500;">
+            ↔ Drag divider or click buttons above to inspect metal mirror polish, facet fire, and brand lighting against the unretouched Etsy estate baseline.
           </p>
         </div>
 
@@ -1825,7 +2116,7 @@
             </div>
             <div class="prop-row">
               <div class="prop-label">Studio Background Canvas</div>
-              <div class="prop-val">Seamless Pure Solid White (#FFFFFF)</div>
+              <div class="prop-val" id="hud-bg">Seamless Pure Solid White (#FFFFFF)</div>
             </div>
             <div class="prop-row">
               <div class="prop-label">Ground Contact Interaction</div>
@@ -1834,6 +2125,40 @@
             <div class="prop-row">
               <div class="prop-label">Inference Model & Latency</div>
               <div class="prop-val">Gemini 2.5 Flash Vision (34s)</div>
+            </div>
+          </div>
+
+          <!-- Live Studio Fine-Tuning Controls -->
+          <div class="studio-tuneup-box">
+            <div class="tuneup-header">
+              <span class="tuneup-title">
+                <span>🎚️</span> Live Studio Lighting & Depth Tuning
+              </span>
+              <button class="tuneup-reset-btn" onclick="resetLiveTuneup()">Reset</button>
+            </div>
+            <div class="tuneup-slider-group">
+              <div class="tuneup-slider-labels">
+                <span>Lighting Balance</span>
+                <span id="label-tuneup-light">Daylight Crisp</span>
+              </div>
+              <input type="range" class="tuneup-range" id="slider-tuneup-light" min="-30" max="30" value="0" oninput="updateLiveTuneup('light', this.value)">
+              <div style="display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--text-sub); font-family: 'JetBrains Mono', monospace; margin-top: 2px;">
+                <span>Soft Diffuse</span>
+                <span>Daylight Crisp</span>
+                <span>High Specular</span>
+              </div>
+            </div>
+            <div class="tuneup-slider-group" style="margin-top: 0.75rem;">
+              <div class="tuneup-slider-labels">
+                <span>Ground Shadow Depth</span>
+                <span id="label-tuneup-shadow">Balanced Contact</span>
+              </div>
+              <input type="range" class="tuneup-range" id="slider-tuneup-shadow" min="-30" max="30" value="0" oninput="updateLiveTuneup('shadow', this.value)">
+              <div style="display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--text-sub); font-family: 'JetBrains Mono', monospace; margin-top: 2px;">
+                <span>Soft Contact</span>
+                <span>Balanced</span>
+                <span>Dimensional</span>
+              </div>
             </div>
           </div>
 
@@ -1887,6 +2212,9 @@
             <span class="preset-badge-item">Specular Max</span>
             <span class="preset-badge-item">99.8% Fidelity</span>
           </div>
+          <button class="preset-preview-btn" onclick="event.stopPropagation(); previewPresetInStudio('cartier')">
+            <span>👁️</span> Preview Bright Boutique in Studio ➔
+          </button>
         </div>
 
         <!-- Preset 2: Tiffany & Co Minimalist -->
@@ -1904,6 +2232,9 @@
             <span class="preset-badge-item">Solid #FFFFFF</span>
             <span class="preset-badge-item">Contact Shadow</span>
           </div>
+          <button class="preset-preview-btn" onclick="event.stopPropagation(); previewPresetInStudio('tiffany')">
+            <span>👁️</span> Preview Soft Editorial in Studio ➔
+          </button>
         </div>
 
         <!-- Preset 3: Sotheby's Archival -->
@@ -1921,6 +2252,9 @@
             <span class="preset-badge-item">Inclusion Lock</span>
             <span class="preset-badge-item">Zero Clipping</span>
           </div>
+          <button class="preset-preview-btn" onclick="event.stopPropagation(); previewPresetInStudio('sothebys')">
+            <span>👁️</span> Preview Archival Platinum in Studio ➔
+          </button>
         </div>
 
         <!-- Preset 4: E-Commerce High-Throughput -->
@@ -1934,10 +2268,13 @@
             <p>Maximum defect suppression, automated turntable removal, and Shopify storefront standardization.</p>
           </div>
           <div class="preset-badges">
-            <span class="preset-badge-item">Aggressive Defect Cut</span>
-            <span class="preset-badge-item">Batch Auto</span>
-            <span class="preset-badge-item">Shopify WebP</span>
+            <span class="preset-badge-item">Midnight Obsidian</span>
+            <span class="preset-badge-item">VIP Lookbook</span>
+            <span class="preset-badge-item">Mirror Floor</span>
           </div>
+          <button class="preset-preview-btn" onclick="event.stopPropagation(); previewPresetInStudio('ecommerce')">
+            <span>👁️</span> Preview Velvet Vault in Studio ➔
+          </button>
         </div>
       </div>
 
@@ -2323,10 +2660,21 @@
       const imgAfter = document.getElementById('img-after');
 
       imgBefore.src = angle.raw;
-      imgAfter.src = angle.master;
+
+      // Check if viewing hero specimen at Angle 1
+      if (currentSpecimenKey === 'art_deco' && currentAngleIndex === 0) {
+        imgAfter.src = HERO_STUDIO_LOOKS[activeStudioLookKey].src;
+        const looksCard = document.getElementById('studio-looks-card');
+        if (looksCard) looksCard.style.display = 'block';
+      } else {
+        imgAfter.src = angle.master;
+        const looksCard = document.getElementById('studio-looks-card');
+        if (looksCard) looksCard.style.display = 'none';
+      }
 
       // Reset slider to 50%
       setSliderPosition(50);
+      setQuickView('split');
     }
 
     // Draggable Split Slider Logic
@@ -2383,6 +2731,185 @@
     });
 
     // ROI Calculator
+    
+    // ==========================================
+    // STUDIO TUNE-UP LOOK PROFILES & LIVE SLIDERS
+    // ==========================================
+    const HERO_STUDIO_LOOKS = {
+      bright_boutique: {
+        id: "bright_boutique",
+        name: "Bright Boutique",
+        sub: "Pure White #FFFFFF",
+        desc: "Clean white high-key studio, specular platinum reflections",
+        src: "assets/art_deco_look_bright_boutique.jpg",
+        metal: "Platinum 950 (Liquid Mirror Chrome)",
+        bg: "Seamless Pure Solid White (#FFFFFF)",
+        optics: "Specular High-Key Brilliant Sparkle",
+        shadow: "Diffuse Soft Drop Shadow (8%)",
+        presetSync: "cartier"
+      },
+      soft_editorial: {
+        id: "soft_editorial",
+        name: "Soft Editorial",
+        sub: "Warm Ivory Bridal",
+        desc: "Warm luxury ivory, silky satin luster, romantic bridal tones",
+        src: "assets/art_deco_look_soft_editorial.jpg",
+        metal: "Warm Platinum (Satin Bridal Luster)",
+        bg: "Luxury Champagne Ivory (#FAF7F2)",
+        optics: "Gentle Diffuse Fire & Deep Sapphire Blue",
+        shadow: "Soft Natural Bridal Contact Shadow",
+        presetSync: "tiffany"
+      },
+      archival_platinum: {
+        id: "archival_platinum",
+        name: "Archival Platinum",
+        sub: "Cool Gray Vignette",
+        desc: "Cool neutral vignette, authentic hallmark clarity, Sotheby's grade",
+        src: "assets/art_deco_look_archival_platinum.jpg",
+        metal: "Platinum 950 (Hallmark Strict / Unclipped)",
+        bg: "Cool Studio Vignette (#EEF2F6 ➔ #CBD5E1)",
+        optics: "100% Inclusion Fidelity & Precision Facet Map",
+        shadow: "Deep Grounded Auction Contact Shadow (15%)",
+        presetSync: "sothebys"
+      },
+      velvet_vault: {
+        id: "velvet_vault",
+        name: "Velvet Vault",
+        sub: "Midnight VIP Obsidian",
+        desc: "Deep charcoal obsidian backdrop, rim lighting, mirror floor reflection",
+        src: "assets/art_deco_look_velvet_vault.jpg",
+        metal: "Illuminated Platinum with Sculpted Rim Lights",
+        bg: "Deep Charcoal Obsidian Studio (#222B38)",
+        optics: "High-Contrast Glowing Sapphire Refraction",
+        shadow: "Subtle Reflective Mirror Floor Grounding",
+        presetSync: "ecommerce"
+      }
+    };
+
+    let activeStudioLookKey = 'bright_boutique';
+    let liveTuneupState = { light: 0, shadow: 0 };
+
+    function selectStudioLook(lookKey, keepPosition = true) {
+      if (!HERO_STUDIO_LOOKS[lookKey]) return;
+      activeStudioLookKey = lookKey;
+      const look = HERO_STUDIO_LOOKS[lookKey];
+
+      // Update UI active buttons in Look Bar
+      document.querySelectorAll('.look-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById('look-btn-' + lookKey);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      // Update image on canvas if viewing Art Deco piece and Angle 1
+      if (currentSpecimenKey === 'art_deco' && currentAngleIndex === 0) {
+        const imgAfter = document.getElementById('img-after');
+        if (imgAfter) {
+          imgAfter.style.opacity = '0.6';
+          setTimeout(() => {
+            imgAfter.src = look.src;
+            imgAfter.style.opacity = '1';
+          }, 80);
+        }
+
+        // Update telemetry HUD
+        const hudMetal = document.getElementById('hud-metal');
+        const hudBg = document.getElementById('hud-bg');
+        const hudOptics = document.getElementById('hud-optics');
+        const hudShadow = document.getElementById('hud-shadow');
+
+        if (hudMetal) hudMetal.textContent = look.metal;
+        if (hudBg) hudBg.textContent = look.bg;
+        if (hudOptics) hudOptics.textContent = look.optics;
+        if (hudShadow) hudShadow.textContent = look.shadow;
+      }
+
+      // Sync active state in Tab 3 preset cards
+      if (look.presetSync) {
+        document.querySelectorAll('.preset-card').forEach(c => c.classList.remove('active'));
+        const presetCard = document.getElementById('preset-' + look.presetSync);
+        if (presetCard) presetCard.classList.add('active');
+      }
+    }
+
+    function setQuickView(mode) {
+      document.querySelectorAll('.quick-view-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById('qv-' + mode);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      if (mode === 'raw') {
+        setSliderPosition(100);
+      } else if (mode === 'split') {
+        setSliderPosition(50);
+      } else if (mode === 'master') {
+        setSliderPosition(0);
+      }
+    }
+
+    function updateLiveTuneup(type, val) {
+      val = parseInt(val);
+      liveTuneupState[type] = val;
+
+      const imgAfter = document.getElementById('img-after');
+      const contrastVal = 1 + (liveTuneupState.light * 0.005);
+      const brightnessVal = 1 + (liveTuneupState.light * 0.002);
+      
+      if (imgAfter) {
+        imgAfter.style.setProperty('--live-contrast', contrastVal);
+        imgAfter.style.setProperty('--live-brightness', brightnessVal);
+      }
+
+      if (type === 'light') {
+        const lbl = document.getElementById('label-tuneup-light');
+        if (lbl) {
+          if (val < -10) lbl.textContent = "Soft Diffuse (" + val + ")";
+          else if (val > 10) lbl.textContent = "High Specular (+" + val + ")";
+          else lbl.textContent = "Daylight Crisp (Balanced)";
+        }
+      } else if (type === 'shadow') {
+        const lbl = document.getElementById('label-tuneup-shadow');
+        if (lbl) {
+          if (val < -10) lbl.textContent = "Feathered Soft (" + val + ")";
+          else if (val > 10) lbl.textContent = "Deep Dimensional (+" + val + ")";
+          else lbl.textContent = "Balanced Contact Ground";
+        }
+      }
+    }
+
+    function resetLiveTuneup() {
+      liveTuneupState = { light: 0, shadow: 0 };
+      const sliderLight = document.getElementById('slider-tuneup-light');
+      const sliderShadow = document.getElementById('slider-tuneup-shadow');
+      if (sliderLight) sliderLight.value = 0;
+      if (sliderShadow) sliderShadow.value = 0;
+
+      const lblLight = document.getElementById('label-tuneup-light');
+      const lblShadow = document.getElementById('label-tuneup-shadow');
+      if (lblLight) lblLight.textContent = "Daylight Crisp";
+      if (lblShadow) lblShadow.textContent = "Balanced Contact";
+
+      const imgAfter = document.getElementById('img-after');
+      if (imgAfter) {
+        imgAfter.style.removeProperty('--live-contrast');
+        imgAfter.style.removeProperty('--live-brightness');
+      }
+    }
+
+    function previewPresetInStudio(presetKey) {
+      applyPreset(presetKey);
+      switchTab('review');
+      selectSpecimen('art_deco');
+
+      // Map presetKey to Studio Look
+      const map = {
+        cartier: 'bright_boutique',
+        tiffany: 'soft_editorial',
+        sothebys: 'archival_platinum',
+        ecommerce: 'velvet_vault'
+      };
+      if (map[presetKey]) {
+        selectStudioLook(map[presetKey]);
+      }
+    }
+
     function calculateROI() {
       const volume = parseInt(document.getElementById('input-volume').value);
       const costPerSku = parseFloat(document.getElementById('input-cost').value);
@@ -2697,7 +3224,11 @@
 
       const angle = SPECIMENS[currentSpecimenKey].angles[currentAngleIndex];
       document.getElementById('studio-lb-img-before').src = angle.raw;
-      document.getElementById('studio-lb-img-after').src = angle.master;
+      if (currentSpecimenKey === 'art_deco' && currentAngleIndex === 0) {
+        document.getElementById('studio-lb-img-after').src = HERO_STUDIO_LOOKS[activeStudioLookKey].src;
+      } else {
+        document.getElementById('studio-lb-img-after').src = angle.master;
+      }
 
       document.getElementById('studio-lb-title').textContent = SPECIMENS[currentSpecimenKey].title + ' — Before vs After Master';
       document.getElementById('studio-lb-meta').textContent = '1:1 Sub-Pixel Inspection';
