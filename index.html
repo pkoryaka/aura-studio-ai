@@ -721,62 +721,210 @@
       box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
     }
 
-    /* Live Studio Fine-Tune Box in Inspector */
-    .studio-tuneup-box {
+    /* Studio Calibrate Card in Tab 2 Inspector */
+    .studio-calibrate-card {
       margin-top: 1.25rem;
-      padding: 1rem;
+      padding: 1rem 1.15rem;
       background: var(--bg-subtle);
       border-radius: var(--radius-md);
       border: 1px solid var(--border-subtle);
     }
 
-    .tuneup-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 0.85rem;
-    }
-
-    .tuneup-title {
-      font-size: 0.78rem;
+    .calibrate-card-title {
+      font-size: 0.82rem;
       font-weight: 700;
       color: var(--text-main);
       display: flex;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.45rem;
+      margin-bottom: 0.4rem;
     }
 
-    .tuneup-reset-btn {
-      background: transparent;
-      border: none;
-      color: var(--accent-blue);
-      font-size: 0.72rem;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: underline;
+    .calibrate-card-desc {
+      font-size: 0.75rem;
+      color: var(--text-sub);
+      line-height: 1.45;
+      margin-bottom: 0.85rem;
     }
 
-    .tuneup-slider-group {
-      margin-bottom: 0.75rem;
-    }
-
-    .tuneup-slider-group:last-child {
-      margin-bottom: 0;
-    }
-
-    .tuneup-slider-labels {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      margin-bottom: 0.35rem;
-    }
-
-    .tuneup-range {
+    .btn-open-controls {
       width: 100%;
-      accent-color: var(--accent-blue);
+      padding: 0.6rem 1rem;
+      background: #FFFFFF;
+      border: 1.5px solid var(--accent-blue);
+      color: var(--accent-blue);
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 700;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .btn-open-controls:hover {
+      background: var(--accent-blue);
+      color: #FFFFFF;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    }
+
+    /* Tab 3: Sandbox Layout with Live Interactive Preview */
+    .controls-sandbox-layout {
+      display: grid;
+      grid-template-columns: 460px 1fr;
+      gap: 1.75rem;
+      align-items: start;
+      margin-bottom: 2rem;
+    }
+
+    .sandbox-preview-column {
+      position: sticky;
+      top: 5rem;
+    }
+
+    .sandbox-stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-float);
+      background: #FFFFFF;
+    }
+
+    .sandbox-bg-layer {
+      position: absolute;
+      inset: 0;
+      background: #FFFFFF;
+      transition: background 0.3s ease;
+    }
+
+    .sandbox-ground-shadow {
+      position: absolute;
+      bottom: 12%;
+      left: 10%;
+      width: 80%;
+      height: 22%;
+      background: radial-gradient(ellipse at 50% 50%, rgba(15, 23, 42, var(--sandbox-shadow-alpha, 0.38)) 0%, rgba(15, 23, 42, calc(var(--sandbox-shadow-alpha, 0.38)*0.55)) 38%, transparent 72%);
+      border-radius: 50%;
+      filter: blur(12px);
+      pointer-events: none;
+      transition: opacity 0.15s ease, transform 0.15s ease, filter 0.15s ease;
+      transform: scaleY(0.7);
+    }
+
+    .sandbox-ground-mirror {
+      position: absolute;
+      bottom: -16%;
+      left: 0;
+      width: 100%;
+      height: 46%;
+      background-image: url('assets/art_deco_ring_cutout.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center bottom;
+      transform: scaleY(-1);
+      opacity: var(--sandbox-mirror-opacity, 0);
+      filter: blur(2.5px);
+      mask-image: linear-gradient(to top, rgba(0,0,0,0.35) 0%, transparent 65%);
+      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.35) 0%, transparent 65%);
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .sandbox-ring-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      z-index: 5;
+      transition: filter 0.2s ease;
+      filter: contrast(var(--sandbox-contrast, 1.05)) brightness(var(--sandbox-brightness, 1.02)) var(--sandbox-temp-filter, drop-shadow(0 0 0 transparent));
+    }
+
+    .sandbox-badge-top {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      font-size: 0.68rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .sandbox-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 8px rgba(5, 150, 105, 0.4);
+    }
+
+    .sandbox-badge-bottom {
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      z-index: 10;
+      background: rgba(37, 99, 235, 0.95);
+      backdrop-filter: blur(8px);
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: #FFFFFF;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+    }
+
+    .btn-apply-to-review {
+      margin-top: 0.85rem;
+      width: 100%;
+      padding: 0.75rem 1.25rem;
+      background: linear-gradient(135deg, #2563EB, #1D4ED8);
+      color: #FFFFFF;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28);
+    }
+
+    .btn-apply-to-review:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+    }
+
+    @media (max-width: 1080px) {
+      .controls-sandbox-layout {
+        grid-template-columns: 1fr;
+      }
+      .sandbox-preview-column {
+        position: static;
+        max-width: 500px;
+        margin: 0 auto;
+      }
     }
 
     .preset-preview-btn {
@@ -2128,38 +2276,17 @@
             </div>
           </div>
 
-          <!-- Live Studio Fine-Tuning Controls -->
-          <div class="studio-tuneup-box">
-            <div class="tuneup-header">
-              <span class="tuneup-title">
-                <span>🎚️</span> Live Studio Lighting & Depth Tuning
-              </span>
-              <button class="tuneup-reset-btn" onclick="resetLiveTuneup()">Reset</button>
+          <!-- Direct Link to Brand Calibration Sandbox in Tab 3 -->
+          <div class="studio-calibrate-card">
+            <div class="calibrate-card-title">
+              <span>🎛️</span> Custom Brand Physics & Lighting?
             </div>
-            <div class="tuneup-slider-group">
-              <div class="tuneup-slider-labels">
-                <span>Lighting Balance</span>
-                <span id="label-tuneup-light">Daylight Crisp</span>
-              </div>
-              <input type="range" class="tuneup-range" id="slider-tuneup-light" min="-30" max="30" value="0" oninput="updateLiveTuneup('light', this.value)">
-              <div style="display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--text-sub); font-family: 'JetBrains Mono', monospace; margin-top: 2px;">
-                <span>Soft Diffuse</span>
-                <span>Daylight Crisp</span>
-                <span>High Specular</span>
-              </div>
-            </div>
-            <div class="tuneup-slider-group" style="margin-top: 0.75rem;">
-              <div class="tuneup-slider-labels">
-                <span>Ground Shadow Depth</span>
-                <span id="label-tuneup-shadow">Balanced Contact</span>
-              </div>
-              <input type="range" class="tuneup-range" id="slider-tuneup-shadow" min="-30" max="30" value="0" oninput="updateLiveTuneup('shadow', this.value)">
-              <div style="display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--text-sub); font-family: 'JetBrains Mono', monospace; margin-top: 2px;">
-                <span>Soft Contact</span>
-                <span>Balanced</span>
-                <span>Dimensional</span>
-              </div>
-            </div>
+            <p class="calibrate-card-desc">
+              Calibrate ground contact shadow physics, metal specular polish, and lighting balance in the interactive Studio Control Plane.
+            </p>
+            <button class="btn-open-controls" onclick="switchTab('controls')">
+              <span>Open Brand Control Plane ➔</span>
+            </button>
           </div>
 
           <!-- Action: One-Click Shopify Sync Simulation -->
@@ -2278,104 +2405,144 @@
         </div>
       </div>
 
-      <!-- Section 2: Fine-Grained Pipeline Parameter Controls -->
-      <div class="controls-layout">
-        <!-- Column A: Material Physics & Gemological Optics -->
-        <div class="control-panel-box">
-          <div class="control-panel-heading">
-            <span>🔬</span>
-            <span>Material Physics & Gemological Optics</span>
-          </div>
+      <!-- Section 2: Interactive Calibration Sandbox & Live Parameter Controls -->
+      <div class="controls-sandbox-layout">
+        
+        <!-- Left: Live Interactive Sandbox Preview Canvas -->
+        <div class="sandbox-preview-column">
+          <div class="sandbox-stage" id="sandbox-stage">
+            <!-- Dynamic Background Layer -->
+            <div class="sandbox-bg-layer" id="sandbox-bg"></div>
 
-          <!-- Metal Finish -->
-          <div class="control-item">
-            <div class="control-item-label-row">
-              <span class="control-item-label">Precious Metal Polish</span>
-              <span class="control-item-value-badge" id="val-metal-finish">Liquid Mirror Chrome</span>
-            </div>
-            <p class="control-item-desc">Eliminates casting porosity, micro-scratches, and buffing haze while preserving mechanical geometry and hallmarks.</p>
-            <input type="range" class="range-slider-styled" id="slider-metal-finish" min="1" max="3" value="3" oninput="updateControlParam('metal', this.value)">
-            <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-sub); font-family: 'JetBrains Mono', monospace;">
-              <span>Satin Luster</span>
-              <span>Commercial Polish</span>
-              <span>Liquid Mirror Chrome</span>
-            </div>
-          </div>
+            <!-- Dynamic Ground Contact Shadow Layer -->
+            <div class="sandbox-ground-shadow" id="sandbox-ground-shadow"></div>
 
-          <!-- Facet & Inclusion Lock Toggle -->
-          <div class="switch-row">
-            <div class="switch-label-wrap">
-              <span class="switch-title">Gemological Lattice & Inclusion Lock</span>
-              <span class="switch-subtitle">Clamps crystal boundaries to prevent AI-generated false facets or color shifting.</span>
+            <!-- Dynamic Floor Mirror Reflection (Active on Velvet Vault) -->
+            <div class="sandbox-ground-mirror" id="sandbox-ground-mirror"></div>
+
+            <!-- Ring Foreground Layer -->
+            <img class="sandbox-ring-img" id="sandbox-ring-img" src="assets/art_deco_ring_cutout.png" alt="Flagship Specimen">
+
+            <!-- Live Status Badges -->
+            <div class="sandbox-badge-top">
+              <span class="sandbox-dot"></span>
+              <span id="sandbox-badge-mode">INTERACTIVE CALIBRATION SANDBOX</span>
             </div>
-            <div class="toggle-ui checked" id="toggle-optics-lock" onclick="toggleSwitch('optics')">
-              <div class="toggle-knob"></div>
+            <div class="sandbox-badge-bottom" id="sandbox-badge-preset">
+              👑 CARTIER HIGH-JEWELRY MASTER
             </div>
           </div>
 
-          <!-- Micro-Defect Suppression -->
-          <div class="control-item">
-            <div class="control-item-label-row">
-              <span class="control-item-label">Surface Micro-Defect Suppression</span>
-              <span class="control-item-value-badge" id="val-defect">Ultra / Full Polish</span>
+          <p style="font-size: 0.78rem; color: var(--text-sub); text-align: center; margin-top: 0.75rem; font-weight: 500;">
+            ⚡ Adjust parameters on the right to see ground shadow depth, metal polish, and color temperature calibrate in real time.
+          </p>
+
+          <button class="btn-apply-to-review" onclick="applySandboxToReview()">
+            <span>🔍 Inspect Calibrated Look in Studio Review ➔</span>
+          </button>
+        </div>
+
+        <!-- Right: Parameter Controls Stack -->
+        <div>
+          <!-- Column A: Material Physics & Gemological Optics -->
+          <div class="control-panel-box" style="margin-bottom: 1.25rem;">
+            <div class="control-panel-heading">
+              <span>🔬</span>
+              <span>Material Physics & Gemological Optics</span>
             </div>
-            <div class="pill-selector-group">
-              <button class="pill-selector-btn" id="btn-def-1" onclick="setDefectLevel(1)">Dust Only</button>
-              <button class="pill-selector-btn" id="btn-def-2" onclick="setDefectLevel(2)">Standard</button>
-              <button class="pill-selector-btn active" id="btn-def-3" onclick="setDefectLevel(3)">Ultra Polish</button>
+
+            <!-- Metal Finish -->
+            <div class="control-item">
+              <div class="control-item-label-row">
+                <span class="control-item-label">Precious Metal Polish</span>
+                <span class="control-item-value-badge" id="val-metal-finish">Liquid Mirror Chrome</span>
+              </div>
+              <p class="control-item-desc">Eliminates casting porosity, micro-scratches, and buffing haze while preserving mechanical geometry and hallmarks.</p>
+              <input type="range" class="range-slider-styled" id="slider-metal-finish" min="1" max="3" value="3" oninput="updateControlParam('metal', this.value)">
+              <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-sub); font-family: 'JetBrains Mono', monospace;">
+                <span>Satin Luster</span>
+                <span>Commercial Polish</span>
+                <span>Liquid Mirror Chrome</span>
+              </div>
+            </div>
+
+            <!-- Facet & Inclusion Lock Toggle -->
+            <div class="switch-row">
+              <div class="switch-label-wrap">
+                <span class="switch-title">Gemological Lattice & Inclusion Lock</span>
+                <span class="switch-subtitle">Clamps crystal boundaries to prevent AI-generated false facets or color shifting.</span>
+              </div>
+              <div class="toggle-ui checked" id="toggle-optics-lock" onclick="toggleSwitch('optics')">
+                <div class="toggle-knob"></div>
+              </div>
+            </div>
+
+            <!-- Micro-Defect Suppression -->
+            <div class="control-item">
+              <div class="control-item-label-row">
+                <span class="control-item-label">Surface Micro-Defect Suppression</span>
+                <span class="control-item-value-badge" id="val-defect">Ultra / Full Polish</span>
+              </div>
+              <div class="pill-selector-group">
+                <button class="pill-selector-btn" id="btn-def-1" onclick="setDefectLevel(1)">Dust Only</button>
+                <button class="pill-selector-btn" id="btn-def-2" onclick="setDefectLevel(2)">Standard</button>
+                <button class="pill-selector-btn active" id="btn-def-3" onclick="setDefectLevel(3)">Ultra Polish</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column B: Lighting, Staging & Contact Geometry -->
+          <div class="control-panel-box">
+            <div class="control-panel-heading">
+              <span>💡</span>
+              <span>Studio Lighting & Staging Geometry</span>
+            </div>
+
+            <!-- Background Canvas -->
+            <div class="control-item">
+              <div class="control-item-label-row">
+                <span class="control-item-label">Studio Background Canvas</span>
+                <span class="control-item-value-badge" id="val-bg-canvas">Solid Pure White (#FFFFFF)</span>
+              </div>
+              <p class="control-item-desc">Seamless studio sweep. Fully eliminates putty mounts, clips, and turntable hardware.</p>
+              <div class="pill-selector-group">
+                <button class="pill-selector-btn active" id="btn-bg-1" onclick="setBgCanvas(1)">Solid #FFFFFF</button>
+                <button class="pill-selector-btn" id="btn-bg-2" onclick="setBgCanvas(2)">Warm Ivory</button>
+                <button class="pill-selector-btn" id="btn-bg-3" onclick="setBgCanvas(3)">Slate Vignette</button>
+                <button class="pill-selector-btn" id="btn-bg-4" onclick="setBgCanvas(4)">Midnight Obsidian</button>
+              </div>
+            </div>
+
+            <!-- Ground Contact Shadow -->
+            <div class="control-item">
+              <div class="control-item-label-row">
+                <span class="control-item-label">Ground Contact Interaction</span>
+                <span class="control-item-value-badge" id="val-shadow">Soft Contact Drop Shadow (8%)</span>
+              </div>
+              <p class="control-item-desc">Renders realistic physical occlusion shadow directly beneath the setting without muddy halo artifacts.</p>
+              <input type="range" class="range-slider-styled" id="slider-shadow" min="0" max="20" value="8" oninput="updateControlParam('shadow', this.value)">
+              <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-sub); font-family: 'JetBrains Mono', monospace;">
+                <span>No Shadow (Cutout)</span>
+                <span>Natural Contact (8%)</span>
+                <span>Dramatic Studio (20%)</span>
+              </div>
+            </div>
+
+            <!-- Key Light Balance -->
+            <div class="control-item">
+              <div class="control-item-label-row">
+                <span class="control-item-label">Studio Key Light Color Balance</span>
+                <span class="control-item-value-badge" id="val-light">5600K Daylight Balanced</span>
+              </div>
+              <div class="pill-selector-group">
+                <button class="pill-selector-btn active" id="btn-light-1" onclick="setLightTemp(1)">5600K Daylight</button>
+                <button class="pill-selector-btn" id="btn-light-2" onclick="setLightTemp(2)">5000K Neutral</button>
+                <button class="pill-selector-btn" id="btn-light-3" onclick="setLightTemp(3)">3200K Warm Golden</button>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Column B: Lighting, Staging & Contact Geometry -->
-        <div class="control-panel-box">
-          <div class="control-panel-heading">
-            <span>💡</span>
-            <span>Studio Lighting & Staging Geometry</span>
-          </div>
-
-          <!-- Background Canvas -->
-          <div class="control-item">
-            <div class="control-item-label-row">
-              <span class="control-item-label">Studio Background Canvas</span>
-              <span class="control-item-value-badge" id="val-bg-canvas">Solid Pure White (#FFFFFF)</span>
-            </div>
-            <p class="control-item-desc">Seamless studio sweep. Fully eliminates putty mounts, clips, and turntable hardware.</p>
-            <div class="pill-selector-group">
-              <button class="pill-selector-btn active" id="btn-bg-1" onclick="setBgCanvas(1)">Solid #FFFFFF</button>
-              <button class="pill-selector-btn" id="btn-bg-2" onclick="setBgCanvas(2)">Subtle Vignette</button>
-              <button class="pill-selector-btn" id="btn-bg-3" onclick="setBgCanvas(3)">Soft Platinum</button>
-            </div>
-          </div>
-
-          <!-- Ground Contact Shadow -->
-          <div class="control-item">
-            <div class="control-item-label-row">
-              <span class="control-item-label">Ground Contact Interaction</span>
-              <span class="control-item-value-badge" id="val-shadow">Soft Contact Drop Shadow (8%)</span>
-            </div>
-            <p class="control-item-desc">Renders realistic physical occlusion shadow directly beneath the setting without muddy halo artifacts.</p>
-            <input type="range" class="range-slider-styled" id="slider-shadow" min="0" max="20" value="8" oninput="updateControlParam('shadow', this.value)">
-            <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-sub); font-family: 'JetBrains Mono', monospace;">
-              <span>No Shadow (Cutout)</span>
-              <span>Natural Contact (8%)</span>
-              <span>Dramatic Studio (20%)</span>
-            </div>
-          </div>
-
-          <!-- Key Light Balance -->
-          <div class="control-item">
-            <div class="control-item-label-row">
-              <span class="control-item-label">Studio Key Light Color Balance</span>
-              <span class="control-item-value-badge" id="val-light">5600K Daylight Balanced</span>
-            </div>
-            <div class="pill-selector-group">
-              <button class="pill-selector-btn active" id="btn-light-1" onclick="setLightTemp(1)">5600K Daylight</button>
-              <button class="pill-selector-btn" id="btn-light-2" onclick="setLightTemp(2)">5000K Neutral</button>
-              <button class="pill-selector-btn" id="btn-light-3" onclick="setLightTemp(3)">3200K Warm</button>
-            </div>
-          </div>
-        </div>
       </div>
 
       <!-- Section 3: Engineering Payload Inspection Drawer -->
@@ -3035,12 +3202,108 @@
       activePresetKey = key;
       currentControlsState = JSON.parse(JSON.stringify(STUDIO_PRESETS[key]));
 
+      // If key is ecommerce, map bg to 4 (Midnight Obsidian)
+      if (key === 'ecommerce') {
+        currentControlsState.bgCanvas = 4;
+        currentControlsState.bgText = "Midnight Obsidian Studio (#222B38)";
+      }
+
       document.querySelectorAll('.preset-card').forEach(c => c.classList.remove('active'));
       const activeCard = document.getElementById('preset-' + key);
       if (activeCard) activeCard.classList.add('active');
 
       syncControlsUI();
       updateCompiledPayload();
+      updateSandboxPreview();
+    }
+
+    
+    // ==========================================
+    // TAB 3 SANDBOX LIVE PREVIEW CONTROLLER
+    // ==========================================
+    function updateSandboxPreview() {
+      const sandboxBg = document.getElementById('sandbox-bg');
+      const sandboxShadow = document.getElementById('sandbox-ground-shadow');
+      const sandboxMirror = document.getElementById('sandbox-ground-mirror');
+      const sandboxRing = document.getElementById('sandbox-ring-img');
+      const badgePreset = document.getElementById('sandbox-badge-preset');
+
+      if (!sandboxBg || !sandboxShadow || !sandboxRing) return;
+
+      // 1. Background
+      const bgMap = {
+        1: "#FFFFFF",
+        2: "#FAF7F2",
+        3: "radial-gradient(circle at center, #EEF2F6 0%, #CBD5E1 100%)",
+        4: "radial-gradient(circle at center, #222B38 0%, #0B0E14 100%)"
+      };
+      sandboxBg.style.background = bgMap[currentControlsState.bgCanvas] || "#FFFFFF";
+
+      // 2. Ground Contact Shadow Alpha (0% to 20% range)
+      // val 0 => alpha 0
+      // val 8 => alpha 0.35
+      // val 20 => alpha 0.80 + dimensional spread
+      const shadowVal = currentControlsState.shadow;
+      if (shadowVal === 0) {
+        sandboxShadow.style.opacity = '0';
+      } else {
+        sandboxShadow.style.opacity = '1';
+        const shadowAlpha = 0.15 + (shadowVal / 20.0) * 0.65;
+        sandboxShadow.style.setProperty('--sandbox-shadow-alpha', shadowAlpha);
+        const scaleY = 0.55 + (shadowVal / 20.0) * 0.40;
+        const scaleX = 0.80 + (shadowVal / 20.0) * 0.35;
+        sandboxShadow.style.transform = `scaleY(${scaleY}) scaleX(${scaleX})`;
+        const blurPx = 7 + (shadowVal / 20.0) * 11;
+        sandboxShadow.style.filter = `blur(${blurPx}px)`;
+      }
+
+      // 3. Mirror Floor (Active on Preset 4 / Obsidian)
+      if (currentControlsState.bgCanvas === 4 || activePresetKey === 'ecommerce') {
+        if (sandboxMirror) sandboxMirror.style.setProperty('--sandbox-mirror-opacity', '0.35');
+      } else {
+        if (sandboxMirror) sandboxMirror.style.setProperty('--sandbox-mirror-opacity', '0');
+      }
+
+      // 4. Metal Polish (1: Satin, 2: Commercial, 3: Liquid Mirror Chrome)
+      const polishMap = {
+        1: { contrast: 0.98, brightness: 0.99 },
+        2: { contrast: 1.02, brightness: 1.01 },
+        3: { contrast: 1.10, brightness: 1.04 }
+      };
+      const polish = polishMap[currentControlsState.metalFinish] || polishMap[3];
+      sandboxRing.style.setProperty('--sandbox-contrast', polish.contrast);
+      sandboxRing.style.setProperty('--sandbox-brightness', polish.brightness);
+
+      // 5. Light Temp Filter
+      const tempMap = {
+        1: 'none',
+        2: 'contrast(1.02)',
+        3: 'sepia(0.18) saturate(1.15) brightness(1.01)'
+      };
+      sandboxRing.style.setProperty('--sandbox-temp-filter', tempMap[currentControlsState.lightTemp] || 'none');
+
+      // 6. Update Badge
+      const presetBadgeMap = {
+        cartier: "👑 CARTIER HIGH-JEWELRY MASTER",
+        tiffany: "✨ TIFFANY & CO. MINIMALIST",
+        sothebys: "🏛️ SOTHEBY'S ARCHIVAL & AUCTION",
+        ecommerce: "🌌 VELVET VAULT VIP LOOKBOOK"
+      };
+      if (badgePreset) badgePreset.textContent = presetBadgeMap[activePresetKey] || "BRAND CALIBRATED MASTER";
+    }
+
+    function applySandboxToReview() {
+      // Map active preset to Review Look
+      const lookMap = {
+        cartier: 'bright_boutique',
+        tiffany: 'soft_editorial',
+        sothebys: 'archival_platinum',
+        ecommerce: 'velvet_vault'
+      };
+      const targetLook = lookMap[activePresetKey] || 'bright_boutique';
+      switchTab('review');
+      selectSpecimen('art_deco');
+      selectStudioLook(targetLook);
     }
 
     function syncControlsUI() {
@@ -3083,6 +3346,7 @@
         document.getElementById('val-shadow').textContent = "Contact Shadow (" + val + "%)";
       }
       updateCompiledPayload();
+      updateSandboxPreview();
     }
 
     function toggleSwitch(param) {
@@ -3110,30 +3374,45 @@
 
     function setBgCanvas(type, triggerSync = true) {
       currentControlsState.bgCanvas = type;
-      const map = { 1: "Solid Pure White (#FFFFFF)", 2: "Subtle Vignette", 3: "Soft Platinum" };
-      currentControlsState.bgText = map[type];
+      const map = { 
+        1: "Solid Pure White (#FFFFFF)", 
+        2: "Warm Ivory Bridal (#FAF7F2)", 
+        3: "Slate Vignette (#EEF2F6 ➔ #CBD5E1)",
+        4: "Midnight Obsidian (#222B38)"
+      };
+      currentControlsState.bgText = map[type] || map[1];
       const valEl = document.getElementById('val-bg-canvas');
-      if (valEl) valEl.textContent = map[type];
+      if (valEl) valEl.textContent = map[type] || map[1];
 
-      for (let i = 1; i <= 3; i++) {
+      for (let i = 1; i <= 4; i++) {
         const btn = document.getElementById('btn-bg-' + i);
         if (btn) btn.classList.toggle('active', i === type);
       }
-      if (triggerSync) updateCompiledPayload();
+      if (triggerSync) {
+        updateCompiledPayload();
+        updateSandboxPreview();
+      }
     }
 
     function setLightTemp(type, triggerSync = true) {
       currentControlsState.lightTemp = type;
-      const map = { 1: "5600K Daylight Balanced", 2: "5000K Neutral White", 3: "3200K Warm Incandescent" };
-      currentControlsState.lightText = map[type];
+      const map = { 
+        1: "5600K Daylight Balanced", 
+        2: "5000K Neutral White", 
+        3: "3200K Warm Golden" 
+      };
+      currentControlsState.lightText = map[type] || map[1];
       const valEl = document.getElementById('val-light');
-      if (valEl) valEl.textContent = map[type];
+      if (valEl) valEl.textContent = map[type] || map[1];
 
       for (let i = 1; i <= 3; i++) {
         const btn = document.getElementById('btn-light-' + i);
         if (btn) btn.classList.toggle('active', i === type);
       }
-      if (triggerSync) updateCompiledPayload();
+      if (triggerSync) {
+        updateCompiledPayload();
+        updateSandboxPreview();
+      }
     }
 
     function togglePayloadDrawer() {
