@@ -1,0 +1,2742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aura Studio AI — Enterprise Multimodal Retouch & Commerce Publishing Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Clean Light Atelier Theme (White & Royal Blue) */
+      --bg-base: #F8FAFC;
+      --bg-surface: #FFFFFF;
+      --bg-card: #FFFFFF;
+      --bg-subtle: #F1F5F9;
+      --bg-hover: #E2E8F0;
+      --border-subtle: #E2E8F0;
+      --border-strong: #CBD5E1;
+      --border-focus: #3B82F6;
+      --text-main: #0F172A;
+      --text-muted: #475569;
+      --text-sub: #64748B;
+      --accent-blue: #2563EB;
+      --accent-blue-hover: #1D4ED8;
+      --accent-blue-light: #EFF6FF;
+      --accent-blue-border: #BFDBFE;
+      --accent-sky: #0284C7;
+      --accent-emerald: #059669;
+      --accent-emerald-light: #ECFDF5;
+      --accent-amber: #D97706;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --shadow-float: 0 12px 30px -4px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    /* Minimalist Top Studio Navigation */
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 0.85rem 2.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .header-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .brand-mark {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, #2563EB, #1D4ED8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: #FFFFFF;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    }
+
+    .brand-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+      line-height: 1.1;
+    }
+
+    .brand-subtitle {
+      font-size: 0.7rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent-blue);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* Streamlined Tab Switcher */
+    .tab-nav {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      background: var(--bg-subtle);
+      padding: 0.25rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .nav-btn {
+      padding: 0.5rem 1.15rem;
+      border-radius: var(--radius-sm);
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.18s ease;
+    }
+
+    .nav-btn:hover {
+      color: var(--text-main);
+    }
+
+    .nav-btn.active {
+      color: var(--accent-blue);
+      background: #FFFFFF;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      font-weight: 700;
+    }
+
+    .nav-badge {
+      background: var(--accent-blue-light);
+      color: var(--accent-blue);
+      font-size: 0.68rem;
+      padding: 0.1rem 0.45rem;
+      border-radius: 999px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .status-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent-emerald-light);
+      border: 1px solid rgba(5, 150, 105, 0.2);
+      color: var(--accent-emerald);
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 8px rgba(5, 150, 105, 0.5);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    .btn-deck-link {
+      background: var(--accent-blue-light);
+      border: 1px solid var(--accent-blue-border);
+      color: var(--accent-blue);
+      padding: 0.42rem 0.85rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.18s ease;
+    }
+
+    .btn-deck-link:hover {
+      background: #DBEAFE;
+      color: var(--accent-blue-hover);
+      transform: translateY(-1px);
+    }
+
+    /* Main Container */
+    main {
+      flex: 1;
+      max-width: 1440px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.25rem 2.5rem;
+    }
+
+    .pane { display: none; }
+    .pane.active { display: block; animation: fadeIn 0.25s ease; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ========================================================
+       TAB 1: CATALOG QUEUE PANE
+       ======================================================== */
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.5rem;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s;
+    }
+
+    .stat-card:hover {
+      border-color: var(--border-strong);
+      box-shadow: var(--shadow-card);
+      transform: translateY(-1px);
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-sub);
+      margin-bottom: 0.4rem;
+      font-weight: 600;
+    }
+
+    .stat-val {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: baseline;
+      gap: 0.4rem;
+      letter-spacing: -0.02em;
+    }
+
+    .stat-val span {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent-blue);
+    }
+
+    .catalog-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .catalog-item-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem 1.75rem;
+      display: grid;
+      grid-template-columns: 84px 1.5fr 1fr 1fr auto;
+      align-items: center;
+      gap: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .catalog-item-card:hover {
+      border-color: var(--accent-blue-border);
+      box-shadow: var(--shadow-card);
+      transform: translateY(-2px);
+    }
+
+    .item-thumb-box {
+      width: 80px;
+      height: 80px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .item-thumb-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .item-meta h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.25rem;
+      letter-spacing: -0.01em;
+    }
+
+    .item-meta p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .item-tag-row {
+      display: flex;
+      gap: 0.45rem;
+      margin-top: 0.45rem;
+    }
+
+    .pill-tag {
+      font-size: 0.68rem;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .btn-action-primary {
+      background: var(--accent-blue);
+      color: #FFFFFF;
+      border: none;
+      padding: 0.65rem 1.35rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+    }
+
+    .btn-action-primary:hover {
+      background: var(--accent-blue-hover);
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+      transform: translateY(-1px);
+    }
+
+    /* ========================================================
+       TAB 2: INTERACTIVE STUDIO REVIEW PANE (BEFORE/AFTER SLIDER)
+       ======================================================== */
+    .studio-layout {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    @media (max-width: 1080px) {
+      .studio-layout { grid-template-columns: 1fr; }
+    }
+
+    .specimen-nav {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+      background: var(--bg-subtle);
+      padding: 0.3rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .specimen-btn {
+      flex: 1;
+      padding: 0.65rem 1rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .specimen-btn:hover {
+      color: var(--text-main);
+    }
+
+    .specimen-btn.active {
+      color: var(--accent-blue);
+      background: #FFFFFF;
+      border-color: var(--border-subtle);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+      font-weight: 700;
+    }
+
+    /* Angle Selector Bar */
+    .angle-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .angle-btn {
+      flex: 1;
+      padding: 0.65rem 0.85rem;
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      transition: all 0.2s;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .angle-btn img {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      object-fit: cover;
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .angle-btn:hover {
+      border-color: var(--border-strong);
+      color: var(--text-main);
+    }
+
+    .angle-btn.active {
+      background: var(--accent-blue-light);
+      border-color: var(--accent-blue);
+      color: var(--accent-blue);
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.15);
+      font-weight: 700;
+    }
+
+    /* Draggable Split Comparison Frame */
+    .slider-stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: #FFFFFF;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-float);
+      user-select: none;
+      cursor: ew-resize;
+    }
+
+    /* After Image (Background) */
+    .slider-layer-after {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #FFFFFF;
+    }
+
+    /* Before Image (Foreground Clamped) */
+    .slider-layer-before-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 50%;
+      overflow: hidden;
+      z-index: 10;
+      background: #FFFFFF;
+      border-right: 2px solid #2563EB;
+      box-shadow: 4px 0 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .slider-layer-before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* Slider Handle */
+    .slider-divider {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 2px;
+      background: #2563EB;
+      z-index: 20;
+      pointer-events: none;
+      transform: translateX(-50%);
+    }
+
+    .slider-knob {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 2px solid #2563EB;
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #2563EB;
+      font-size: 0.8rem;
+      cursor: ew-resize;
+      pointer-events: auto;
+      font-weight: 800;
+    }
+
+    /* Badges on Viewport */
+    .stage-badge {
+      position: absolute;
+      top: 1.25rem;
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+      z-index: 15;
+      backdrop-filter: blur(8px);
+    }
+
+    .badge-raw {
+      left: 1.25rem;
+      background: rgba(15, 23, 42, 0.85);
+      color: #FFFFFF;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .badge-master {
+      right: 1.25rem;
+      background: var(--accent-blue);
+      color: #FFFFFF;
+      box-shadow: 0 2px 10px rgba(37, 99, 235, 0.35);
+    }
+
+    .stage-expand-btn {
+      position: absolute;
+      bottom: 1.25rem;
+      right: 1.25rem;
+      background: #FFFFFF;
+      color: var(--accent-blue);
+      padding: 0.45rem 0.95rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      font-family: 'JetBrains Mono', monospace;
+      z-index: 35;
+      backdrop-filter: blur(8px);
+      border: 1.5px solid var(--accent-blue);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .stage-expand-btn:hover {
+      background: var(--accent-blue);
+      color: #FFFFFF;
+      border-color: var(--accent-blue);
+      transform: scale(1.05);
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
+    }
+
+    .arch-img-frame.expandable-visual {
+      cursor: zoom-in;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .arch-img-frame.expandable-visual:hover {
+      transform: scale(1.01);
+      box-shadow: var(--shadow-card);
+    }
+
+    .expand-cue-pill {
+      position: absolute;
+      bottom: 0.75rem;
+      right: 0.75rem;
+      background: #FFFFFF;
+      color: var(--accent-blue);
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      border: 1.5px solid var(--accent-blue);
+      backdrop-filter: blur(8px);
+      pointer-events: auto;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .expand-cue-pill:hover,
+    .arch-img-frame.expandable-visual:hover .expand-cue-pill {
+      background: var(--accent-blue);
+      color: #FFFFFF;
+      transform: scale(1.04);
+      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+    }
+
+    /* Studio Full-Screen Lightbox (Project White & Royal Blue Palette) */
+    .studio-lightbox-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(248, 250, 252, 0.98);
+      backdrop-filter: blur(20px);
+      z-index: 99999;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .studio-lightbox-modal.active {
+      display: flex;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .studio-lightbox-chrome {
+      position: absolute;
+      top: 1.25rem;
+      left: 2rem;
+      right: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+      background: #FFFFFF;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-card);
+    }
+
+    .studio-lightbox-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      letter-spacing: -0.01em;
+    }
+
+    .studio-lightbox-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      background: var(--accent-blue-light);
+      color: var(--accent-blue);
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid var(--accent-blue-border);
+      font-weight: 700;
+    }
+
+    .studio-lightbox-close {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-strong);
+      color: var(--text-main);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.45rem 1.15rem;
+      border-radius: 999px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.2s;
+    }
+
+    .studio-lightbox-close:hover {
+      background: #EF4444;
+      border-color: #EF4444;
+      color: #FFFFFF;
+      transform: scale(1.05);
+    }
+
+    .studio-lightbox-stage {
+      max-width: 94vw;
+      max-height: 82vh;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin-top: 2rem;
+    }
+
+    .studio-lightbox-stage img {
+      max-width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-float);
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .studio-split-container {
+      position: relative;
+      width: 80vh;
+      height: 80vh;
+      max-width: 88vw;
+      max-height: 80vh;
+      aspect-ratio: 1 / 1;
+      background: #FFFFFF;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-float);
+      cursor: ew-resize;
+      user-select: none;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .studio-lb-layer-after {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #FFFFFF;
+    }
+
+    .studio-lb-before-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 50%;
+      overflow: hidden;
+      z-index: 10;
+      background: #FFFFFF;
+      border-right: 2px solid var(--accent-blue);
+      box-shadow: 6px 0 20px rgba(0,0,0,0.25);
+    }
+
+    .studio-lb-layer-before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .studio-lb-divider {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 2px;
+      background: var(--accent-blue);
+      z-index: 20;
+      pointer-events: none;
+      transform: translateX(-50%);
+    }
+
+    .studio-lb-knob {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 2px solid var(--accent-blue);
+      box-shadow: 0 4px 20px rgba(37, 99, 235, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-blue);
+      font-size: 0.85rem;
+      cursor: ew-resize;
+      font-weight: 800;
+    }
+
+    /* Studio Inspector Sidebar */
+    .inspector-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 0.85rem;
+    }
+
+    .panel-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-main);
+    }
+
+    .prop-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .prop-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      background: var(--bg-subtle);
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .prop-label {
+      font-size: 0.68rem;
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+      color: var(--text-sub);
+      font-weight: 600;
+    }
+
+    .prop-val {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .badge-check {
+      font-size: 0.72rem;
+      color: var(--accent-emerald);
+      background: var(--accent-emerald-light);
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+
+    .btn-sync-shopify {
+      background: var(--accent-blue);
+      color: white;
+      border: none;
+      padding: 0.95rem 1.5rem;
+      border-radius: var(--radius-md);
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      transition: all 0.2s;
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+      width: 100%;
+    }
+
+    .btn-sync-shopify:hover {
+      background: var(--accent-blue-hover);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+      transform: translateY(-1px);
+    }
+
+    /* Modal for Shopify Sync Simulation */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.4);
+      backdrop-filter: blur(8px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .modal-overlay.active { display: flex; animation: fadeIn 0.2s ease; }
+
+    .modal-box {
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      max-width: 600px;
+      width: 100%;
+      padding: 2rem;
+      box-shadow: var(--shadow-float);
+    }
+
+    .modal-step-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.85rem 1rem;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      margin-bottom: 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .step-spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #CBD5E1;
+      border-top-color: var(--accent-blue);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ========================================================
+       TAB 3: STUDIO CONTROL PLANE & PRESET ENGINE
+       ======================================================== */
+    .controls-header-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 2rem;
+      margin-bottom: 1.75rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .controls-header-info h2 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.35rem;
+      letter-spacing: -0.01em;
+    }
+
+    .controls-header-info p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      max-width: 720px;
+    }
+
+    .engine-status-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      background: #EFF6FF;
+      border: 1px solid #BFDBFE;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: #1D4ED8;
+      font-weight: 600;
+    }
+
+    .preset-section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .preset-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .preset-card {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.35rem;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .preset-card:hover {
+      border-color: var(--border-strong);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-card);
+    }
+
+    .preset-card.active {
+      border-color: var(--accent-blue);
+      background: #FFFFFF;
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.12);
+    }
+
+    .preset-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .preset-card-icon {
+      font-size: 1.4rem;
+    }
+
+    .preset-card-check {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: transparent;
+      transition: all 0.2s;
+    }
+
+    .preset-card.active .preset-card-check {
+      background: var(--accent-blue);
+      border-color: var(--accent-blue);
+      color: #FFFFFF;
+    }
+
+    .preset-card h4 {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.3rem;
+    }
+
+    .preset-card p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .preset-badges {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .preset-badge-item {
+      font-size: 0.65rem;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      background: var(--bg-subtle);
+      color: var(--text-sub);
+      border: 1px solid var(--border-subtle);
+      font-weight: 600;
+    }
+
+    .preset-card.active .preset-badge-item {
+      background: #EFF6FF;
+      color: #1D4ED8;
+      border-color: #BFDBFE;
+    }
+
+    /* Fine-Grained Controls 2-Column Grid */
+    .controls-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.75rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 960px) {
+      .controls-layout { grid-template-columns: 1fr; }
+    }
+
+    .control-panel-box {
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .control-panel-heading {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .control-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .control-item-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .control-item-label {
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .control-item-value-badge {
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent-blue);
+      font-weight: 700;
+      background: #EFF6FF;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid #BFDBFE;
+    }
+
+    .control-item-desc {
+      font-size: 0.77rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .range-slider-styled {
+      width: 100%;
+      height: 6px;
+      accent-color: var(--accent-blue);
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .pill-selector-group {
+      display: flex;
+      gap: 0.5rem;
+      background: var(--bg-subtle);
+      padding: 0.25rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .pill-selector-btn {
+      flex: 1;
+      padding: 0.45rem 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.18s;
+      text-align: center;
+    }
+
+    .pill-selector-btn:hover {
+      color: var(--text-main);
+    }
+
+    .pill-selector-btn.active {
+      background: #FFFFFF;
+      color: var(--accent-blue);
+      font-weight: 700;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
+    .switch-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-subtle);
+      padding: 0.85rem 1rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .switch-label-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .switch-title {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .switch-subtitle {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+    }
+
+    .toggle-ui {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      background: #CBD5E1;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .toggle-ui.checked {
+      background: var(--accent-blue);
+    }
+
+    .toggle-knob {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      transition: transform 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+
+    .toggle-ui.checked .toggle-knob {
+      transform: translateX(20px);
+    }
+
+    .payload-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .payload-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+
+    .payload-title-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .payload-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .btn-payload-toggle {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      padding: 0.45rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.18s;
+    }
+
+    .btn-payload-toggle:hover {
+      background: var(--bg-hover);
+    }
+
+    .payload-code-container {
+      display: none;
+      margin-top: 1.25rem;
+      background: #0F172A;
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: #93C5FD;
+      line-height: 1.6;
+      max-height: 380px;
+      overflow-y: auto;
+      border: 1px solid #1E293B;
+    }
+
+    .payload-code-container.open {
+      display: block;
+      animation: fadeIn 0.2s ease;
+    }
+
+    /* ========================================================
+       TAB 4: ARCHITECTURE & ROI TELEMETRY
+       ======================================================== */
+    .arch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .arch-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .arch-img-frame {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      background: #FFFFFF;
+    }
+
+    .arch-img-frame img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* ROI Interactive Calculator */
+    .roi-box {
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      align-items: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .range-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .range-group label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    input[type=range] {
+      width: 100%;
+      accent-color: var(--accent-blue);
+      cursor: pointer;
+    }
+
+    .roi-display {
+      background: var(--accent-blue-light);
+      border: 1px solid var(--accent-blue-border);
+      border-radius: var(--radius-md);
+      padding: 2.25rem 2rem;
+      text-align: center;
+    }
+
+    .roi-num {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--accent-blue);
+      margin: 0.5rem 0;
+      letter-spacing: -0.02em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Studio Bar -->
+  <header>
+    <div class="header-inner">
+      <a href="#" class="brand-mark">
+        <div class="brand-icon">✦</div>
+        <div>
+          <div class="brand-title">AURA STUDIO AI</div>
+          <div class="brand-subtitle">Multimodal Jewelry Retouch Console</div>
+        </div>
+      </a>
+
+      <!-- 4 Navigation Tabs -->
+      <nav class="tab-nav">
+        <button class="nav-btn active" onclick="switchTab('catalog')" id="tab-btn-catalog">
+          <span>📦</span>
+          <span>Catalog Queue</span>
+          <span class="nav-badge">3</span>
+        </button>
+        <button class="nav-btn" onclick="switchTab('review')" id="tab-btn-review">
+          <span>🔍</span>
+          <span>Studio Review</span>
+        </button>
+        <button class="nav-btn" onclick="switchTab('controls')" id="tab-btn-controls">
+          <span>🎛️</span>
+          <span>Studio Controls</span>
+        </button>
+        <button class="nav-btn" onclick="switchTab('telemetry')" id="tab-btn-telemetry">
+          <span>📈</span>
+          <span>Architecture & ROI</span>
+        </button>
+      </nav>
+
+      <!-- Status & Cloud Proof -->
+      <div class="header-actions">
+        <a href="deck.html" class="btn-deck-link" title="View 7-Slide Executive Deck">
+          <span>📊</span>
+          <span>Presentation Deck</span>
+        </a>
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          <span>Cloud Run us-central1 (28ms)</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ========================================================
+         TAB 1: CATALOG QUEUE PANE
+         ======================================================== -->
+    <section id="pane-catalog" class="pane active">
+      <!-- Top Metrics Ribbon -->
+      <div class="metric-grid">
+        <div class="stat-card">
+          <div class="stat-label">Active Showcase Pieces</div>
+          <div class="stat-val">3 <span>Units</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Multi-View Angles</div>
+          <div class="stat-val">9 <span>Angles</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Cloud Pipeline Latency</div>
+          <div class="stat-val">34.2 <span>seconds</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Projected Annual Savings</div>
+          <div class="stat-val">$124,800 <span>/ year</span></div>
+        </div>
+      </div>
+
+      <!-- Catalog Queue List -->
+      <h2 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-main);">Catalog Processing Inbox</h2>
+      <div class="catalog-list">
+
+        <!-- Piece 1: Art Deco Ring -->
+        <div class="catalog-item-card">
+          <div class="item-thumb-box">
+            <img src="assets/art_deco_retouched_angle1.jpg" alt="Art Deco Sapphire Ring">
+          </div>
+          <div class="item-meta">
+            <h3>Art Deco Sapphire & Diamond Ring</h3>
+            <p>SKU: <code>AURA-DEC-01</code> • Platinum 950 Filigree Mount</p>
+            <div class="item-tag-row">
+              <span class="pill-tag">3 Angles (3/4, Profile, Under-Gallery)</span>
+              <span class="pill-tag">Royal Blue Sapphire</span>
+              <span class="pill-tag">Old European Cut</span>
+            </div>
+          </div>
+          <div>
+            <div style="font-size: 0.7rem; color: var(--text-sub); text-transform: uppercase; font-weight: 600;">QC Status</div>
+            <div style="font-size: 0.85rem; font-weight: 700; color: var(--accent-emerald);">✓ 100% Geometry Passed</div>
+          </div>
+          <div>
+            <div style="font-size: 0.7rem; color: var(--text-sub); text-transform: uppercase; font-weight: 600;">Shopify Target</div>
+            <div style="font-size: 0.85rem; font-weight: 600;">Online Storefront (Published)</div>
+          </div>
+          <div>
+            <button class="btn-action-primary" onclick="loadSpecimenAndReview('art_deco')">
+              <span>Inspect in Studio</span> →
+            </button>
+          </div>
+        </div>
+
+        <!-- Piece 2: 1930s Solitaire Ring -->
+        <div class="catalog-item-card">
+          <div class="item-thumb-box">
+            <img src="assets/vintage_solitaire_retouched_angle1.jpg" alt="1930s Solitaire Ring">
+          </div>
+          <div class="item-meta">
+            <h3>1930s Vintage Engraved Solitaire Ring</h3>
+            <p>SKU: <code>AURA-SOL-02</code> • Hand-Carved Wheat Filigree</p>
+            <div class="item-tag-row">
+              <span class="pill-tag">3 Angles (Left 3/4, Profile, Right 3/4)</span>
+              <span class="pill-tag">Calibre Sapphire Accents</span>
+              <span class="pill-tag">Wood Background Isolated</span>
+            </div>
+          </div>
+          <div>
+            <div style="font-size: 0.7rem; color: var(--text-sub); text-transform: uppercase; font-weight: 600;">QC Status</div>
+            <div style="font-size: 0.85rem; font-weight: 700; color: var(--accent-emerald);">✓ Sub-Pixel Alpha Feather</div>
+          </div>
+          <div>
+            <div style="font-size: 0.7rem; color: var(--text-sub); text-transform: uppercase; font-weight: 600;">Shopify Target</div>
+            <div style="font-size: 0.85rem; font-weight: 600;">Bridal Ring Collection</div>
+          </div>
+          <div>
+            <button class="btn-action-primary" onclick="loadSpecimenAndReview('solitaire')">
+              <span>Inspect in Studio</span> →
+            </button>
+          </div>
+        </div>
+
+        <!-- Piece 3: 4.60 Crt Ethiopian Black Opal -->
+        <div class="catalog-item-card">
+          <div class="item-thumb-box">
+            <img src="assets/opal_black_retouched_angle1.jpg" alt="4.60 Crt Ethiopian Black Opal">
+          </div>
+          <div class="item-meta">
+            <h3>4.60 Crt Natural Ethiopian Black Opal</h3>
+            <p>SKU: <code>AURA-OPL-03</code> • Oval Cabochon Specimen</p>
+            <div class="item-tag-row">
+              <span class="pill-tag">3 Variations (Vertical Amber, Fiery, Electric)</span>
+              <span class="pill-tag">Play-of-Color Preserved</span>
+              <span class="pill-tag">Studio Mirror Reflection</span>
+            </div>
+          </div>
+          <div>
+            <div style="font-size: 0.7rem; color: var(--text-sub); text-transform: uppercase; font-weight: 600;">QC Status</div>
+            <div style="font-size: 0.85rem; font-weight: 700; color: var(--accent-emerald);">✓ Spectral Fidelity Verified</div>
+          </div>
+          <div>
+            <div style="font-size: 0.7rem; color: var(--text-sub); text-transform: uppercase; font-weight: 600;">Shopify Target</div>
+            <div style="font-size: 0.85rem; font-weight: 600;">Rare Gemstone Vault</div>
+          </div>
+          <div>
+            <button class="btn-action-primary" onclick="loadSpecimenAndReview('opal')">
+              <span>Inspect in Studio</span> →
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================
+         TAB 2: INTERACTIVE STUDIO REVIEW PANE (BEFORE/AFTER SLIDER)
+         ======================================================== -->
+    <section id="pane-review" class="pane">
+      <div class="studio-layout">
+
+        <!-- Left: Interactive Viewer -->
+        <div>
+          <!-- Specimen Switcher -->
+          <div class="specimen-nav">
+            <button class="specimen-btn active" id="btn-spec-artdeco" onclick="selectSpecimen('art_deco')">
+              <span>💎</span> Art Deco Sapphire Ring
+            </button>
+            <button class="specimen-btn" id="btn-spec-solitaire" onclick="selectSpecimen('solitaire')">
+              <span>💍</span> 1930s Solitaire Ring
+            </button>
+            <button class="specimen-btn" id="btn-spec-opal" onclick="selectSpecimen('opal')">
+              <span>🌈</span> 4.60 Crt Black Opal
+            </button>
+          </div>
+
+          <!-- Angle Selector Bar -->
+          <div class="angle-bar" id="angle-button-container">
+            <!-- Dynamically populated -->
+          </div>
+
+          <!-- Draggable Split Comparison Frame -->
+          <div class="slider-stage" id="slider-container">
+            <!-- Master Image (Background / Right) -->
+            <img class="slider-layer-after" id="img-after" src="assets/art_deco_retouched_angle1.jpg" alt="Master Studio Retouched">
+
+            <!-- Raw Image (Foreground / Left / Clamped) -->
+            <div class="slider-layer-before-wrapper" id="before-wrapper">
+              <img class="slider-layer-before" id="img-before" src="assets/art_deco_sapphire_angle1_perspective.jpg" alt="Raw Camera Baseline">
+            </div>
+
+            <!-- Divider Line & Knob -->
+            <div class="slider-divider" id="slider-divider">
+              <div class="slider-knob">◀ ▶</div>
+            </div>
+
+            <!-- Badges -->
+            <div class="stage-badge badge-raw">Raw Camera Capture</div>
+            <div class="stage-badge badge-master">AI Studio 4K Master</div>
+
+            <!-- Full-Screen Expand Button -->
+            <button class="stage-expand-btn" onclick="openStudioLightboxSlider(event)" title="Expand to Whole Screen Size">
+              <span>⛶</span>
+              <span>Full Screen</span>
+            </button>
+          </div>
+
+          <!-- Prompt Hint -->
+          <p style="font-size: 0.8rem; color: var(--text-sub); text-align: center; margin-top: 0.85rem; font-weight: 500;">
+            ↔ Drag the blue center divider or click anywhere to inspect metal mirror polish, facet fire, and white background isolation.
+          </p>
+        </div>
+
+        <!-- Right: Studio Inspector Sidebar -->
+        <div class="inspector-panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <span>⚡</span> Pipeline Inspection Telemetry
+            </div>
+            <span class="badge-check">VERIFIED</span>
+          </div>
+
+          <div class="prop-list">
+            <div class="prop-row">
+              <div class="prop-label">Subject & Classification</div>
+              <div class="prop-val" id="hud-subject">Art Deco Sapphire & Baguette Ring</div>
+            </div>
+            <div class="prop-row">
+              <div class="prop-label">Precious Metal Polish</div>
+              <div class="prop-val" id="hud-metal">Platinum 950 (Liquid Mirror Chrome)</div>
+            </div>
+            <div class="prop-row">
+              <div class="prop-label">Optical Clarity & Facet Depth</div>
+              <div class="prop-val" id="hud-optics">Water-Clear Geometric Sparkle</div>
+            </div>
+            <div class="prop-row">
+              <div class="prop-label">Studio Background Canvas</div>
+              <div class="prop-val">Seamless Pure Solid White (#FFFFFF)</div>
+            </div>
+            <div class="prop-row">
+              <div class="prop-label">Ground Contact Interaction</div>
+              <div class="prop-val" id="hud-shadow">Diffuse Soft Drop Shadow</div>
+            </div>
+            <div class="prop-row">
+              <div class="prop-label">Inference Model & Latency</div>
+              <div class="prop-val">Gemini 2.5 Flash Vision (34s)</div>
+            </div>
+          </div>
+
+          <!-- Action: One-Click Shopify Sync Simulation -->
+          <button class="btn-sync-shopify" onclick="triggerShopifyPublish()">
+            <span>🚀</span>
+            <span>Publish 4K Master to Shopify</span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================
+         TAB 3: STUDIO CONTROL PLANE & PRESET ENGINE
+         ======================================================== -->
+    <section id="pane-controls" class="pane">
+      <!-- Top Overview Banner -->
+      <div class="controls-header-card">
+        <div class="controls-header-info">
+          <h2>Studio Control Plane & Brand Preset Architecture</h2>
+          <p>
+            Enterprise visual governance engine. Configure multimodal material physics, optical clarity guardrails, and studio staging parameters without prompt coding.
+          </p>
+        </div>
+        <div class="engine-status-pill">
+          <span class="engine-lock-icon">🔒</span>
+          <span id="engine-status-text">PIPELINE COMPILED • 0.00% DRIFT CLAMP</span>
+        </div>
+      </div>
+
+      <!-- Section 1: Brand Aesthetic Presets -->
+      <div class="preset-section-title">
+        <span>💎</span>
+        <span>Catalog Brand Aesthetic Presets (1-Click Calibration)</span>
+      </div>
+
+      <div class="preset-grid">
+        <!-- Preset 1: Cartier High-Jewelry Master -->
+        <div class="preset-card active" id="preset-cartier" onclick="applyPreset('cartier')">
+          <div class="preset-card-top">
+            <span class="preset-card-icon">👑</span>
+            <div class="preset-card-check">✓</div>
+          </div>
+          <div>
+            <h4>Cartier High-Jewelry Master</h4>
+            <p>High-contrast specular reflection, liquid chrome platinum polish, and razor-sharp facet light return.</p>
+          </div>
+          <div class="preset-badges">
+            <span class="preset-badge-item">Liquid Mirror</span>
+            <span class="preset-badge-item">Specular Max</span>
+            <span class="preset-badge-item">99.8% Fidelity</span>
+          </div>
+        </div>
+
+        <!-- Preset 2: Tiffany & Co Minimalist -->
+        <div class="preset-card" id="preset-tiffany" onclick="applyPreset('tiffany')">
+          <div class="preset-card-top">
+            <span class="preset-card-icon">✨</span>
+            <div class="preset-card-check">✓</div>
+          </div>
+          <div>
+            <h4>Tiffany & Co. Minimalist</h4>
+            <p>Airy diffuse reflections, pure solid white background (#FFFFFF), and subtle soft drop shadow.</p>
+          </div>
+          <div class="preset-badges">
+            <span class="preset-badge-item">Soft Diffuse</span>
+            <span class="preset-badge-item">Solid #FFFFFF</span>
+            <span class="preset-badge-item">Contact Shadow</span>
+          </div>
+        </div>
+
+        <!-- Preset 3: Sotheby's Archival -->
+        <div class="preset-card" id="preset-sothebys" onclick="applyPreset('sothebys')">
+          <div class="preset-card-top">
+            <span class="preset-card-icon">🏛️</span>
+            <div class="preset-card-check">✓</div>
+          </div>
+          <div>
+            <h4>Sotheby's Archival & Auction</h4>
+            <p>100% natural inclusion & hallmark stamp preservation with zero color gamut clipping.</p>
+          </div>
+          <div class="preset-badges">
+            <span class="preset-badge-item">Archival Raw</span>
+            <span class="preset-badge-item">Inclusion Lock</span>
+            <span class="preset-badge-item">Zero Clipping</span>
+          </div>
+        </div>
+
+        <!-- Preset 4: E-Commerce High-Throughput -->
+        <div class="preset-card" id="preset-ecommerce" onclick="applyPreset('ecommerce')">
+          <div class="preset-card-top">
+            <span class="preset-card-icon">⚡</span>
+            <div class="preset-card-check">✓</div>
+          </div>
+          <div>
+            <h4>E-Commerce Rapid Batch</h4>
+            <p>Maximum defect suppression, automated turntable removal, and Shopify storefront standardization.</p>
+          </div>
+          <div class="preset-badges">
+            <span class="preset-badge-item">Aggressive Defect Cut</span>
+            <span class="preset-badge-item">Batch Auto</span>
+            <span class="preset-badge-item">Shopify WebP</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Fine-Grained Pipeline Parameter Controls -->
+      <div class="controls-layout">
+        <!-- Column A: Material Physics & Gemological Optics -->
+        <div class="control-panel-box">
+          <div class="control-panel-heading">
+            <span>🔬</span>
+            <span>Material Physics & Gemological Optics</span>
+          </div>
+
+          <!-- Metal Finish -->
+          <div class="control-item">
+            <div class="control-item-label-row">
+              <span class="control-item-label">Precious Metal Polish</span>
+              <span class="control-item-value-badge" id="val-metal-finish">Liquid Mirror Chrome</span>
+            </div>
+            <p class="control-item-desc">Eliminates casting porosity, micro-scratches, and buffing haze while preserving mechanical geometry and hallmarks.</p>
+            <input type="range" class="range-slider-styled" id="slider-metal-finish" min="1" max="3" value="3" oninput="updateControlParam('metal', this.value)">
+            <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-sub); font-family: 'JetBrains Mono', monospace;">
+              <span>Satin Luster</span>
+              <span>Commercial Polish</span>
+              <span>Liquid Mirror Chrome</span>
+            </div>
+          </div>
+
+          <!-- Facet & Inclusion Lock Toggle -->
+          <div class="switch-row">
+            <div class="switch-label-wrap">
+              <span class="switch-title">Gemological Lattice & Inclusion Lock</span>
+              <span class="switch-subtitle">Clamps crystal boundaries to prevent AI-generated false facets or color shifting.</span>
+            </div>
+            <div class="toggle-ui checked" id="toggle-optics-lock" onclick="toggleSwitch('optics')">
+              <div class="toggle-knob"></div>
+            </div>
+          </div>
+
+          <!-- Micro-Defect Suppression -->
+          <div class="control-item">
+            <div class="control-item-label-row">
+              <span class="control-item-label">Surface Micro-Defect Suppression</span>
+              <span class="control-item-value-badge" id="val-defect">Ultra / Full Polish</span>
+            </div>
+            <div class="pill-selector-group">
+              <button class="pill-selector-btn" id="btn-def-1" onclick="setDefectLevel(1)">Dust Only</button>
+              <button class="pill-selector-btn" id="btn-def-2" onclick="setDefectLevel(2)">Standard</button>
+              <button class="pill-selector-btn active" id="btn-def-3" onclick="setDefectLevel(3)">Ultra Polish</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column B: Lighting, Staging & Contact Geometry -->
+        <div class="control-panel-box">
+          <div class="control-panel-heading">
+            <span>💡</span>
+            <span>Studio Lighting & Staging Geometry</span>
+          </div>
+
+          <!-- Background Canvas -->
+          <div class="control-item">
+            <div class="control-item-label-row">
+              <span class="control-item-label">Studio Background Canvas</span>
+              <span class="control-item-value-badge" id="val-bg-canvas">Solid Pure White (#FFFFFF)</span>
+            </div>
+            <p class="control-item-desc">Seamless studio sweep. Fully eliminates putty mounts, clips, and turntable hardware.</p>
+            <div class="pill-selector-group">
+              <button class="pill-selector-btn active" id="btn-bg-1" onclick="setBgCanvas(1)">Solid #FFFFFF</button>
+              <button class="pill-selector-btn" id="btn-bg-2" onclick="setBgCanvas(2)">Subtle Vignette</button>
+              <button class="pill-selector-btn" id="btn-bg-3" onclick="setBgCanvas(3)">Soft Platinum</button>
+            </div>
+          </div>
+
+          <!-- Ground Contact Shadow -->
+          <div class="control-item">
+            <div class="control-item-label-row">
+              <span class="control-item-label">Ground Contact Interaction</span>
+              <span class="control-item-value-badge" id="val-shadow">Soft Contact Drop Shadow (8%)</span>
+            </div>
+            <p class="control-item-desc">Renders realistic physical occlusion shadow directly beneath the setting without muddy halo artifacts.</p>
+            <input type="range" class="range-slider-styled" id="slider-shadow" min="0" max="20" value="8" oninput="updateControlParam('shadow', this.value)">
+            <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-sub); font-family: 'JetBrains Mono', monospace;">
+              <span>No Shadow (Cutout)</span>
+              <span>Natural Contact (8%)</span>
+              <span>Dramatic Studio (20%)</span>
+            </div>
+          </div>
+
+          <!-- Key Light Balance -->
+          <div class="control-item">
+            <div class="control-item-label-row">
+              <span class="control-item-label">Studio Key Light Color Balance</span>
+              <span class="control-item-value-badge" id="val-light">5600K Daylight Balanced</span>
+            </div>
+            <div class="pill-selector-group">
+              <button class="pill-selector-btn active" id="btn-light-1" onclick="setLightTemp(1)">5600K Daylight</button>
+              <button class="pill-selector-btn" id="btn-light-2" onclick="setLightTemp(2)">5000K Neutral</button>
+              <button class="pill-selector-btn" id="btn-light-3" onclick="setLightTemp(3)">3200K Warm</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3: Engineering Payload Inspection Drawer -->
+      <div class="payload-card">
+        <div class="payload-header" onclick="togglePayloadDrawer()">
+          <div class="payload-title-group">
+            <span style="font-size: 1.2rem;">🛡️</span>
+            <div>
+              <div class="payload-title">Compiled Vertex AI Payload & Safety Constraints</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Encrypted multimodal parameters dispatched to Gemini 2.5 Flash Cloud Run backend</div>
+            </div>
+          </div>
+          <button class="btn-payload-toggle" id="btn-payload-text">
+            <span>Inspect Compiled Payload</span>
+            <span id="payload-arrow">▼</span>
+          </button>
+        </div>
+
+        <div class="payload-code-container" id="payload-code-drawer">
+<pre id="payload-json-display">{
+  "engine": "aura-studio-orchestrator-v2",
+  "active_preset": "cartier_high_jewelry_master",
+  "model_target": "vertex-ai/gemini-2.5-flash-vision",
+  "runtime_execution": "gcp-cloud-run-container",
+  "parameters": {
+    "material_physics": {
+      "precious_metal_finish": "liquid_mirror_chrome",
+      "specular_reflection_threshold": 0.98,
+      "porosity_elimination": true,
+      "preserve_hallmark_stamps": true
+    },
+    "gemological_optics": {
+      "crystal_lattice_lock": true,
+      "facet_edge_sharpness": "maximum_high_key",
+      "inclusions_natural_retention": 1.00,
+      "geometric_drift_clamp": 0.00
+    },
+    "studio_staging": {
+      "background_canvas_hex": "#FFFFFF",
+      "ground_shadow": {
+        "mode": "diffuse_contact_occlusion",
+        "opacity": 0.08,
+        "blur_radius_px": 16
+      },
+      "lighting_temperature_kelvin": 5600
+    },
+    "negative_constraints_matrix": [
+      "dull_alloy_haze", "casting_pits", "polishing_wheel_scratches",
+      "fake_hdr_halo", "dark_room_reflection", "putty_mount", "turntable_stand",
+      "altered_gem_geometry", "synthetic_extra_facets"
+    ]
+  },
+  "cryptographic_verification": {
+    "pipeline_hash": "sha256-8f4e2b01ac79d3810f44c21b9201e74a",
+    "status": "COMPILED_AND_PROTECTED"
+  }
+}</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         TAB 4: ARCHITECTURE & ROI TELEMETRY
+         ======================================================== -->
+    <section id="pane-telemetry" class="pane">
+      <h2 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--text-main);">Systems Architecture & Telemetry</h2>
+      <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 2rem;">
+        Production Google Cloud Platform serverless infrastructure paired with autonomous Shopify Admin GraphQL publishing.
+      </p>
+
+      <!-- Architecture Diagrams Grid -->
+      <div class="arch-grid">
+        <div class="arch-card">
+          <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-main);">4-Stage Cloud Pipeline Blueprint</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted);">Event-driven dataflow from GCS Bucket trigger to Shopify Admin API.</p>
+          <div class="arch-img-frame expandable-visual" onclick="openStudioLightboxImage('assets/2_aura_architecture_blueprint.jpg', '4-Stage Cloud Pipeline Blueprint', 'GCS Eventarc ➔ Vertex AI Gemini 2.5 ➔ Cloud Run ➔ Shopify Admin GraphQL', event)" title="Click to Expand Full Screen">
+            <img src="assets/2_aura_architecture_blueprint.jpg" alt="Systems Blueprint">
+            <button class="expand-cue-pill" onclick="openStudioLightboxImage('assets/2_aura_architecture_blueprint.jpg', '4-Stage Cloud Pipeline Blueprint', 'GCS Eventarc ➔ Vertex AI Gemini 2.5 ➔ Cloud Run ➔ Shopify Admin GraphQL', event)" title="Expand Full Screen">
+              <span>⛶</span>
+              <span>Expand Full Screen</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="arch-card">
+          <h3 style="font-size: 1rem; font-weight: 700; color: var(--text-main);">GCP Cloud Run Production Console</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted);">Real container service handling asynchronous GPU inference and Eventarc hooks.</p>
+          <div class="arch-img-frame expandable-visual" onclick="openStudioLightboxImage('assets/6_gcp_cloud_run_console.jpg', 'GCP Cloud Run Production Console', 'us-central1 Asynchronous Microservice Telemetry & Concurrency Autoscaling', event)" title="Click to Expand Full Screen">
+            <img src="assets/6_gcp_cloud_run_console.jpg" alt="Cloud Run Console">
+            <button class="expand-cue-pill" onclick="openStudioLightboxImage('assets/6_gcp_cloud_run_console.jpg', 'GCP Cloud Run Production Console', 'us-central1 Asynchronous Microservice Telemetry & Concurrency Autoscaling', event)" title="Expand Full Screen">
+              <span>⛶</span>
+              <span>Expand Full Screen</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive ROI Simulator -->
+      <div class="roi-box">
+        <div>
+          <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--text-main);">Interactive ROI & OPEX Simulator</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+            Calculate immediate studio savings by replacing manual $25-$40/SKU Photoshop retouching with Aura Studio AI.
+          </p>
+
+          <div class="range-group">
+            <label>
+              <span>Monthly Catalog Ingestion Volume:</span>
+              <span id="label-volume" style="color: var(--accent-blue); font-weight: 700;">400 SKUs</span>
+            </label>
+            <input type="range" id="input-volume" min="50" max="2000" step="25" value="400" oninput="calculateROI()">
+          </div>
+
+          <div class="range-group">
+            <label>
+              <span>Current Manual Retouch Cost per SKU ($):</span>
+              <span id="label-cost" style="color: var(--accent-blue); font-weight: 700;">$28.00</span>
+            </label>
+            <input type="range" id="input-cost" min="10" max="60" step="1" value="28" oninput="calculateROI()">
+          </div>
+        </div>
+
+        <div class="roi-display">
+          <div style="font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; color: var(--text-sub); font-weight: 700;">
+            Projected Annual OPEX Savings
+          </div>
+          <div class="roi-num" id="roi-savings">$124,800</div>
+          <p style="font-size: 0.82rem; color: var(--text-muted); font-weight: 500;">
+            Replaces 48-hour studio queue with instant 34s cloud publication.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal for Shopify Sync Simulation -->
+  <div class="modal-overlay" id="shopify-modal">
+    <div class="modal-box">
+      <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--text-main);">Syncing 4K Studio Master to Shopify</h3>
+      <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+        Triggering automated GraphQL mutation to attach retouched master to live SKU variant...
+      </p>
+
+      <div class="modal-step-row" id="step-1">
+        <div class="step-spinner" id="spin-1"></div>
+        <span>Uploading 4K Master WebP to Google Cloud Storage...</span>
+      </div>
+      <div class="modal-step-row" id="step-2">
+        <div class="step-spinner" id="spin-2" style="opacity: 0.3;"></div>
+        <span>Triggering Shopify Admin GraphQL <code>stagedUploadsCreate</code>...</span>
+      </div>
+      <div class="modal-step-row" id="step-3">
+        <div class="step-spinner" id="spin-3" style="opacity: 0.3;"></div>
+        <span>Binding Media to Variant SKU & Updating Metafield <code>custom.retouch_status</code>...</span>
+      </div>
+
+      <div id="modal-success" style="display: none; background: var(--accent-emerald-light); border: 1px solid rgba(5, 150, 105, 0.3); border-radius: var(--radius-sm); padding: 1.25rem; margin-top: 1rem; text-align: center;">
+        <div style="color: var(--accent-emerald); font-weight: 800; margin-bottom: 0.25rem;">✓ Published Successfully to Shopify Storefront!</div>
+        <p style="font-size: 0.8rem; color: var(--text-muted);">SKU Media ID: <code>gid://shopify/MediaImage/9408497451262</code> • Status: Live</p>
+        <button class="btn-action-primary" style="margin-top: 0.85rem;" onclick="closeShopifyModal()">Close Inspector</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full-Screen Lightbox Modal for Studio View -->
+  <div class="studio-lightbox-modal" id="studio-lightbox-modal" onclick="handleStudioLightboxBackdropClick(event)">
+    <div class="studio-lightbox-chrome">
+      <div class="studio-lightbox-title">
+        <span id="studio-lb-title">Full Screen Inspection</span>
+        <span class="studio-lightbox-meta" id="studio-lb-meta">4K Master Asset</span>
+      </div>
+      <button class="studio-lightbox-close" onclick="closeStudioLightbox(event)">
+        <span>✕</span>
+        <span>Close [Esc]</span>
+      </button>
+    </div>
+
+    <!-- Image Stage -->
+    <div class="studio-lightbox-stage" id="studio-lb-stage-img" style="display: none;">
+      <img id="studio-lb-img" src="" alt="Full Screen Inspection">
+    </div>
+
+    <!-- Interactive Comparison Stage -->
+    <div class="studio-lightbox-stage" id="studio-lb-stage-slider" style="display: none;">
+      <div class="studio-split-container" id="studio-lb-slider-container">
+        <img class="studio-lb-layer-after" id="studio-lb-img-after" src="" alt="Master Retouched">
+        <div class="studio-lb-before-wrapper" id="studio-lb-before-wrapper">
+          <img class="studio-lb-layer-before" id="studio-lb-img-before" src="" alt="Raw Baseline">
+        </div>
+        <div class="studio-lb-divider" id="studio-lb-slider-divider">
+          <div class="studio-lb-knob">◀ ▶</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Dataset for the 3 Pieces & 3 Angles each
+    const SPECIMENS = {
+      art_deco: {
+        title: "Art Deco Sapphire & Diamond Ring",
+        subject: "Art Deco Sapphire & Baguette Ring",
+        metal: "Platinum 950 (Liquid Mirror Chrome)",
+        optics: "Water-Clear Geometric Facet Sparkle",
+        shadow: "Diffuse Soft Ground Drop Shadow",
+        angles: [
+          {
+            name: "Angle 1 (3/4 View)",
+            raw: "assets/art_deco_sapphire_angle1_perspective.jpg",
+            master: "assets/art_deco_retouched_angle1.jpg"
+          },
+          {
+            name: "Angle 2 (Side Profile)",
+            raw: "assets/art_deco_sapphire_angle2_side_profile.jpg",
+            master: "assets/art_deco_retouched_angle2.jpg"
+          },
+          {
+            name: "Angle 3 (Under Gallery)",
+            raw: "assets/art_deco_sapphire_angle3_under_gallery.jpg",
+            master: "assets/art_deco_retouched_angle3.jpg"
+          }
+        ]
+      },
+      solitaire: {
+        title: "1930s Vintage Solitaire Diamond Ring",
+        subject: "1930s Engraved Solitaire Diamond Ring",
+        metal: "Platinum Filigree (Hand-Carved Wheat Pattern)",
+        optics: "Brilliant-Cut Diamond Sparkle + Sapphire Accents",
+        shadow: "Diffuse Contact Shadow (Wood Grain Isolated)",
+        angles: [
+          {
+            name: "Angle 1 (Left 3/4)",
+            raw: "assets/vintage_solitaire_angle1_perspective.jpg",
+            master: "assets/vintage_solitaire_retouched_angle1.jpg"
+          },
+          {
+            name: "Angle 2 (Side Profile)",
+            raw: "assets/vintage_solitaire_angle2_side_profile.jpg",
+            master: "assets/vintage_solitaire_retouched_angle2.jpg"
+          },
+          {
+            name: "Angle 3 (Right 3/4)",
+            raw: "assets/vintage_solitaire_angle3_reverse_perspective.jpg",
+            master: "assets/vintage_solitaire_retouched_angle3.jpg"
+          }
+        ]
+      },
+      opal: {
+        title: "4.60 Crt Natural Ethiopian Black Opal",
+        subject: "Natural Ethiopian Black Opal Cabochon",
+        metal: "Natural Smooth Cabochon Dome (High Gloss)",
+        optics: "Spectral Pinfire Play-of-Color Preserved",
+        shadow: "Ground Mirror Reflection + Diffuse Contact Shadow",
+        angles: [
+          {
+            name: "Angle 1 (Amber / Gold Fire)",
+            raw: "assets/opal_black_angle1_vertical.jpg",
+            master: "assets/opal_black_retouched_angle1.jpg"
+          },
+          {
+            name: "Angle 2 (Fiery Red Macro)",
+            raw: "assets/opal_black_angle2_vertical_fiery.jpg",
+            master: "assets/opal_black_retouched_angle2.jpg"
+          },
+          {
+            name: "Angle 3 (Electric Shift)",
+            raw: "assets/opal_black_angle3_vertical_electric.jpg",
+            master: "assets/opal_black_retouched_angle3.jpg"
+          }
+        ]
+      }
+    };
+
+    let currentSpecimenKey = 'art_deco';
+    let currentAngleIndex = 0;
+
+    // Navigation Switcher
+    function switchTab(tabId) {
+      if (tabId === 'prompts') tabId = 'controls';
+      document.querySelectorAll('.pane').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+      
+      const targetPane = document.getElementById('pane-' + tabId);
+      const targetBtn = document.getElementById('tab-btn-' + tabId);
+      if (targetPane) targetPane.classList.add('active');
+      if (targetBtn) targetBtn.classList.add('active');
+    }
+
+    function loadSpecimenAndReview(specKey) {
+      switchTab('review');
+      selectSpecimen(specKey);
+    }
+
+    // Specimen Selection
+    function selectSpecimen(specKey) {
+      currentSpecimenKey = specKey;
+      currentAngleIndex = 0;
+
+      document.querySelectorAll('.specimen-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById('btn-spec-' + specKey);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const data = SPECIMENS[specKey];
+      document.getElementById('hud-subject').textContent = data.subject;
+      document.getElementById('hud-metal').textContent = data.metal;
+      document.getElementById('hud-optics').textContent = data.optics;
+      document.getElementById('hud-shadow').textContent = data.shadow;
+
+      renderAngleBar();
+      updateSliderImages();
+    }
+
+    function renderAngleBar() {
+      const container = document.getElementById('angle-button-container');
+      container.innerHTML = '';
+      const angles = SPECIMENS[currentSpecimenKey].angles;
+
+      angles.forEach((angle, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'angle-btn' + (idx === currentAngleIndex ? ' active' : '');
+        btn.onclick = () => {
+          currentAngleIndex = idx;
+          renderAngleBar();
+          updateSliderImages();
+        };
+
+        const img = document.createElement('img');
+        img.src = angle.master;
+        img.alt = angle.name;
+
+        const text = document.createElement('span');
+        text.textContent = angle.name;
+
+        btn.appendChild(img);
+        btn.appendChild(text);
+        container.appendChild(btn);
+      });
+    }
+
+    function updateSliderImages() {
+      const angle = SPECIMENS[currentSpecimenKey].angles[currentAngleIndex];
+      const imgBefore = document.getElementById('img-before');
+      const imgAfter = document.getElementById('img-after');
+
+      imgBefore.src = angle.raw;
+      imgAfter.src = angle.master;
+
+      // Reset slider to 50%
+      setSliderPosition(50);
+    }
+
+    // Draggable Split Slider Logic
+    const sliderContainer = document.getElementById('slider-container');
+    const beforeWrapper = document.getElementById('before-wrapper');
+    const sliderDivider = document.getElementById('slider-divider');
+    let isDragging = false;
+
+    function setSliderPosition(percentage) {
+      percentage = Math.max(0, Math.min(100, percentage));
+      beforeWrapper.style.width = percentage + '%';
+      sliderDivider.style.left = percentage + '%';
+
+      // Keep before image full width to maintain 1:1 coordinate match
+      const imgBefore = document.getElementById('img-before');
+      imgBefore.style.width = sliderContainer.offsetWidth + 'px';
+    }
+
+    function updateSliderFromEvent(e) {
+      const rect = sliderContainer.getBoundingClientRect();
+      const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
+      const pct = (x / rect.width) * 100;
+      setSliderPosition(pct);
+    }
+
+    sliderContainer.addEventListener('mousedown', (e) => {
+      if (e.target.closest('.stage-expand-btn')) return;
+      isDragging = true;
+      updateSliderFromEvent(e);
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      updateSliderFromEvent(e);
+    });
+
+    window.addEventListener('mouseup', () => { isDragging = false; });
+
+    // Touch events for mobile/tablet
+    sliderContainer.addEventListener('touchstart', (e) => {
+      if (e.target.closest('.stage-expand-btn')) return;
+      isDragging = true;
+      updateSliderFromEvent(e);
+    });
+    window.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      updateSliderFromEvent(e);
+    });
+    window.addEventListener('touchend', () => { isDragging = false; });
+
+    window.addEventListener('resize', () => {
+      const imgBefore = document.getElementById('img-before');
+      imgBefore.style.width = sliderContainer.offsetWidth + 'px';
+    });
+
+    // ROI Calculator
+    function calculateROI() {
+      const volume = parseInt(document.getElementById('input-volume').value);
+      const costPerSku = parseFloat(document.getElementById('input-cost').value);
+
+      document.getElementById('label-volume').textContent = volume + " SKUs";
+      document.getElementById('label-cost').textContent = "$" + costPerSku.toFixed(2);
+
+      const manualAnnual = volume * costPerSku * 12;
+      const aiCostPerSku = 2.10; // Cloud Run + Gemini inference
+      const aiAnnual = volume * aiCostPerSku * 12;
+      const annualSavings = manualAnnual - aiAnnual;
+
+      document.getElementById('roi-savings').textContent = "$" + Math.round(annualSavings).toLocaleString();
+    }
+
+    // Shopify Sync Simulation
+    function triggerShopifyPublish() {
+      const modal = document.getElementById('shopify-modal');
+      modal.classList.add('active');
+
+      document.getElementById('spin-1').style.display = 'block';
+      document.getElementById('spin-2').style.opacity = '0.3';
+      document.getElementById('spin-3').style.opacity = '0.3';
+      document.getElementById('modal-success').style.display = 'none';
+
+      setTimeout(() => {
+        document.getElementById('spin-1').style.display = 'none';
+        document.getElementById('step-1').innerHTML = '<span style="color:var(--accent-emerald); font-weight:700;">✓</span> <span>Uploaded 4K Master WebP to GCS (gs://aura-catalog-clean/AURA-01.webp)</span>';
+        document.getElementById('spin-2').style.opacity = '1';
+
+        setTimeout(() => {
+          document.getElementById('spin-2').style.display = 'none';
+          document.getElementById('step-2').innerHTML = '<span style="color:var(--accent-emerald); font-weight:700;">✓</span> <span>Shopify stagedUploadsCreate (200 OK)</span>';
+          document.getElementById('spin-3').style.opacity = '1';
+
+          setTimeout(() => {
+            document.getElementById('spin-3').style.display = 'none';
+            document.getElementById('step-3').innerHTML = '<span style="color:var(--accent-emerald); font-weight:700;">✓</span> <span>Variant Attached & Metafield custom.retouch_status set to "Published"</span>';
+            document.getElementById('modal-success').style.display = 'block';
+          }, 800);
+        }, 800);
+      }, 700);
+    }
+
+    function closeShopifyModal() {
+      document.getElementById('shopify-modal').classList.remove('active');
+    }
+
+    // ==========================================
+    // STUDIO CONTROL PLANE & PRESET ENGINE LOGIC
+    // ==========================================
+    const STUDIO_PRESETS = {
+      cartier: {
+        name: "Cartier High-Jewelry Master",
+        metalFinish: 3,
+        metalText: "Liquid Mirror Chrome",
+        opticsLock: true,
+        defectLevel: 3,
+        defectText: "Ultra / Full Polish",
+        bgCanvas: 1,
+        bgText: "Solid Pure White (#FFFFFF)",
+        shadow: 8,
+        shadowText: "Soft Contact Drop Shadow (8%)",
+        lightTemp: 1,
+        lightText: "5600K Daylight Balanced",
+        driftClamp: "0.00% DRIFT CLAMP",
+        hash: "sha256-8f4e2b01ac79d3810f44c21b9201e74a"
+      },
+      tiffany: {
+        name: "Tiffany & Co. Minimalist",
+        metalFinish: 2,
+        metalText: "Soft Commercial Polish",
+        opticsLock: true,
+        defectLevel: 2,
+        defectText: "Standard Studio",
+        bgCanvas: 1,
+        bgText: "Solid Pure White (#FFFFFF)",
+        shadow: 12,
+        shadowText: "Subtle Natural Shadow (12%)",
+        lightTemp: 2,
+        lightText: "5000K Neutral White",
+        driftClamp: "0.00% DRIFT CLAMP",
+        hash: "sha256-4b99d10e82c1f0384a62174be88910aa"
+      },
+      sothebys: {
+        name: "Sotheby's Archival & Auction",
+        metalFinish: 1,
+        metalText: "Satin Luster (Hallmark Strict)",
+        opticsLock: true,
+        defectLevel: 1,
+        defectText: "Dust Only (Inclusions 100%)",
+        bgCanvas: 3,
+        bgText: "Soft Platinum Vignette",
+        shadow: 15,
+        shadowText: "Deep Archival Ground (15%)",
+        lightTemp: 1,
+        lightText: "5600K Daylight Balanced",
+        driftClamp: "0.00% DRIFT CLAMP",
+        hash: "sha256-a19c3b889240deff89b0271c6674391e"
+      },
+      ecommerce: {
+        name: "E-Commerce Rapid Batch",
+        metalFinish: 3,
+        metalText: "High-Key Specular Chrome",
+        opticsLock: true,
+        defectLevel: 3,
+        defectText: "Aggressive Auto-Clean",
+        bgCanvas: 1,
+        bgText: "Solid Pure White (#FFFFFF)",
+        shadow: 5,
+        shadowText: "Feathered Web Contact (5%)",
+        lightTemp: 1,
+        lightText: "5600K Daylight Balanced",
+        driftClamp: "0.00% DRIFT CLAMP",
+        hash: "sha256-c73ef811b59032ab300e84da182390f7"
+      }
+    };
+
+    let activePresetKey = 'cartier';
+    let currentControlsState = JSON.parse(JSON.stringify(STUDIO_PRESETS.cartier));
+
+    function applyPreset(key) {
+      activePresetKey = key;
+      currentControlsState = JSON.parse(JSON.stringify(STUDIO_PRESETS[key]));
+
+      document.querySelectorAll('.preset-card').forEach(c => c.classList.remove('active'));
+      const activeCard = document.getElementById('preset-' + key);
+      if (activeCard) activeCard.classList.add('active');
+
+      syncControlsUI();
+      updateCompiledPayload();
+    }
+
+    function syncControlsUI() {
+      const sliderMetal = document.getElementById('slider-metal-finish');
+      if (sliderMetal) sliderMetal.value = currentControlsState.metalFinish;
+      const valMetal = document.getElementById('val-metal-finish');
+      if (valMetal) valMetal.textContent = currentControlsState.metalText;
+
+      const sliderShadow = document.getElementById('slider-shadow');
+      if (sliderShadow) sliderShadow.value = currentControlsState.shadow;
+      const valShadow = document.getElementById('val-shadow');
+      if (valShadow) valShadow.textContent = currentControlsState.shadowText;
+
+      const toggle = document.getElementById('toggle-optics-lock');
+      if (toggle) {
+        if (currentControlsState.opticsLock) {
+          toggle.classList.add('checked');
+        } else {
+          toggle.classList.remove('checked');
+        }
+      }
+
+      setDefectLevel(currentControlsState.defectLevel, false);
+      setBgCanvas(currentControlsState.bgCanvas, false);
+      setLightTemp(currentControlsState.lightTemp, false);
+
+      const statusEl = document.getElementById('engine-status-text');
+      if (statusEl) statusEl.textContent = 'PIPELINE COMPILED • ' + currentControlsState.driftClamp;
+    }
+
+    function updateControlParam(param, val) {
+      if (param === 'metal') {
+        currentControlsState.metalFinish = parseInt(val);
+        const map = { 1: "Satin Luster", 2: "Commercial Polish", 3: "Liquid Mirror Chrome" };
+        currentControlsState.metalText = map[val];
+        document.getElementById('val-metal-finish').textContent = map[val];
+      } else if (param === 'shadow') {
+        currentControlsState.shadow = parseInt(val);
+        currentControlsState.shadowText = "Contact Shadow (" + val + "%)";
+        document.getElementById('val-shadow').textContent = "Contact Shadow (" + val + "%)";
+      }
+      updateCompiledPayload();
+    }
+
+    function toggleSwitch(param) {
+      if (param === 'optics') {
+        currentControlsState.opticsLock = !currentControlsState.opticsLock;
+        const el = document.getElementById('toggle-optics-lock');
+        if (el) el.classList.toggle('checked', currentControlsState.opticsLock);
+      }
+      updateCompiledPayload();
+    }
+
+    function setDefectLevel(lvl, triggerSync = true) {
+      currentControlsState.defectLevel = lvl;
+      const map = { 1: "Dust Only", 2: "Standard", 3: "Ultra Polish" };
+      currentControlsState.defectText = map[lvl];
+      const valEl = document.getElementById('val-defect');
+      if (valEl) valEl.textContent = map[lvl];
+
+      for (let i = 1; i <= 3; i++) {
+        const btn = document.getElementById('btn-def-' + i);
+        if (btn) btn.classList.toggle('active', i === lvl);
+      }
+      if (triggerSync) updateCompiledPayload();
+    }
+
+    function setBgCanvas(type, triggerSync = true) {
+      currentControlsState.bgCanvas = type;
+      const map = { 1: "Solid Pure White (#FFFFFF)", 2: "Subtle Vignette", 3: "Soft Platinum" };
+      currentControlsState.bgText = map[type];
+      const valEl = document.getElementById('val-bg-canvas');
+      if (valEl) valEl.textContent = map[type];
+
+      for (let i = 1; i <= 3; i++) {
+        const btn = document.getElementById('btn-bg-' + i);
+        if (btn) btn.classList.toggle('active', i === type);
+      }
+      if (triggerSync) updateCompiledPayload();
+    }
+
+    function setLightTemp(type, triggerSync = true) {
+      currentControlsState.lightTemp = type;
+      const map = { 1: "5600K Daylight Balanced", 2: "5000K Neutral White", 3: "3200K Warm Incandescent" };
+      currentControlsState.lightText = map[type];
+      const valEl = document.getElementById('val-light');
+      if (valEl) valEl.textContent = map[type];
+
+      for (let i = 1; i <= 3; i++) {
+        const btn = document.getElementById('btn-light-' + i);
+        if (btn) btn.classList.toggle('active', i === type);
+      }
+      if (triggerSync) updateCompiledPayload();
+    }
+
+    function togglePayloadDrawer() {
+      const drawer = document.getElementById('payload-code-drawer');
+      const arrow = document.getElementById('payload-arrow');
+      if (drawer) {
+        drawer.classList.toggle('open');
+        if (arrow) arrow.textContent = drawer.classList.contains('open') ? '▲' : '▼';
+      }
+    }
+
+    function updateCompiledPayload() {
+      const payloadObj = {
+        engine: "aura-studio-orchestrator-v2",
+        active_preset: activePresetKey,
+        model_target: "vertex-ai/gemini-2.5-flash-vision",
+        runtime_execution: "gcp-cloud-run-container",
+        parameters: {
+          material_physics: {
+            precious_metal_finish: currentControlsState.metalText.toLowerCase().replace(/ /g, '_'),
+            specular_reflection_threshold: currentControlsState.metalFinish === 3 ? 0.98 : (currentControlsState.metalFinish === 2 ? 0.75 : 0.40),
+            porosity_elimination: currentControlsState.defectLevel >= 2,
+            preserve_hallmark_stamps: true
+          },
+          gemological_optics: {
+            crystal_lattice_lock: currentControlsState.opticsLock,
+            facet_edge_sharpness: currentControlsState.metalFinish === 3 ? "maximum_high_key" : "balanced_natural",
+            inclusions_natural_retention: currentControlsState.opticsLock ? 1.00 : 0.85,
+            geometric_drift_clamp: 0.00
+          },
+          studio_staging: {
+            background_canvas_hex: currentControlsState.bgCanvas === 1 ? "#FFFFFF" : (currentControlsState.bgCanvas === 2 ? "#F1F5F9" : "#E2E8F0"),
+            ground_shadow: {
+              mode: "diffuse_contact_occlusion",
+              opacity: currentControlsState.shadow / 100,
+              blur_radius_px: currentControlsState.shadow * 2
+            },
+            lighting_temperature_kelvin: currentControlsState.lightTemp === 1 ? 5600 : (currentControlsState.lightTemp === 2 ? 5000 : 3200)
+          },
+          negative_constraints_matrix: [
+            "dull_alloy_haze", "casting_pits", "polishing_wheel_scratches",
+            "fake_hdr_halo", "dark_room_reflection", "putty_mount", "turntable_stand",
+            "altered_gem_geometry", "synthetic_extra_facets"
+          ]
+        },
+        cryptographic_verification: {
+          pipeline_hash: currentControlsState.hash,
+          status: "COMPILED_AND_PROTECTED"
+        }
+      };
+
+      const display = document.getElementById('payload-json-display');
+      if (display) {
+        display.textContent = JSON.stringify(payloadObj, null, 2);
+      }
+    }
+
+    // ==========================================
+    // STUDIO FULL-SCREEN EXPANSION & LIGHTBOX
+    // ==========================================
+    function openStudioLightboxImage(src, title, meta, e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      const modal = document.getElementById('studio-lightbox-modal');
+      const stageImg = document.getElementById('studio-lb-stage-img');
+      const stageSlider = document.getElementById('studio-lb-stage-slider');
+      const img = document.getElementById('studio-lb-img');
+
+      img.src = src;
+      document.getElementById('studio-lb-title').textContent = title || 'Full Screen Inspection';
+      document.getElementById('studio-lb-meta').textContent = meta || '4K Production Asset';
+
+      stageImg.style.display = 'flex';
+      stageSlider.style.display = 'none';
+      modal.classList.add('active');
+    }
+
+    function openStudioLightboxSlider(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      const modal = document.getElementById('studio-lightbox-modal');
+      const stageImg = document.getElementById('studio-lb-stage-img');
+      const stageSlider = document.getElementById('studio-lb-stage-slider');
+
+      const angle = SPECIMENS[currentSpecimenKey].angles[currentAngleIndex];
+      document.getElementById('studio-lb-img-before').src = angle.raw;
+      document.getElementById('studio-lb-img-after').src = angle.master;
+
+      document.getElementById('studio-lb-title').textContent = SPECIMENS[currentSpecimenKey].title + ' — Before vs After Master';
+      document.getElementById('studio-lb-meta').textContent = '1:1 Sub-Pixel Inspection';
+
+      stageImg.style.display = 'none';
+      stageSlider.style.display = 'flex';
+      modal.classList.add('active');
+
+      // Double-pass layout calculation to guarantee before-image width locks 1:1 on render
+      requestAnimationFrame(() => {
+        setStudioLbSliderPosition(50);
+        setTimeout(() => {
+          setStudioLbSliderPosition(50);
+        }, 50);
+      });
+    }
+
+    function closeStudioLightbox(e) {
+      if (e) e.stopPropagation();
+      const modal = document.getElementById('studio-lightbox-modal');
+      if (modal) modal.classList.remove('active');
+    }
+
+    function handleStudioLightboxBackdropClick(e) {
+      if (e.target.id === 'studio-lightbox-modal' || e.target.classList.contains('studio-lightbox-stage')) {
+        closeStudioLightbox(e);
+      }
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeStudioLightbox();
+      }
+    });
+
+    // Studio Lightbox Slider Dragging
+    const studioLbContainer = document.getElementById('studio-lb-slider-container');
+    const studioLbBeforeWrapper = document.getElementById('studio-lb-before-wrapper');
+    const studioLbDivider = document.getElementById('studio-lb-slider-divider');
+    let studioLbDragging = false;
+
+    function setStudioLbSliderPosition(pct) {
+      pct = Math.max(0, Math.min(100, pct));
+      if (studioLbBeforeWrapper) studioLbBeforeWrapper.style.width = pct + '%';
+      if (studioLbDivider) studioLbDivider.style.left = pct + '%';
+
+      const imgBefore = document.getElementById('studio-lb-img-before');
+      const container = document.getElementById('studio-lb-slider-container');
+      if (imgBefore && container) {
+        const w = container.offsetWidth || container.getBoundingClientRect().width;
+        if (w > 0) {
+          imgBefore.style.width = w + 'px';
+        }
+      }
+    }
+
+    function updateStudioLbSlider(e) {
+      const container = document.getElementById('studio-lb-slider-container');
+      if (!container) return;
+      const rect = container.getBoundingClientRect();
+      const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
+      const pct = (x / rect.width) * 100;
+      setStudioLbSliderPosition(pct);
+    }
+
+    if (studioLbContainer) {
+      studioLbContainer.addEventListener('mousedown', (e) => {
+        studioLbDragging = true;
+        updateStudioLbSlider(e);
+      });
+      window.addEventListener('mousemove', (e) => {
+        if (!studioLbDragging) return;
+        updateStudioLbSlider(e);
+      });
+      window.addEventListener('mouseup', () => { studioLbDragging = false; });
+
+      studioLbContainer.addEventListener('touchstart', (e) => {
+        studioLbDragging = true;
+        updateStudioLbSlider(e);
+      });
+      window.addEventListener('touchmove', (e) => {
+        if (!studioLbDragging) return;
+        updateStudioLbSlider(e);
+      });
+      window.addEventListener('touchend', () => { studioLbDragging = false; });
+    }
+
+    window.addEventListener('resize', () => {
+      const modal = document.getElementById('studio-lightbox-modal');
+      if (modal && modal.classList.contains('active')) {
+        setStudioLbSliderPosition(50);
+      }
+    });
+
+    // Initialize
+    window.addEventListener('DOMContentLoaded', () => {
+      selectSpecimen('art_deco');
+      calculateROI();
+      applyPreset('cartier');
+    });
+  </script>
+</body>
+</html>

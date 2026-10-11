@@ -1,0 +1,1797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aura Studio AI — Executive Capability Presentation Deck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Project Palette: Clean Light Atelier (Pure White & Royal Blue) */
+      --bg-base: #F8FAFC;
+      --bg-surface: #FFFFFF;
+      --bg-card: #FFFFFF;
+      --bg-subtle: #F1F5F9;
+      --bg-hover: #E2E8F0;
+      --border-subtle: #E2E8F0;
+      --border-strong: #CBD5E1;
+      --border-focus: #3B82F6;
+      --text-main: #0F172A;
+      --text-muted: #475569;
+      --text-sub: #64748B;
+      --accent-blue: #2563EB;
+      --accent-blue-hover: #1D4ED8;
+      --accent-blue-light: #EFF6FF;
+      --accent-blue-border: #BFDBFE;
+      --accent-sky: #0284C7;
+      --accent-emerald: #059669;
+      --accent-emerald-light: #ECFDF5;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --shadow-float: 0 12px 30px -4px rgba(37, 99, 235, 0.12), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.5;
+      transition: all 0.2s;
+    }
+
+    /* Fail-Safe Fullscreen Mode (Both CSS & Native API Supported) */
+    body.is-fullscreen,
+    body.is-css-fullscreen {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 99999;
+      background-color: var(--bg-base);
+    }
+
+    body.is-fullscreen .deck-header,
+    body.is-css-fullscreen .deck-header {
+      padding: 0.6rem 2rem;
+      background: rgba(255, 255, 255, 0.98);
+    }
+
+    body.is-fullscreen .deck-viewport,
+    body.is-css-fullscreen .deck-viewport {
+      height: calc(100vh - 80px);
+      max-width: 1800px;
+      padding: 0 1.5rem;
+    }
+
+    body.is-fullscreen .deck-slider-stage,
+    body.is-css-fullscreen .deck-slider-stage {
+      max-height: 560px;
+    }
+
+    /* Floating Exit Fullscreen Pill */
+    .btn-exit-fs {
+      display: none;
+      position: fixed;
+      top: 1rem;
+      right: 1.5rem;
+      z-index: 10000;
+      background: #FFFFFF;
+      color: var(--accent-blue);
+      padding: 0.45rem 1.15rem;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      border: 1.5px solid var(--accent-blue);
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(37, 99, 235, 0.25);
+      transition: all 0.2s;
+    }
+
+    .btn-exit-fs:hover {
+      background: var(--accent-blue);
+      color: #FFFFFF;
+      transform: scale(1.05);
+    }
+
+    body.is-fullscreen .btn-exit-fs,
+    body.is-css-fullscreen .btn-exit-fs {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Minimalist Top Chrome Header */
+    .deck-header {
+      padding: 0.85rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .brand-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .brand-badge {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, #2563EB, #1D4ED8);
+      color: #FFFFFF;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.05rem;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    }
+
+    .brand-name {
+      font-weight: 800;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+      line-height: 1.1;
+    }
+
+    .brand-subtitle {
+      font-size: 0.7rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent-blue);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .deck-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .slide-counter {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--text-sub);
+      background: var(--bg-subtle);
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-subtle);
+      font-weight: 700;
+    }
+
+    .nav-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 0.45rem 1rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 600;
+      transition: all 0.18s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-btn:hover {
+      background: var(--bg-subtle);
+      border-color: var(--border-strong);
+    }
+
+    .nav-btn.primary {
+      background: var(--accent-blue);
+      color: #FFFFFF;
+      border-color: var(--accent-blue);
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+    }
+
+    .nav-btn.primary:hover {
+      background: var(--accent-blue-hover);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+    }
+
+    .btn-fs-toggle {
+      background: #FFFFFF;
+      border: 1.5px solid var(--accent-blue);
+      color: var(--accent-blue);
+      font-weight: 700;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.15);
+    }
+
+    .btn-fs-toggle:hover {
+      background: var(--accent-blue);
+      color: #FFFFFF;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+    }
+
+    .btn-studio-link {
+      background: var(--accent-blue-light);
+      border: 1px solid var(--accent-blue-border);
+      color: var(--accent-blue);
+      padding: 0.45rem 0.85rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.18s;
+    }
+
+    .btn-studio-link:hover {
+      background: #DBEAFE;
+    }
+
+    /* Main Slide Viewport */
+    .deck-viewport {
+      flex: 1;
+      position: relative;
+      width: 100%;
+      height: calc(100vh - 125px);
+      overflow: hidden;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: 2.25rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(35px);
+      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow-y: auto;
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateX(0);
+    }
+
+    .slide.previous {
+      transform: translateX(-35px);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Slide Typography & Pill Headers */
+    .slide-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent-blue);
+      margin-bottom: 0.75rem;
+      background: var(--accent-blue-light);
+      border: 1px solid var(--accent-blue-border);
+      padding: 0.25rem 0.75rem;
+      border-radius: var(--radius-full);
+      width: fit-content;
+      font-weight: 700;
+    }
+
+    .slide-title {
+      font-size: clamp(1.85rem, 2.7vw, 2.5rem);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.65rem;
+      color: var(--text-main);
+    }
+
+    .slide-subtitle {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      max-width: 920px;
+      margin-bottom: 1.75rem;
+      line-height: 1.55;
+    }
+
+    /* Common Card Aesthetics */
+    .card-white {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s;
+    }
+
+    .card-white:hover {
+      border-color: var(--border-strong);
+      box-shadow: var(--shadow-card);
+    }
+
+    /* Clickable Expansion Button Overlays (White & Blue Palette) */
+    .expand-trigger-btn {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      background: #FFFFFF;
+      color: var(--accent-blue);
+      border: 1.5px solid var(--accent-blue);
+      padding: 0.45rem 0.95rem;
+      border-radius: var(--radius-full);
+      font-size: 0.72rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      z-index: 30;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .expand-trigger-btn:hover {
+      background: var(--accent-blue);
+      color: #FFFFFF;
+      transform: scale(1.05);
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
+    }
+
+    /* Slide 1: Hero & Comparison */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .contrast-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 1.75rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .contrast-card.legacy {
+      border-left: 4px solid #EF4444;
+    }
+
+    .contrast-card.ai-studio {
+      border-left: 4px solid var(--accent-blue);
+      background: linear-gradient(135deg, #FFFFFF, #F8FAFC);
+    }
+
+    .contrast-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .contrast-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .contrast-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      line-height: 1.45;
+    }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+
+    .stat-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .stat-number {
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+    }
+
+    .stat-number span {
+      color: var(--accent-blue);
+      font-size: 1.15rem;
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 0.35rem;
+      font-weight: 600;
+    }
+
+    /* Slide 2: Interactive Specimen Slider */
+    .specimen-slider-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .deck-slider-stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      max-height: 440px;
+      background: #FFFFFF;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-float);
+      user-select: none;
+      cursor: ew-resize;
+    }
+
+    .deck-layer-after {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #FFFFFF;
+    }
+
+    .deck-layer-before-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 50%;
+      overflow: hidden;
+      z-index: 10;
+      background: #FFFFFF;
+      border-right: 2px solid var(--accent-blue);
+      box-shadow: 4px 0 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .deck-layer-before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .deck-slider-divider {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 2px;
+      background: var(--accent-blue);
+      z-index: 20;
+      pointer-events: none;
+      transform: translateX(-50%);
+    }
+
+    .deck-slider-knob {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 2px solid var(--accent-blue);
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-blue);
+      font-size: 0.75rem;
+      cursor: ew-resize;
+      font-weight: 800;
+      pointer-events: auto;
+    }
+
+    .specimen-nav-pills {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+      background: var(--bg-subtle);
+      padding: 0.25rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .specimen-pill-btn {
+      flex: 1;
+      padding: 0.55rem 0.85rem;
+      border-radius: var(--radius-sm);
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+
+    .specimen-pill-btn.active {
+      background: #FFFFFF;
+      color: var(--accent-blue);
+      font-weight: 700;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Slide 3: Control Plane Cards */
+    .controls-deck-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .preset-deck-card {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .preset-deck-card.highlight {
+      border-color: var(--accent-blue);
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.12);
+    }
+
+    .preset-deck-card h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .preset-deck-card p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    /* Slide 4: 4-Stage Pipeline */
+    .arch-flow-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .stage-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.15rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .stage-step {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--accent-blue);
+      margin-bottom: 0.35rem;
+      display: block;
+      font-weight: 700;
+    }
+
+    .stage-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.4rem;
+    }
+
+    .stage-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin-bottom: 0.75rem;
+    }
+
+    .stage-tech {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--accent-blue);
+      background: var(--accent-blue-light);
+      border: 1px solid var(--accent-blue-border);
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      display: inline-block;
+      font-weight: 600;
+    }
+
+    /* Slide 5 & 6: Visual Architecture & Shopify */
+    .two-col-visual-layout {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 1.75rem;
+      align-items: center;
+    }
+
+    .visual-frame {
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      position: relative;
+    }
+
+    .visual-frame img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Slide 7: ROI Calculator */
+    .roi-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .roi-slider-block {
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .slider-field {
+      margin-bottom: 1.5rem;
+    }
+
+    .slider-field label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+    }
+
+    .slider-field input[type="range"] {
+      width: 100%;
+      height: 6px;
+      accent-color: var(--accent-blue);
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .roi-display-card {
+      background: #FFFFFF;
+      border: 1px solid var(--accent-blue-border);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem;
+      text-align: center;
+      box-shadow: var(--shadow-card);
+      position: relative;
+    }
+
+    .roi-big-metric {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: var(--accent-blue);
+      margin: 0.5rem 0;
+      letter-spacing: -0.02em;
+    }
+
+    /* Footer Navigation */
+    .deck-footer {
+      padding: 0.75rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.95);
+      border-top: 1px solid var(--border-subtle);
+      z-index: 100;
+      box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.03);
+    }
+
+    .deck-dots {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .dot {
+      width: 26px;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--border-strong);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .dot.active {
+      background: var(--accent-blue);
+      box-shadow: 0 0 8px rgba(37, 99, 235, 0.4);
+    }
+
+    .deck-hint {
+      font-size: 0.75rem;
+      color: var(--text-sub);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ========================================================
+       FULL-SCREEN LIGHTBOX MODAL (CLEAN LIGHT THEME PALETTE)
+       ======================================================== */
+    .lightbox-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(248, 250, 252, 0.97);
+      backdrop-filter: blur(20px);
+      z-index: 999999;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .lightbox-modal.active {
+      display: flex;
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .lightbox-chrome {
+      position: absolute;
+      top: 1.25rem;
+      left: 2rem;
+      right: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+      background: #FFFFFF;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-card);
+    }
+
+    .lightbox-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      letter-spacing: -0.01em;
+    }
+
+    .lightbox-meta-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      background: var(--accent-blue-light);
+      color: var(--accent-blue);
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid var(--accent-blue-border);
+      font-weight: 700;
+    }
+
+    .lightbox-close-btn {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-strong);
+      color: var(--text-main);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.45rem 1.15rem;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.2s;
+    }
+
+    .lightbox-close-btn:hover {
+      background: #EF4444;
+      border-color: #EF4444;
+      color: #FFFFFF;
+      transform: scale(1.05);
+    }
+
+    .lightbox-stage {
+      max-width: 94vw;
+      max-height: 80vh;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin-top: 2rem;
+    }
+
+    .lightbox-stage img {
+      max-width: 100%;
+      max-height: 78vh;
+      object-fit: contain;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-float);
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+    }
+
+    /* Giant Comparison Slider inside Lightbox */
+    .lightbox-split-container {
+      position: relative;
+      width: 78vh;
+      height: 78vh;
+      max-width: 88vw;
+      max-height: 78vh;
+      aspect-ratio: 1 / 1;
+      background: #FFFFFF;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-float);
+      cursor: ew-resize;
+      user-select: none;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .lightbox-layer-after {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #FFFFFF;
+    }
+
+    .lightbox-layer-before-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 50%;
+      overflow: hidden;
+      z-index: 10;
+      background: #FFFFFF;
+      border-right: 2px solid var(--accent-blue);
+      box-shadow: 6px 0 20px rgba(37, 99, 235, 0.2);
+    }
+
+    .lightbox-layer-before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .lightbox-divider {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 2px;
+      background: var(--accent-blue);
+      z-index: 20;
+      pointer-events: none;
+      transform: translateX(-50%);
+    }
+
+    .lightbox-knob {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 2px solid var(--accent-blue);
+      box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-blue);
+      font-size: 0.85rem;
+      cursor: ew-resize;
+      font-weight: 800;
+    }
+
+    .lightbox-caption-bar {
+      position: absolute;
+      bottom: 1.25rem;
+      background: #FFFFFF;
+      color: var(--text-muted);
+      padding: 0.5rem 1.25rem;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-family: 'JetBrains Mono', monospace;
+      z-index: 15;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Exit Fullscreen pill -->
+  <button class="btn-exit-fs" onclick="exitFullScreen()" id="btn-floating-exit">
+    <span>✕</span>
+    <span>Exit Fullscreen [Esc]</span>
+  </button>
+
+  <!-- Minimalist Top Chrome Header -->
+  <header class="deck-header">
+    <div class="brand-meta">
+      <div class="brand-badge">✦</div>
+      <div>
+        <div class="brand-name">AURA STUDIO AI</div>
+        <div class="brand-subtitle">Executive Capability Deck</div>
+      </div>
+    </div>
+    <div class="deck-controls">
+      <a href="index.html" class="btn-studio-link" title="Open Interactive Web Console">
+        <span>⚡</span>
+        <span>Interactive Studio</span>
+      </a>
+      <div class="slide-counter" id="slide-indicator">SLIDE 01 / 07</div>
+      <button class="nav-btn" onclick="prevSlide()" id="btn-prev">◀ Prev</button>
+      <button class="nav-btn primary" onclick="nextSlide()" id="btn-next">Next ▶</button>
+      <button class="nav-btn btn-fs-toggle" onclick="toggleFullScreen(event)" id="btn-fullscreen" title="Expand to Whole Screen Size (F)">
+        <span id="fs-icon">⛶</span>
+        <span id="fs-text">Full Screen</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Slide Viewport -->
+  <div class="deck-viewport" ondblclick="toggleFullScreen(event)" title="Double click slide canvas to toggle fullscreen">
+
+    <!-- SLIDE 1: Executive Overview & Problem/Solution -->
+    <section class="slide active" id="slide-1">
+      <div class="slide-tag">✦ Capability Presentation Deck</div>
+      <h2 class="slide-title">Autonomous AI Jewelry Retouch &<br>Storefront Publishing Studio</h2>
+      <p class="slide-subtitle">
+        An enterprise multimodal AI system replacing costly manual workshop photo editing with sub-minute, publication-ready 4K studio masters and atomic Shopify catalog synchronization.
+      </p>
+
+      <div class="hero-grid">
+        <div class="contrast-card legacy">
+          <div class="contrast-title"><span>⚠️</span> Legacy Studio Bottlenecks</div>
+          <ul class="contrast-list">
+            <li><span>&bull;</span> <strong>48-Hour Turnaround:</strong> Manual pen clipping paths, putty removal, and hand-painted reflections.</li>
+            <li><span>&bull;</span> <strong>$20 – $40+ per SKU:</strong> Heavy ongoing labor costs across third-party retouching agencies.</li>
+            <li><span>&bull;</span> <strong>Inconsistent Quality:</strong> Subjective operator grading and inaccurate gemstone color reproduction.</li>
+          </ul>
+        </div>
+
+        <div class="contrast-card ai-studio">
+          <div class="contrast-title"><span>⚡</span> Aura AI Autonomous Studio</div>
+          <ul class="contrast-list">
+            <li><span>&bull;</span> <strong>&lt; 35s Turnaround:</strong> Full raw camera capture to catalog-ready master in real time.</li>
+            <li><span>&bull;</span> <strong>92% Cost Reduction:</strong> Serverless Google Cloud Run microservice compute profile.</li>
+            <li><span>&bull;</span> <strong>100% Gemological Fidelity:</strong> Strict crystal lattice lock and Tiffany & Co / Cartier master standards.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="metric-row">
+        <div class="stat-box">
+          <div class="stat-number">34<span>s</span></div>
+          <div class="stat-label">Pipeline Latency</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">92<span>%</span></div>
+          <div class="stat-label">OPEX Reduction</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">4K</div>
+          <div class="stat-label">Catalog Master WebP</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">0<span>%</span></div>
+          <div class="stat-label">Geometry Hallucination</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: 3-Specimen Studio Gallery & Interactive Slider -->
+    <section class="slide" id="slide-2">
+      <div class="slide-tag">✦ Visual Production Proof</div>
+      <h2 class="slide-title">3-Specimen Multi-View Catalog Showcase</h2>
+      <p class="slide-subtitle">
+        Production results across precious metals, faceted gemstones, and loose natural cabochons. Real camera baseline vs. Tiffany & Cartier luxury catalog standard.
+      </p>
+
+      <div class="specimen-slider-layout">
+        <!-- Interactive Split Slider Frame with Dedicated Expand Button -->
+        <div class="deck-slider-stage" id="deck-slider-container">
+          <img class="deck-layer-after" id="deck-img-after" src="assets/art_deco_retouched_angle1.jpg" alt="Master AI Retouched">
+          <div class="deck-layer-before-wrapper" id="deck-before-wrapper">
+            <img class="deck-layer-before" id="deck-img-before" src="assets/art_deco_sapphire_angle1_perspective.jpg" alt="Raw Camera Baseline">
+          </div>
+          <div class="deck-slider-divider" id="deck-slider-divider">
+            <div class="deck-slider-knob">◀ ▶</div>
+          </div>
+          <!-- Clickable Button to Open Full-Screen Comparison Lightbox -->
+          <button class="expand-trigger-btn" onclick="openLightboxSlider(event)" title="Expand to Whole Screen Size">
+            <span>⛶</span>
+            <span>Expand Full Screen</span>
+          </button>
+        </div>
+
+        <!-- Specimen Switcher & Telemetry Card -->
+        <div class="card-white">
+          <div style="font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; color: var(--text-sub); text-transform: uppercase; font-weight: 700; margin-bottom: 0.75rem;">
+            Select Showcase Specimen
+          </div>
+
+          <div class="specimen-nav-pills">
+            <button class="specimen-pill-btn active" id="deck-spec-deco" onclick="selectDeckSpecimen('art_deco')">
+              <span>💎</span> Art Deco
+            </button>
+            <button class="specimen-pill-btn" id="deck-spec-solitaire" onclick="selectDeckSpecimen('solitaire')">
+              <span>💍</span> Solitaire
+            </button>
+            <button class="specimen-pill-btn" id="deck-spec-opal" onclick="selectDeckSpecimen('opal')">
+              <span>🌈</span> Opal
+            </button>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 0.85rem; margin-top: 1rem;">
+            <div style="background: var(--bg-subtle); padding: 0.75rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+              <div style="font-size: 0.68rem; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; color: var(--text-sub); font-weight: 700;">Subject Identity</div>
+              <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-main);" id="deck-hud-title">Art Deco Sapphire & Diamond Ring</div>
+            </div>
+            <div style="background: var(--bg-subtle); padding: 0.75rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+              <div style="font-size: 0.68rem; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; color: var(--text-sub); font-weight: 700;">Surface Physics</div>
+              <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-main);" id="deck-hud-metal">Platinum 950 (Liquid Mirror Chrome)</div>
+            </div>
+            <div style="background: var(--bg-subtle); padding: 0.75rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+              <div style="font-size: 0.68rem; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; color: var(--text-sub); font-weight: 700;">Studio Isolation</div>
+              <div style="font-size: 0.85rem; font-weight: 700; color: var(--accent-emerald);">Seamless Pure White (#FFFFFF) + Contact Shadow</div>
+            </div>
+          </div>
+          <p style="font-size: 0.75rem; color: var(--text-sub); margin-top: 1rem; text-align: center;">
+            Click <strong>⛶ Expand Full Screen</strong> to inspect at 100% whole-screen scale.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: Studio Control Plane & Presets -->
+    <section class="slide" id="slide-3">
+      <div class="slide-tag">✦ Enterprise Governance & Controls</div>
+      <h2 class="slide-title">Studio Control Plane & Brand Preset Architecture</h2>
+      <p class="slide-subtitle">
+        Empowering merchandising teams with intuitive brand controls. Multi-stage multimodal parameters are governed visually without exposing or writing prompt code.
+      </p>
+
+      <div class="controls-deck-grid">
+        <div class="preset-deck-card highlight">
+          <div style="font-size: 1.5rem;">👑</div>
+          <h4>Cartier High-Jewelry Master</h4>
+          <p>High-contrast specular reflection, liquid chrome platinum polish, and razor-sharp facet light return.</p>
+          <div style="font-size: 0.68rem; font-family: 'JetBrains Mono', monospace; color: var(--accent-blue); font-weight: 700;">
+            ● 99.8% GEOMETRY LOCK
+          </div>
+        </div>
+
+        <div class="preset-deck-card">
+          <div style="font-size: 1.5rem;">✨</div>
+          <h4>Tiffany & Co. Minimalist</h4>
+          <p>Airy diffuse reflections, pure solid white background (#FFFFFF), and delicate natural contact drop shadow.</p>
+          <div style="font-size: 0.68rem; font-family: 'JetBrains Mono', monospace; color: var(--text-sub); font-weight: 700;">
+            ● SOLID #FFFFFF SWEEP
+          </div>
+        </div>
+
+        <div class="preset-deck-card">
+          <div style="font-size: 1.5rem;">🏛️</div>
+          <h4>Sotheby’s Archival & Auction</h4>
+          <p>100% natural inclusion & hallmark stamp preservation with zero color gamut clipping.</p>
+          <div style="font-size: 0.68rem; font-family: 'JetBrains Mono', monospace; color: var(--text-sub); font-weight: 700;">
+            ● ZERO GAMUT CLIPPING
+          </div>
+        </div>
+
+        <div class="preset-deck-card">
+          <div style="font-size: 1.5rem;">⚡</div>
+          <h4>E-Commerce Rapid Batch</h4>
+          <p>Maximum defect suppression, automated turntable removal, and Shopify storefront standardization.</p>
+          <div style="font-size: 0.68rem; font-family: 'JetBrains Mono', monospace; color: var(--text-sub); font-weight: 700;">
+            ● AGGRESSIVE AUTO-CLEAN
+          </div>
+        </div>
+      </div>
+
+      <div class="card-white" style="display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; flex-wrap: wrap;">
+        <div>
+          <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.25rem;">Proprietary Algorithmic Orchestration</h4>
+          <p style="font-size: 0.82rem; color: var(--text-muted);">
+            Visual controls dynamically compile into encrypted Vertex AI payloads with SHA-256 cryptographic verification and 0.00% geometric drift clamping.
+          </p>
+        </div>
+        <div style="display: flex; gap: 0.75rem;">
+          <span class="stage-tech">SHA-256 Verified</span>
+          <span class="stage-tech">Lattice Clamp [ON]</span>
+          <span class="stage-tech">Gemini 2.5 Flash Vision</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: 4-Stage Cloud Pipeline Blueprint -->
+    <section class="slide" id="slide-4">
+      <div class="slide-tag">✦ Production Architecture</div>
+      <h2 class="slide-title">Event-Driven Serverless Pipeline Dataflow</h2>
+      <p class="slide-subtitle">
+        Architected for horizontal elasticity on Google Cloud Platform. Seamlessly processes single custom commissions or burst catalogs of 10,000+ SKUs with zero manual intervention.
+      </p>
+
+      <div class="two-col-visual-layout">
+        <!-- Clickable Blueprint Image with Direct Expand Button -->
+        <div class="visual-frame">
+          <img src="assets/2_aura_architecture_blueprint.jpg" alt="Systems Blueprint">
+          <button class="expand-trigger-btn" onclick="openLightboxImage('assets/2_aura_architecture_blueprint.jpg', '4-Stage Cloud Pipeline Architecture Blueprint', 'GCS Eventarc ➔ Vertex AI Gemini 2.5 ➔ Cloud Run ➔ Shopify Admin GraphQL', event)" title="Expand to Whole Screen Size">
+            <span>⛶</span>
+            <span>Expand Full Screen</span>
+          </button>
+        </div>
+
+        <!-- 4 Phase Cards -->
+        <div class="arch-flow-grid">
+          <div class="stage-card">
+            <div>
+              <span class="stage-step">PHASE 01</span>
+              <div class="stage-title">Ingestion & QC</div>
+              <div class="stage-desc">GCS Bucket Eventarc trigger initiates async pipeline. Validates EXIF color space and resolution gates.</div>
+            </div>
+            <span class="stage-tech">GCS Eventarc • FastAPI</span>
+          </div>
+
+          <div class="stage-card">
+            <div>
+              <span class="stage-step">PHASE 02</span>
+              <div class="stage-title">Multimodal AI Vision</div>
+              <div class="stage-desc">Gemini 2.5 Flash Vision maps stone facet crystal lattice and clamps color boundaries.</div>
+            </div>
+            <span class="stage-tech">Vertex AI • Gemini 2.5</span>
+          </div>
+
+          <div class="stage-card">
+            <div>
+              <span class="stage-step">PHASE 03</span>
+              <div class="stage-title">Surface Polish</div>
+              <div class="stage-desc">Eliminates casting porosity and workshop putty. Synthesizes liquid mirror chrome and contact shadow.</div>
+            </div>
+            <span class="stage-tech">Sub-Pixel Alpha Feather</span>
+          </div>
+
+          <div class="stage-card">
+            <div>
+              <span class="stage-step">PHASE 04</span>
+              <div class="stage-title">Shopify Dispatch</div>
+              <div class="stage-desc">Automated stagedUploadsCreate via Admin GraphQL. Swaps media on live storefront variants.</div>
+            </div>
+            <span class="stage-tech">Shopify GraphQL API</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: GCP Cloud Run Production Console -->
+    <section class="slide" id="slide-5">
+      <div class="slide-tag">✦ Cloud Infrastructure Verification</div>
+      <h2 class="slide-title">Google Cloud Platform Production Infrastructure</h2>
+      <p class="slide-subtitle">
+        Enterprise container service running on Cloud Run us-central1. Zero cold-start latency, auto-scaling from 0 to 50 concurrent instances, and sub-$0.04 cost per SKU.
+      </p>
+
+      <div class="two-col-visual-layout">
+        <div class="visual-frame">
+          <img src="assets/6_gcp_cloud_run_console.jpg" alt="Google Cloud Run Console">
+          <button class="expand-trigger-btn" onclick="openLightboxImage('assets/6_gcp_cloud_run_console.jpg', 'Google Cloud Run Production Service Console', 'us-central1 Asynchronous Microservice Telemetry & Concurrency Autoscaling', event)" title="Expand to Whole Screen Size">
+            <span>⛶</span>
+            <span>Expand Full Screen</span>
+          </button>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+          <div class="card-white">
+            <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.35rem;">⚡ Horizontal Auto-Scaling</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted);">
+              Container instances scale from 0 to 50 dynamically in response to catalog upload spikes, ensuring zero fixed idle server overhead during off-hours.
+            </p>
+          </div>
+
+          <div class="card-white">
+            <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.35rem;">🛡️ Production Resiliency</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted);">
+              Eventarc triggers coupled with Cloud Tasks retry dead-letter queues guarantee that no workshop upload is lost, even under network instability.
+            </p>
+          </div>
+
+          <div class="card-white">
+            <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.35rem;">💰 Ultra-Low Unit Economics</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted);">
+              $0.04 total infrastructure and inference cost per multi-angle SKU—cutting 92% of traditional agency overhead.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: Autonomous Shopify Storefront Synchronization -->
+    <section class="slide" id="slide-6">
+      <div class="slide-tag">✦ Headless Commerce Automation</div>
+      <h2 class="slide-title">Atomic Shopify Storefront Synchronization</h2>
+      <p class="slide-subtitle">
+        Direct integration with Shopify Admin GraphQL API. Retouched 4K masters are dynamically bound to SKU variants without checkout disruption or 404 cache downtime.
+      </p>
+
+      <div class="two-col-visual-layout">
+        <div class="visual-frame">
+          <img src="assets/7_shopify_admin_product.jpg" alt="Shopify Admin Product Catalog">
+          <button class="expand-trigger-btn" onclick="openLightboxImage('assets/7_shopify_admin_product.jpg', 'Shopify Admin Product Catalog Synchronization', '4K Master Published Directly to SKU Variant Media Gallery', event)" title="Expand to Whole Screen Size">
+            <span>⛶</span>
+            <span>Expand Full Screen</span>
+          </button>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+          <div class="card-white">
+            <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.35rem;">🛍️ Zero-Downtime Media Swaps</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted);">
+              The <code>stagedUploadsCreate</code> mutation registers the master WebP on Shopify CDN. Live shoppers experience zero disruption while media updates.
+            </p>
+          </div>
+
+          <div class="card-white">
+            <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.35rem;">🏷️ Automated Metafield Tracking</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted);">
+              Custom metafields (<code>custom.retouch_status</code>, <code>custom.qc_score</code>) are updated automatically to give merchandising teams complete audit visibility.
+            </p>
+          </div>
+
+          <div class="card-white">
+            <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.35rem;">🔄 Automated Rollback Watchdog</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted);">
+              If the generated master fails strict aspect ratio or resolution criteria, the automated watchdog reverts immediately to baseline with Slack alerts.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: Business Impact & Scalability ROI -->
+    <section class="slide" id="slide-7">
+      <div class="slide-tag">✦ Commercial Economics</div>
+      <h2 class="slide-title">Quantifiable ROI & Cost Elimination</h2>
+      <p class="slide-subtitle">
+        Eliminate studio bottlenecks, accelerate new jewelry collection launches by 98%, and scale catalog volume during peak seasons without hiring additional contractors.
+      </p>
+
+      <div class="roi-layout">
+        <div class="roi-slider-block">
+          <div class="slider-field">
+            <label>
+              <span>Monthly Catalog SKUs:</span>
+              <span id="slide-sku-label" style="color: var(--accent-blue); font-family: 'JetBrains Mono', monospace;">400 SKUs</span>
+            </label>
+            <input type="range" id="slide-sku-range" min="50" max="2000" step="50" value="400" oninput="updateSlideROI()">
+          </div>
+
+          <div class="slider-field">
+            <label>
+              <span>Agency Retouch Cost per SKU ($):</span>
+              <span id="slide-cost-label" style="color: var(--accent-blue); font-family: 'JetBrains Mono', monospace;">$28.00 / item</span>
+            </label>
+            <input type="range" id="slide-cost-range" min="10" max="60" step="2" value="28" oninput="updateSlideROI()">
+          </div>
+
+          <div style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5;">
+            *Assumes $2.10/item automated cloud compute & Gemini inference cost vs. standard industry contractor rates.
+          </div>
+        </div>
+
+        <div class="roi-display-card">
+          <div style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-sub); font-family: 'JetBrains Mono', monospace; font-weight: 700;">
+            Projected Annual Operational Savings
+          </div>
+          <div class="roi-big-metric" id="slide-roi-total">$124,320</div>
+          <div style="color: var(--accent-emerald); font-size: 0.92rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.4rem; background: var(--accent-emerald-light); padding: 0.35rem 0.85rem; border-radius: 999px;">
+            <span>✓</span> 92.5% OPEX Reduction Achieved
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Deck Footer -->
+  <footer class="deck-footer">
+    <div class="deck-dots" id="dots-container">
+      <div class="dot active" onclick="goToSlide(0)"></div>
+      <div class="dot" onclick="goToSlide(1)"></div>
+      <div class="dot" onclick="goToSlide(2)"></div>
+      <div class="dot" onclick="goToSlide(3)"></div>
+      <div class="dot" onclick="goToSlide(4)"></div>
+      <div class="dot" onclick="goToSlide(5)"></div>
+      <div class="dot" onclick="goToSlide(6)"></div>
+    </div>
+    <div class="deck-hint">
+      Use [ ← / → ] arrow keys or Spacebar • Press [ F ] or Click Full Screen
+    </div>
+  </footer>
+
+  <!-- ========================================================
+       FULL-SCREEN LIGHTBOX MODAL (PROJECT PALETTE)
+       ======================================================== -->
+  <div class="lightbox-modal" id="lightbox-modal" onclick="handleLightboxBackdropClick(event)">
+    <div class="lightbox-chrome">
+      <div class="lightbox-title">
+        <span id="lightbox-title-text">Visual Asset Full Screen</span>
+        <span class="lightbox-meta-badge" id="lightbox-meta-text">4K Master Inspection</span>
+      </div>
+      <button class="lightbox-close-btn" onclick="closeLightbox(event)">
+        <span>✕</span>
+        <span>Close [Esc]</span>
+      </button>
+    </div>
+
+    <!-- Container for Image Lightbox -->
+    <div class="lightbox-stage" id="lightbox-stage-image" style="display: none;">
+      <img id="lightbox-img" src="" alt="Full Screen Inspection">
+    </div>
+
+    <!-- Container for Interactive Comparison Slider Lightbox -->
+    <div class="lightbox-stage" id="lightbox-stage-slider" style="display: none;">
+      <div class="lightbox-split-container" id="lb-slider-container">
+        <img class="lightbox-layer-after" id="lb-img-after" src="" alt="After Master">
+        <div class="lightbox-layer-before-wrapper" id="lb-before-wrapper">
+          <img class="lightbox-layer-before" id="lb-img-before" src="" alt="Before Raw">
+        </div>
+        <div class="lightbox-divider" id="lb-slider-divider">
+          <div class="lightbox-knob">◀ ▶</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lightbox-caption-bar" id="lightbox-caption-bar">
+      <span id="lb-caption-text">↔ Drag center divider to inspect 1:1 sub-pixel polish • Press Esc or click Close to exit</span>
+    </div>
+  </div>
+
+  <script>
+    // Slide Navigation State
+    let currentSlide = 0;
+    const totalSlides = 7;
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    const indicator = document.getElementById('slide-indicator');
+
+    function showSlide(index) {
+      if (index < 0 || index >= totalSlides) return;
+      
+      slides.forEach((s, idx) => {
+        s.classList.remove('active', 'previous');
+        if (idx === index) {
+          s.classList.add('active');
+        } else if (idx < index) {
+          s.classList.add('previous');
+        }
+      });
+
+      dots.forEach((d, idx) => {
+        d.classList.toggle('active', idx === index);
+      });
+
+      currentSlide = index;
+      indicator.textContent = `SLIDE 0${currentSlide + 1} / 0${totalSlides}`;
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        showSlide(currentSlide + 1);
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        showSlide(currentSlide - 1);
+      }
+    }
+
+    function goToSlide(index) {
+      showSlide(index);
+    }
+
+    // ==========================================
+    // FAIL-SAFE WHOLE SCREEN EXPANSION (NATIVE + CSS)
+    // ==========================================
+    function toggleFullScreen(e) {
+      if (e) { e.stopPropagation(); }
+      
+      const isAlreadyFs = document.body.classList.contains('is-fullscreen') || document.body.classList.contains('is-css-fullscreen');
+
+      if (!isAlreadyFs) {
+        // Activate CSS fullscreen immediately for instant response
+        document.body.classList.add('is-css-fullscreen');
+        updateFsButton(true);
+
+        // Also request native browser fullscreen if permitted
+        if (document.documentElement.requestFullscreen) {
+          document.documentElement.requestFullscreen().then(() => {
+            document.body.classList.add('is-fullscreen');
+          }).catch(() => {
+            // Native rejected (e.g. iframe or local security); CSS fullscreen remains active
+          });
+        }
+      } else {
+        exitFullScreen();
+      }
+    }
+
+    function exitFullScreen() {
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(() => {});
+      }
+      document.body.classList.remove('is-fullscreen', 'is-css-fullscreen');
+      updateFsButton(false);
+    }
+
+    function updateFsButton(isFs) {
+      const fsIcon = document.getElementById('fs-icon');
+      const fsText = document.getElementById('fs-text');
+      if (fsIcon && fsText) {
+        fsIcon.textContent = isFs ? '✕' : '⛶';
+        fsText.textContent = isFs ? 'Exit Full' : 'Full Screen';
+      }
+    }
+
+    document.addEventListener('fullscreenchange', () => {
+      const isFs = !!document.fullscreenElement;
+      if (!isFs && !document.body.classList.contains('is-css-fullscreen')) {
+        document.body.classList.remove('is-fullscreen');
+        updateFsButton(false);
+      }
+    });
+
+    // Keyboard Navigation
+    window.addEventListener('keydown', (e) => {
+      // Don't intercept if lightbox is open
+      const lb = document.getElementById('lightbox-modal');
+      if (lb && lb.classList.contains('active')) {
+        if (e.key === 'Escape') {
+          closeLightbox();
+        }
+        return;
+      }
+
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullScreen();
+      } else if (e.key === 'Escape') {
+        if (document.body.classList.contains('is-fullscreen') || document.body.classList.contains('is-css-fullscreen')) {
+          exitFullScreen();
+        }
+      }
+    });
+
+    // ==========================================
+    // LIGHTBOX FULL SCREEN EXPANSION LOGIC
+    // ==========================================
+    function openLightboxImage(imgSrc, title, subtitle, e) {
+      if (e) { e.preventDefault(); e.stopPropagation(); }
+      const lb = document.getElementById('lightbox-modal');
+      const stageImg = document.getElementById('lightbox-stage-image');
+      const stageSlider = document.getElementById('lightbox-stage-slider');
+      const targetImg = document.getElementById('lightbox-img');
+      const titleEl = document.getElementById('lightbox-title-text');
+      const metaEl = document.getElementById('lightbox-meta-text');
+      const captionEl = document.getElementById('lb-caption-text');
+
+      targetImg.src = imgSrc;
+      titleEl.textContent = title || 'Visual Asset Full Screen';
+      metaEl.textContent = subtitle || '4K Production Asset';
+      captionEl.textContent = '✦ Press Esc or click Close to return to slides';
+
+      stageImg.style.display = 'flex';
+      stageSlider.style.display = 'none';
+      lb.classList.add('active');
+    }
+
+    function openLightboxSlider(e) {
+      if (e) { e.preventDefault(); e.stopPropagation(); }
+      const lb = document.getElementById('lightbox-modal');
+      const stageImg = document.getElementById('lightbox-stage-image');
+      const stageSlider = document.getElementById('lightbox-stage-slider');
+      const titleEl = document.getElementById('lightbox-title-text');
+      const metaEl = document.getElementById('lightbox-meta-text');
+      const captionEl = document.getElementById('lb-caption-text');
+
+      const data = DECK_SPECIMENS[currentSpecimenKey];
+      document.getElementById('lb-img-before').src = data.raw;
+      document.getElementById('lb-img-after').src = data.master;
+
+      titleEl.textContent = data.title + ' — Before vs After Master';
+      metaEl.textContent = '1:1 Sub-Pixel Inspection';
+      captionEl.textContent = '↔ Drag center divider to inspect metal mirror polish, facet fire, and solid white isolation';
+
+      stageImg.style.display = 'none';
+      stageSlider.style.display = 'flex';
+      lb.classList.add('active');
+
+      // Double-pass layout calculation to guarantee before-image width locks 1:1 on render
+      requestAnimationFrame(() => {
+        setLightboxSliderPosition(50);
+        setTimeout(() => {
+          setLightboxSliderPosition(50);
+        }, 50);
+      });
+    }
+
+    function closeLightbox(e) {
+      if (e) { e.stopPropagation(); }
+      const lb = document.getElementById('lightbox-modal');
+      if (lb) lb.classList.remove('active');
+    }
+
+    function handleLightboxBackdropClick(e) {
+      if (e.target.id === 'lightbox-modal' || e.target.classList.contains('lightbox-stage')) {
+        closeLightbox(e);
+      }
+    }
+
+    // Lightbox Slider Dragging Logic
+    const lbSliderContainer = document.getElementById('lb-slider-container');
+    const lbBeforeWrapper = document.getElementById('lb-before-wrapper');
+    const lbSliderDivider = document.getElementById('lb-slider-divider');
+    let lbDragging = false;
+
+    function setLightboxSliderPosition(pct) {
+      pct = Math.max(0, Math.min(100, pct));
+      if (lbBeforeWrapper) lbBeforeWrapper.style.width = pct + '%';
+      if (lbSliderDivider) lbSliderDivider.style.left = pct + '%';
+
+      const imgBefore = document.getElementById('lb-img-before');
+      const container = document.getElementById('lb-slider-container');
+      if (imgBefore && container) {
+        const w = container.offsetWidth || container.getBoundingClientRect().width;
+        if (w > 0) {
+          imgBefore.style.width = w + 'px';
+        }
+      }
+    }
+
+    function updateLbSlider(e) {
+      const container = document.getElementById('lb-slider-container');
+      if (!container) return;
+      const rect = container.getBoundingClientRect();
+      const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
+      const pct = (x / rect.width) * 100;
+      setLightboxSliderPosition(pct);
+    }
+
+    if (lbSliderContainer) {
+      lbSliderContainer.addEventListener('mousedown', (e) => {
+        lbDragging = true;
+        updateLbSlider(e);
+      });
+      window.addEventListener('mousemove', (e) => {
+        if (!lbDragging) return;
+        updateLbSlider(e);
+      });
+      window.addEventListener('mouseup', () => { lbDragging = false; });
+
+      lbSliderContainer.addEventListener('touchstart', (e) => {
+        lbDragging = true;
+        updateLbSlider(e);
+      });
+      window.addEventListener('touchmove', (e) => {
+        if (!lbDragging) return;
+        updateLbSlider(e);
+      });
+      window.addEventListener('touchend', () => { lbDragging = false; });
+    }
+
+    window.addEventListener('resize', () => {
+      const lb = document.getElementById('lightbox-modal');
+      if (lb && lb.classList.contains('active')) {
+        setLightboxSliderPosition(50);
+      }
+    });
+
+    // ==========================================
+    // SLIDE 2 SPECIMEN SLIDER LOGIC
+    // ==========================================
+    const DECK_SPECIMENS = {
+      art_deco: {
+        title: "Art Deco Sapphire & Diamond Ring",
+        metal: "Platinum 950 (Liquid Mirror Chrome)",
+        raw: "assets/art_deco_sapphire_angle1_perspective.jpg",
+        master: "assets/art_deco_retouched_angle1.jpg"
+      },
+      solitaire: {
+        title: "1930s Vintage Solitaire Diamond Ring",
+        metal: "Platinum Filigree (Hand-Carved Wheat Pattern)",
+        raw: "assets/vintage_solitaire_angle1_perspective.jpg",
+        master: "assets/vintage_solitaire_retouched_angle1.jpg"
+      },
+      opal: {
+        title: "4.60 Crt Natural Ethiopian Black Opal",
+        metal: "Natural Smooth Cabochon Dome (High Gloss)",
+        raw: "assets/opal_black_angle1_vertical.jpg",
+        master: "assets/opal_black_retouched_angle1.jpg"
+      }
+    };
+
+    let currentSpecimenKey = 'art_deco';
+
+    function selectDeckSpecimen(key) {
+      currentSpecimenKey = key;
+      document.querySelectorAll('.specimen-pill-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById('deck-spec-' + (key === 'art_deco' ? 'deco' : key));
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const data = DECK_SPECIMENS[key];
+      document.getElementById('deck-hud-title').textContent = data.title;
+      document.getElementById('deck-hud-metal').textContent = data.metal;
+      document.getElementById('deck-img-before').src = data.raw;
+      document.getElementById('deck-img-after').src = data.master;
+
+      setDeckSliderPosition(50);
+    }
+
+    const deckSliderContainer = document.getElementById('deck-slider-container');
+    const deckBeforeWrapper = document.getElementById('deck-before-wrapper');
+    const deckSliderDivider = document.getElementById('deck-slider-divider');
+    let deckDragging = false;
+
+    function setDeckSliderPosition(pct) {
+      pct = Math.max(0, Math.min(100, pct));
+      deckBeforeWrapper.style.width = pct + '%';
+      deckSliderDivider.style.left = pct + '%';
+
+      const imgBefore = document.getElementById('deck-img-before');
+      if (imgBefore && deckSliderContainer) {
+        imgBefore.style.width = deckSliderContainer.offsetWidth + 'px';
+      }
+    }
+
+    function updateDeckSlider(e) {
+      if (!deckSliderContainer) return;
+      const rect = deckSliderContainer.getBoundingClientRect();
+      const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
+      const pct = (x / rect.width) * 100;
+      setDeckSliderPosition(pct);
+    }
+
+    if (deckSliderContainer) {
+      deckSliderContainer.addEventListener('mousedown', (e) => {
+        // Prevent slider dragging if clicking the expand button
+        if (e.target.closest('.expand-trigger-btn')) return;
+        deckDragging = true;
+        updateDeckSlider(e);
+      });
+      window.addEventListener('mousemove', (e) => {
+        if (!deckDragging) return;
+        updateDeckSlider(e);
+      });
+      window.addEventListener('mouseup', () => { deckDragging = false; });
+
+      deckSliderContainer.addEventListener('touchstart', (e) => {
+        if (e.target.closest('.expand-trigger-btn')) return;
+        deckDragging = true;
+        updateDeckSlider(e);
+      });
+      window.addEventListener('touchmove', (e) => {
+        if (!deckDragging) return;
+        updateDeckSlider(e);
+      });
+      window.addEventListener('touchend', () => { deckDragging = false; });
+    }
+
+    // ==========================================
+    // SLIDE 7 ROI CALCULATOR
+    // ==========================================
+    function updateSlideROI() {
+      const skuVal = parseInt(document.getElementById('slide-sku-range').value);
+      const costVal = parseFloat(document.getElementById('slide-cost-range').value);
+
+      document.getElementById('slide-sku-label').textContent = skuVal + " SKUs";
+      document.getElementById('slide-cost-label').textContent = "$" + costVal.toFixed(2) + " / item";
+
+      const manualAnnual = skuVal * costVal * 12;
+      const aiCostPerSku = 2.10;
+      const aiAnnual = skuVal * aiCostPerSku * 12;
+      const annualSavings = manualAnnual - aiAnnual;
+
+      document.getElementById('slide-roi-total').textContent = "$" + Math.round(annualSavings).toLocaleString();
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      selectDeckSpecimen('art_deco');
+      updateSlideROI();
+    });
+  </script>
+</body>
+</html>
