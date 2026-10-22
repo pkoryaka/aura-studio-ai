@@ -2590,7 +2590,7 @@
         <div>
           <!-- Specimen Switcher -->
           <div class="specimen-nav">
-            <button class="specimen-btn active" id="btn-spec-artdeco" onclick="selectSpecimen('art_deco')">
+            <button class="specimen-btn active" id="btn-spec-art_deco" onclick="selectSpecimen('art_deco')">
               <span>💎</span> Art Deco Sapphire Ring
             </button>
             <button class="specimen-btn" id="btn-spec-solitaire" onclick="selectSpecimen('solitaire')">
@@ -3347,9 +3347,11 @@
       art_deco: {
         title: "Old European With Blue Sapphire Baguette Ring",
         subject: "Old European With Blue Sapphire Baguette Ring",
-        metal: "Platinum 950 (Liquid Mirror Chrome)",
-        optics: "Water-Clear Geometric Facet Sparkle",
-        shadow: "Diffuse Soft Ground Drop Shadow",
+        pattern: "Old European Cut (58 Facets) + 4x French Baguettes",
+        drift: "✓ 0.000% Drift (Passed Gateway)",
+        minerals: "#1E3A8A Royal Sapphire (214° Locked)",
+        shadow: "Natural Photorealistic Contact (No Awkward Shadow)",
+        latency: "Cloud Run us-central1 (412ms)",
         sourceName: "Etsy Estate Listing (#4432433810)",
         sourceUrl: "https://www.etsy.com/listing/4432433810/old-european-with-blue-sapphire-baguette",
         angles: [
@@ -3373,9 +3375,11 @@
       solitaire: {
         title: "Circa 1930s Vintage Style Ring",
         subject: "Circa 1930s Vintage Style Ring (Wheat Filigree)",
-        metal: "Platinum Filigree (Hand-Carved Wheat Pattern)",
-        optics: "Brilliant-Cut Diamond Sparkle + Sapphire Accents",
-        shadow: "Diffuse Contact Shadow (Wood Grain Isolated)",
+        pattern: "Old European Round Solitaire + Wheat Hand-Engraving",
+        drift: "✓ 0.000% Drift (Passed Gateway)",
+        minerals: "Natural Platinum 950 + I-Color Diamond Fire",
+        shadow: "Soft Natural Ground Contact Occlusion",
+        latency: "Cloud Run us-central1 (388ms)",
         sourceName: "Etsy Vintage Listing (#1665306321)",
         sourceUrl: "https://www.etsy.com/listing/1665306321/circa-1930s-vintage-style-ring-old",
         angles: [
@@ -3398,10 +3402,12 @@
       },
       opal: {
         title: "4.60 Crt Natural Ethiopian Black Opal",
-        subject: "Natural Ethiopian Black Opal Cabochon",
-        metal: "Natural Smooth Cabochon Dome (High Gloss)",
-        optics: "Spectral Pinfire Play-of-Color Preserved",
-        shadow: "Ground Mirror Reflection + Diffuse Contact Shadow",
+        subject: "Natural Ethiopian Black Opal Cabochon (4.60 Crt)",
+        pattern: "Smooth Oval Cabochon Dome (Zero Facets)",
+        drift: "✓ 0.000% Drift (Passed Gateway)",
+        minerals: "Spectral Pinfire Opal (Multi-Spectrum Iridescence Clamped)",
+        shadow: "Specular Reflection + Natural Contact Occlusion",
+        latency: "Cloud Run us-central1 (395ms)",
         sourceName: "Etsy Mineral Listing (#4591160154)",
         sourceUrl: "https://www.etsy.com/listing/4591160154/460-crtnatural-ethiopian-black-opal",
         angles: [
@@ -3454,10 +3460,29 @@
       if (activeBtn) activeBtn.classList.add('active');
 
       const data = SPECIMENS[specKey];
-      document.getElementById('hud-subject').textContent = data.subject;
-      document.getElementById('hud-metal').textContent = data.metal;
-      document.getElementById('hud-optics').textContent = data.optics;
-      document.getElementById('hud-shadow').textContent = data.shadow;
+      const hudSubject = document.getElementById('hud-subject');
+      const hudPattern = document.getElementById('hud-pattern');
+      const hudDrift = document.getElementById('hud-drift');
+      const hudMinerals = document.getElementById('hud-minerals');
+      const hudShadow = document.getElementById('hud-shadow');
+      const hudLatency = document.getElementById('hud-latency');
+      const badgeQc = document.getElementById('badge-qc-status');
+
+      if (hudSubject && data.subject) hudSubject.textContent = data.subject;
+      if (hudPattern && data.pattern) hudPattern.textContent = data.pattern;
+      if (hudDrift && data.drift) {
+        hudDrift.textContent = data.drift;
+        hudDrift.style.color = "var(--accent-emerald)";
+      }
+      if (hudMinerals && data.minerals) hudMinerals.textContent = data.minerals;
+      if (hudShadow && data.shadow) hudShadow.textContent = data.shadow;
+      if (hudLatency && data.latency) hudLatency.textContent = data.latency;
+      if (badgeQc) {
+        badgeQc.textContent = "VERIFIED";
+        badgeQc.style.background = "var(--accent-emerald-light)";
+        badgeQc.style.color = "var(--accent-emerald)";
+        badgeQc.style.borderColor = "rgba(5,150,105,0.3)";
+      }
 
       const srcLink = document.getElementById('hud-source-link');
       if (srcLink && data.sourceUrl) {
@@ -3517,6 +3542,7 @@
         if (promptCard) promptCard.style.display = 'none';
 
         // Update telemetry HUD for other specimens
+        const data = SPECIMENS[currentSpecimenKey];
         const hudPattern = document.getElementById('hud-pattern');
         const hudDrift = document.getElementById('hud-drift');
         const hudMinerals = document.getElementById('hud-minerals');
@@ -3524,14 +3550,14 @@
         const hudLatency = document.getElementById('hud-latency');
         const badgeQc = document.getElementById('badge-qc-status');
 
-        if (hudPattern) hudPattern.textContent = "Standard Geometry Locked";
-        if (hudDrift) {
-          hudDrift.textContent = "✓ 0.000% Drift (Passed Gateway)";
+        if (hudPattern && data.pattern) hudPattern.textContent = data.pattern;
+        if (hudDrift && data.drift) {
+          hudDrift.textContent = data.drift;
           hudDrift.style.color = "var(--accent-emerald)";
         }
-        if (hudMinerals) hudMinerals.textContent = "Calibrated Optical Palette";
-        if (hudShadow) hudShadow.textContent = "Natural Photorealistic Contact";
-        if (hudLatency) hudLatency.textContent = "Cloud Run us-central1 (385ms)";
+        if (hudMinerals && data.minerals) hudMinerals.textContent = data.minerals;
+        if (hudShadow && data.shadow) hudShadow.textContent = data.shadow;
+        if (hudLatency && data.latency) hudLatency.textContent = data.latency;
         if (badgeQc) {
           badgeQc.textContent = "VERIFIED";
           badgeQc.style.background = "var(--accent-emerald-light)";
@@ -3762,18 +3788,25 @@
     }
 
     function calculateROI() {
-      const volume = parseInt(document.getElementById('input-volume').value);
-      const costPerSku = parseFloat(document.getElementById('input-cost').value);
+      const inputVol = document.getElementById('input-volume');
+      const inputCost = document.getElementById('input-cost');
+      if (!inputVol || !inputCost) return;
+      const volume = parseInt(inputVol.value);
+      const costPerSku = parseFloat(inputCost.value);
 
-      document.getElementById('label-volume').textContent = volume + " SKUs";
-      document.getElementById('label-cost').textContent = "$" + costPerSku.toFixed(2);
+      const lblVol = document.getElementById('label-volume');
+      const lblCost = document.getElementById('label-cost');
+      const roiSavings = document.getElementById('roi-savings');
+
+      if (lblVol) lblVol.textContent = volume + " SKUs";
+      if (lblCost) lblCost.textContent = "$" + costPerSku.toFixed(2);
 
       const manualAnnual = volume * costPerSku * 12;
       const aiCostPerSku = 2.10; // Cloud Run + Gemini inference
       const aiAnnual = volume * aiCostPerSku * 12;
       const annualSavings = manualAnnual - aiAnnual;
 
-      document.getElementById('roi-savings').textContent = "$" + Math.round(annualSavings).toLocaleString();
+      if (roiSavings) roiSavings.textContent = "$" + Math.round(annualSavings).toLocaleString();
     }
 
     // Shopify Sync Simulation
