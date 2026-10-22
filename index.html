@@ -205,10 +205,228 @@
       transition: all 0.18s ease;
     }
 
-    .btn-deck-link:hover {
-      background: #DBEAFE;
-      color: var(--accent-blue-hover);
+    .step-num-pill {
+      font-size: 0.68rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: var(--accent-blue);
+      background: var(--accent-blue-light);
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      margin-right: 0.2rem;
+    }
+
+    .btn-hire-consultant {
+      background: linear-gradient(135deg, #2563EB, #1D4ED8);
+      border: 1px solid #1D4ED8;
+      color: #FFFFFF;
+      padding: 0.45rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+    }
+
+    .btn-hire-consultant:hover {
+      background: linear-gradient(135deg, #1D4ED8, #1E40AF);
       transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+    }
+
+    /* Architecture Context Strip */
+    .arch-context-strip {
+      background: #0F172A;
+      color: #F8FAFC;
+      border-bottom: 1px solid #1E293B;
+      padding: 0.6rem 2.5rem;
+      font-size: 0.8rem;
+    }
+
+    .arch-strip-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: nowrap;
+    }
+
+    .arch-strip-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: nowrap;
+    }
+
+    .arch-strip-badge {
+      font-size: 0.68rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 800;
+      color: #60A5FA;
+      background: rgba(37, 99, 235, 0.2);
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      letter-spacing: 0.04em;
+    }
+
+    .arch-strip-text {
+      color: #CBD5E1;
+      font-size: 0.8rem;
+    }
+
+    .arch-strip-text strong {
+      color: #FFFFFF;
+    }
+
+    .arch-strip-link {
+      color: #93C5FD;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.78rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+
+    .arch-strip-link:hover {
+      color: #FFFFFF;
+      text-decoration: underline;
+    }
+
+    /* Contact Modal Styling */
+    .contact-modal-box {
+      max-width: 620px;
+      width: 100%;
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-float);
+    }
+
+    .contact-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 1rem;
+    }
+
+    .contact-modal-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .contact-modal-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    .contact-scope-card {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .contact-scope-item {
+      font-size: 0.78rem;
+      color: var(--text-sub);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      margin-bottom: 0.45rem;
+      line-height: 1.45;
+    }
+
+    .contact-actions-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .btn-contact-action {
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-contact-primary {
+      background: var(--accent-blue);
+      color: #FFFFFF;
+      border: 1px solid var(--accent-blue);
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-contact-primary:hover {
+      background: var(--accent-blue-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-contact-secondary {
+      background: #FFFFFF;
+      color: var(--text-main);
+      border: 1px solid var(--border-strong);
+    }
+
+    .btn-contact-secondary:hover {
+      background: var(--bg-hover);
+      transform: translateY(-1px);
+    }
+
+    .inquiry-template-box {
+      background: #0F172A;
+      border: 1px solid #1E293B;
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.74rem;
+      color: #93C5FD;
+      position: relative;
+    }
+
+    .btn-copy-template {
+      position: absolute;
+      top: 0.6rem;
+      right: 0.6rem;
+      background: #1E293B;
+      border: 1px solid #334155;
+      color: #F8FAFC;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-copy-template:hover {
+      background: #334155;
     }
 
     /* Main Container */
@@ -2032,36 +2250,56 @@
         <div class="brand-icon">✦</div>
         <div>
           <div class="brand-title">AURA STUDIO AI</div>
-          <div class="brand-subtitle">Multimodal Jewelry Retouch Console</div>
+          <div class="brand-subtitle">Architecture & Verification Console</div>
         </div>
       </a>
 
-      <!-- 3 Product Navigation Tabs -->
+      <!-- 3 Storyboard Stage Navigation Tabs -->
       <nav class="tab-nav">
         <button class="nav-btn active" onclick="switchTab('catalog')" id="tab-btn-catalog">
-          <span>📦</span>
-          <span>Catalog Queue</span>
-          <span class="nav-badge">3</span>
+          <span class="step-num-pill">01</span>
+          <span>Catalog Queue & Baseline</span>
+          <span class="nav-badge">3 SKUs</span>
         </button>
         <button class="nav-btn" onclick="switchTab('review')" id="tab-btn-review">
-          <span>🔍</span>
-          <span>Studio Review</span>
+          <span class="step-num-pill">02</span>
+          <span>1:1 Quality Gate Studio</span>
         </button>
         <button class="nav-btn" onclick="switchTab('controls')" id="tab-btn-controls">
-          <span>🔬</span>
-          <span>Vision Pipeline</span>
+          <span class="step-num-pill">03</span>
+          <span>Vision Pipeline (YOLO + SAM-2)</span>
         </button>
       </nav>
 
-      <!-- Status & Cloud Proof -->
+      <!-- Status & Consulting Actions -->
       <div class="header-actions">
         <div class="status-pill">
           <span class="status-dot"></span>
-          <span>Cloud Run us-central1 (28ms)</span>
+          <span>Cloud Run us-central1 (412ms)</span>
         </div>
+        <button class="btn-hire-consultant" onclick="openContactModal()">
+          <span>💬 Work with Petro</span>
+        </button>
       </div>
     </div>
   </header>
+
+  <!-- Persistent Architecture Context Strip -->
+  <div class="arch-context-strip">
+    <div class="arch-strip-inner">
+      <div class="arch-strip-left">
+        <span class="arch-strip-badge">INTERACTIVE ARCHITECTURE PROTOTYPE</span>
+        <span class="arch-strip-text">
+          Enterprise Multimodal Vision Pipeline engineered by <strong>Petro Koriaka</strong> (AI Automation Architect). Benchmarking uncalibrated workshop photography to 4K publication masters.
+        </span>
+      </div>
+      <div class="arch-strip-right">
+        <span class="arch-strip-link" onclick="openContactModal()">
+          <span>📋 Pipeline Scope & Upwork Profile ↗</span>
+        </span>
+      </div>
+    </div>
+  </div>
 
   <main>
     <!-- ========================================================
@@ -2102,8 +2340,29 @@
         </div>
       </div>
 
+      <!-- Executive Architecture & Storyboard Summary -->
+      <div style="background: #FFFFFF; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; box-shadow: var(--shadow-sm);">
+        <div style="font-size: 0.84rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+          <span>📐</span>
+          <span>Pipeline Architecture Walkthrough (Stage 01 of 03)</span>
+        </div>
+        <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.85rem;">
+          This console demonstrates an autonomous computer vision system designed for luxury jewelry catalogs. The 3-act walkthrough begins with <strong>uncalibrated workshop photography</strong> (below), passes through an <strong>interactive 1:1 quality verification gate</strong> (Tab 2), and exposes the <strong>underlying YOLOv11 & SAM-2 segmentation layers</strong> (Tab 3).
+        </p>
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <span style="font-size: 0.72rem; font-family: 'JetBrains Mono', monospace; background: var(--bg-subtle); border: 1px solid var(--border-subtle); padding: 0.2rem 0.55rem; border-radius: 4px; color: var(--text-sub);">1. Intake: Workshop Baseline</span>
+          <span style="color: var(--text-muted); font-size: 0.72rem;">➔</span>
+          <span style="font-size: 0.72rem; font-family: 'JetBrains Mono', monospace; background: var(--bg-subtle); border: 1px solid var(--border-subtle); padding: 0.2rem 0.55rem; border-radius: 4px; color: var(--text-sub);">2. Quality Gate: 1:1 Split Verification</span>
+          <span style="color: var(--text-muted); font-size: 0.72rem;">➔</span>
+          <span style="font-size: 0.72rem; font-family: 'JetBrains Mono', monospace; background: var(--bg-subtle); border: 1px solid var(--border-subtle); padding: 0.2rem 0.55rem; border-radius: 4px; color: var(--text-sub);">3. Vision: YOLOv11 + SAM-2 + Normals</span>
+          <span style="color: var(--text-muted); font-size: 0.72rem;">➔</span>
+          <span style="font-size: 0.72rem; font-family: 'JetBrains Mono', monospace; background: #EFF6FF; border: 1px solid #BFDBFE; padding: 0.2rem 0.55rem; border-radius: 4px; color: #1D4ED8; font-weight: 700;">4. Shopify Publish</span>
+        </div>
+      </div>
+
       <!-- Catalog Queue List -->
-      <h2 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-main);">Catalog Processing Inbox</h2>
+      <h2 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.25rem; color: var(--text-main);">01 / Benchmark Baseline Specimens (Public Etsy Archives)</h2>
+      <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem;">Select any real-world piece below to inspect raw uncalibrated workshop photography against our 4K AI studio output.</p>
       <div class="catalog-list">
 
         <!-- Piece 1: Art Deco Ring -->
@@ -2132,7 +2391,7 @@
           </div>
           <div>
             <button class="btn-action-primary" onclick="loadSpecimenAndReview('art_deco')">
-              <span>Inspect in Studio</span> →
+              <span>Verify 1:1 Quality Gate</span> →
             </button>
           </div>
         </div>
@@ -2163,7 +2422,7 @@
           </div>
           <div>
             <button class="btn-action-primary" onclick="loadSpecimenAndReview('solitaire')">
-              <span>Inspect in Studio</span> →
+              <span>Verify 1:1 Quality Gate</span> →
             </button>
           </div>
         </div>
@@ -2194,7 +2453,7 @@
           </div>
           <div>
             <button class="btn-action-primary" onclick="loadSpecimenAndReview('opal')">
-              <span>Inspect in Studio</span> →
+              <span>Verify 1:1 Quality Gate</span> →
             </button>
           </div>
         </div>
@@ -2206,6 +2465,21 @@
          TAB 2: INTERACTIVE STUDIO REVIEW PANE (BEFORE/AFTER SLIDER)
          ======================================================== -->
     <section id="pane-review" class="pane">
+      <!-- Stage 02 Header Banner -->
+      <div style="background: #FFFFFF; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem 1.5rem; margin-bottom: 1.5rem; box-shadow: var(--shadow-sm); display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
+        <div>
+          <h2 style="font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.25rem;">
+            02 / 1:1 Quality Gate Studio (Sub-Pixel Geometry Verification)
+          </h2>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">
+            Drag the interactive center slider to verify sub-pixel contour fidelity: raw unedited Etsy baseline photo (left) vs. autonomous 4K studio master (right). Zero gemological facet distortion.
+          </p>
+        </div>
+        <button class="btn-action-primary" style="padding: 0.45rem 1rem; font-size: 0.78rem;" onclick="switchTab('controls')">
+          <span>Inspect Vision Pipeline (Stage 03) ➔</span>
+        </button>
+      </div>
+
       <div class="studio-layout">
 
         <!-- Left: Interactive Viewer -->
@@ -2372,8 +2646,11 @@
           <!-- Action: One-Click Shopify Sync Simulation -->
           <button class="btn-sync-shopify" onclick="triggerShopifyPublish()">
             <span>🚀</span>
-            <span>Publish 4K Master to Shopify</span>
+            <span>Simulate Autonomous Shopify Publish</span>
           </button>
+          <div style="font-size: 0.72rem; color: var(--text-muted); text-align: center; margin-top: 0.35rem;">
+            Simulates Cloud Run triggering Shopify Admin GraphQL <code>stagedUploadsCreate</code>
+          </div>
         </div>
 
       </div>
@@ -2386,7 +2663,7 @@
       <!-- Top Overview Banner -->
       <div class="controls-header-card">
         <div class="controls-header-info">
-          <h2>Autonomous Vision Pipeline Architecture & Stage Decomposition</h2>
+          <h2>03 / Computer Vision Pipeline Architecture & Stage Decomposition</h2>
           <p>
             Interactive multi-stage computer vision console. Verify how YOLOv11-Jewelry anomaly detection, sub-pixel gemological lattice clamping, 3D surface normal reconstruction, and commercial compositing execute serverlessly on Google Cloud Run.
           </p>
@@ -2807,6 +3084,66 @@
       </div>
     </section>
   </main>
+
+  <!-- Modal for Pipeline Deployment & Upwork Consulting Inquiry -->
+  <div class="modal-overlay" id="contact-modal" onclick="handleContactModalBackdrop(event)">
+    <div class="contact-modal-box">
+      <div class="contact-modal-header">
+        <div>
+          <div class="contact-modal-title">
+            <span>⚡</span>
+            <span>Deploy This Vision Pipeline For Your Brand</span>
+          </div>
+          <div class="contact-modal-sub">
+            Engineered by <strong>Petro Koriaka</strong> • AI Automation Architect & Multimodal Pipeline Engineer
+          </div>
+        </div>
+        <button style="background: transparent; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-muted);" onclick="closeContactModal()">✕</button>
+      </div>
+
+      <div class="contact-scope-card">
+        <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.6rem;">
+          What I Can Build & Integrate For Your E-Commerce Catalog:
+        </div>
+        <div class="contact-scope-item">
+          <span style="color: var(--accent-emerald); font-weight: bold;">✓</span>
+          <span><strong>Custom Multimodal Vision Pipeline:</strong> Fine-tuned YOLOv11 + SAM-2 models for jewelry, watches, apparel, or luxury accessories that eliminate 90%+ retouch OPEX.</span>
+        </div>
+        <div class="contact-scope-item">
+          <span style="color: var(--accent-emerald); font-weight: bold;">✓</span>
+          <span><strong>Zero Hallucination Guardrails:</strong> Sub-pixel gemological/facet geometry locking ensuring zero distortion of gemstone cuts, logos, and hallmark stamps.</span>
+        </div>
+        <div class="contact-scope-item">
+          <span style="color: var(--accent-emerald); font-weight: bold;">✓</span>
+          <span><strong>Serverless Cloud Architecture:</strong> Event-driven Google Cloud Run / AWS Lambda deployment with sub-40s processing time and automated CDN sync.</span>
+        </div>
+        <div class="contact-scope-item">
+          <span style="color: var(--accent-emerald); font-weight: bold;">✓</span>
+          <span><strong>Direct Shopify / ERP Integration:</strong> Automated GraphQL mutations, variant media uploads, and catalog status sync without manual retouch queues.</span>
+        </div>
+      </div>
+
+      <div class="contact-actions-grid">
+        <a href="https://www.upwork.com" target="_blank" rel="noopener noreferrer" class="btn-contact-action btn-contact-primary">
+          <span>💼 Work with Petro on Upwork ↗</span>
+        </a>
+        <a href="https://github.com/pkoryaka/aura-studio-ai" target="_blank" rel="noopener noreferrer" class="btn-contact-action btn-contact-secondary">
+          <span>🐙 Inspect GitHub Codebase ↗</span>
+        </a>
+      </div>
+
+      <div style="margin-top: 1rem;">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.4rem;">
+          <span style="font-size: 0.74rem; font-weight: 700; color: var(--text-main);">Quick Upwork Message Template:</span>
+          <span style="font-size: 0.68rem; color: var(--text-muted);">Click button to copy</span>
+        </div>
+        <div class="inquiry-template-box">
+          <button class="btn-copy-template" id="btn-copy-inquiry" onclick="copyInquiryTemplate()">Copy Text</button>
+          <span id="inquiry-template-text">Hi Petro, I saw your Aura Studio AI multimodal retouch pipeline prototype. We have an e-commerce catalog with unretouched photography and want to automate our studio workflow with custom geometry locks and Shopify sync. Let's discuss a deployment!</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Modal for Shopify Sync Simulation -->
   <div class="modal-overlay" id="shopify-modal">
@@ -3328,6 +3665,46 @@
       document.getElementById('shopify-modal').classList.remove('active');
     }
 
+    // Contact & Upwork Consulting Modal Handlers
+    function openContactModal(e) {
+      if (e) e.preventDefault();
+      const modal = document.getElementById('contact-modal');
+      if (modal) modal.classList.add('active');
+    }
+
+    function closeContactModal() {
+      const modal = document.getElementById('contact-modal');
+      if (modal) modal.classList.remove('active');
+    }
+
+    function handleContactModalBackdrop(e) {
+      if (e.target.id === 'contact-modal') {
+        closeContactModal();
+      }
+    }
+
+    function copyInquiryTemplate() {
+      const textElem = document.getElementById('inquiry-template-text');
+      if (!textElem) return;
+      const text = textElem.textContent.trim();
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById('btn-copy-inquiry');
+        if (btn) {
+          const original = btn.textContent;
+          btn.textContent = "✓ Copied!";
+          btn.style.background = "#059669";
+          btn.style.borderColor = "#10B981";
+          setTimeout(() => {
+            btn.textContent = original;
+            btn.style.background = "#1E293B";
+            btn.style.borderColor = "#334155";
+          }, 2000);
+        }
+      }).catch(err => {
+        console.error("Failed to copy text: ", err);
+      });
+    }
+
     // ==========================================
     // VISION PIPELINE ARCHITECTURE & STAGE CONTROLLER
     // ==========================================
@@ -3569,6 +3946,8 @@
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         closeStudioLightbox();
+        closeContactModal();
+        closeShopifyModal();
       }
     });
 
