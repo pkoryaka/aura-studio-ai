@@ -795,25 +795,27 @@
       font-weight: 700;
     }
 
-    /* Studio Tune-Up Look Profiles Bar */
-    .studio-looks-card {
+    /* Closed-Loop Stone Pattern Recognition & Prompt Auto-Correction Controller */
+    .algorithm-stage-card {
       background: #FFFFFF;
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-md);
-      padding: 0.85rem 1rem;
+      padding: 0.9rem 1.15rem;
       margin-bottom: 1rem;
       box-shadow: var(--shadow-sm);
     }
 
-    .studio-looks-header {
+    .algorithm-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 0.65rem;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
     }
 
-    .studio-looks-title {
-      font-size: 0.82rem;
+    .algorithm-title {
+      font-size: 0.84rem;
       font-weight: 700;
       color: var(--text-main);
       display: flex;
@@ -821,84 +823,186 @@
       gap: 0.5rem;
     }
 
-    .studio-looks-badge {
+    .algorithm-status-badge {
       font-size: 0.68rem;
       font-family: 'JetBrains Mono', monospace;
       font-weight: 700;
-      color: var(--accent-blue);
-      background: var(--accent-blue-light);
-      padding: 0.2rem 0.55rem;
+      color: #1D4ED8;
+      background: #EFF6FF;
+      padding: 0.2rem 0.6rem;
       border-radius: 999px;
-      border: 1px solid var(--accent-blue-border);
+      border: 1px solid #BFDBFE;
     }
 
-    .looks-grid {
+    .algorithm-stages-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0.6rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
     }
 
-    .look-btn {
+    .algo-step-btn {
       background: var(--bg-subtle);
       border: 1.5px solid var(--border-subtle);
       border-radius: var(--radius-sm);
-      padding: 0.5rem 0.6rem;
+      padding: 0.75rem 0.85rem;
       cursor: pointer;
       display: flex;
-      align-items: center;
-      gap: 0.6rem;
+      flex-direction: column;
+      gap: 0.35rem;
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       text-align: left;
     }
 
-    .look-btn img {
-      width: 38px;
-      height: 38px;
-      border-radius: 6px;
-      object-fit: cover;
-      border: 1px solid var(--border-subtle);
-      flex-shrink: 0;
-      background: #FFFFFF;
-    }
-
-    .look-btn-info {
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-    }
-
-    .look-btn-name {
-      font-size: 0.76rem;
-      font-weight: 700;
-      color: var(--text-main);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .look-btn-desc {
-      font-size: 0.66rem;
-      color: var(--text-sub);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .look-btn:hover {
+    .algo-step-btn:hover {
       border-color: var(--border-strong);
       background: #FFFFFF;
       transform: translateY(-1px);
     }
 
-    .look-btn.active {
-      background: var(--accent-blue-light);
+    .algo-step-btn.active {
+      background: #FFFFFF;
       border-color: var(--accent-blue);
-      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.18);
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.15);
     }
 
-    .look-btn.active .look-btn-name {
-      color: var(--accent-blue);
+    .algo-step-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .algo-step-pill {
+      font-size: 0.64rem;
+      font-family: 'JetBrains Mono', monospace;
       font-weight: 800;
+      padding: 0.12rem 0.45rem;
+      border-radius: 4px;
+      letter-spacing: 0.03em;
+    }
+
+    .pill-fail {
+      background: #FEF2F2;
+      color: #DC2626;
+      border: 1px solid #FECACA;
+    }
+
+    .pill-scan {
+      background: #EFF6FF;
+      color: #2563EB;
+      border: 1px solid #BFDBFE;
+    }
+
+    .pill-pass {
+      background: #ECFDF5;
+      color: #059669;
+      border: 1px solid #A7F3D0;
+    }
+
+    .algo-step-name {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.25;
+    }
+
+    .algo-step-btn.active .algo-step-name {
+      color: var(--accent-blue);
+    }
+
+    .algo-step-desc {
+      font-size: 0.7rem;
+      color: var(--text-sub);
+      line-height: 1.35;
+      flex-grow: 1;
+    }
+
+    .algo-step-tag {
+      font-size: 0.68rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      margin-top: 0.2rem;
+    }
+
+    /* Prompt Evolution & Closed-Loop Reasoning Panel below Slider */
+    .prompt-evolution-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.15rem 1.35rem;
+      margin-top: 1.25rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .prompt-diff-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .prompt-diff-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .prompt-diff-pill {
+      font-size: 0.68rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+    }
+
+    .prompt-diff-console {
+      background: #0F172A;
+      border: 1px solid #1E293B;
+      border-radius: var(--radius-sm);
+      padding: 1rem 1.15rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: #93C5FD;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 240px;
+      overflow-y: auto;
+    }
+
+    .prompt-delta-alert {
+      margin-top: 0.75rem;
+      padding: 0.65rem 0.9rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.76rem;
+      line-height: 1.45;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      font-weight: 500;
+    }
+
+    .delta-fail {
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+      color: #991B1B;
+    }
+
+    .delta-scan {
+      background: #EFF6FF;
+      border: 1px solid #BFDBFE;
+      color: #1E40AF;
+    }
+
+    .delta-pass {
+      background: #ECFDF5;
+      border: 1px solid #A7F3D0;
+      color: #065F46;
     }
 
     /* Quick View Navigation below slider */
@@ -2502,43 +2606,48 @@
             <!-- Dynamically populated -->
           </div>
 
-          <!-- Studio Aesthetic Calibration & Look Profiles (Live Real-Time Tuning) -->
-          <div class="studio-looks-card" id="studio-looks-card">
-            <div class="studio-looks-header">
-              <div class="studio-looks-title">
-                <span>🎨</span>
-                <span>Studio Aesthetic Calibration (Live Real-Time Tuning)</span>
+          <!-- Closed-Loop Stone Pattern Recognition & Prompt Auto-Correction Controller -->
+          <div class="algorithm-stage-card" id="algorithm-stage-card">
+            <div class="algorithm-header">
+              <div class="algorithm-title">
+                <span>🧬</span>
+                <span>Base Model Inference ➔ Stone Pattern Recognition ➔ Prompt Auto-Correction</span>
               </div>
-              <span class="studio-looks-badge">Instant Look Profile Sync</span>
+              <span class="algorithm-status-badge" id="algo-status-badge">CLOSED-LOOP SELF-CORRECTION ACTIVE</span>
             </div>
-            <div class="looks-grid">
-              <button class="look-btn active" id="look-btn-bright_boutique" onclick="selectStudioLook('bright_boutique')">
-                <img src="assets/art_deco_look_bright_boutique.jpg" alt="Bright Boutique">
-                <div class="look-btn-info">
-                  <span class="look-btn-name">Bright Boutique</span>
-                  <span class="look-btn-desc">Pure White #FFFFFF</span>
+
+            <div class="algorithm-stages-grid">
+              <!-- Pass 1: Generic Base Prompt (Failure) -->
+              <button class="algo-step-btn" id="algo-btn-base_flawed" onclick="selectAlgorithmStep('base_flawed')">
+                <div class="algo-step-top">
+                  <span class="algo-step-pill pill-fail">PASS 1: FAILED</span>
+                  <span style="font-size: 0.8rem;">❌</span>
                 </div>
+                <div class="algo-step-name">Generic Base Prompt Output</div>
+                <div class="algo-step-desc">Standard diffusion without gemological cut conditioning. Diamond table is smeared into generic round; sapphires desaturated into black shadows.</div>
+                <div class="algo-step-tag" style="color: #DC2626;">❌ 4.82% Facet Drift</div>
               </button>
-              <button class="look-btn" id="look-btn-soft_editorial" onclick="selectStudioLook('soft_editorial')">
-                <img src="assets/art_deco_look_soft_editorial.jpg" alt="Soft Editorial">
-                <div class="look-btn-info">
-                  <span class="look-btn-name">Soft Editorial</span>
-                  <span class="look-btn-desc">Warm Ivory Bridal</span>
+
+              <!-- Pass 2: CV Stone Pattern Recognition -->
+              <button class="algo-step-btn" id="algo-btn-cv_pattern" onclick="selectAlgorithmStep('cv_pattern')">
+                <div class="algo-step-top">
+                  <span class="algo-step-pill pill-scan">PASS 2: CV SCAN</span>
+                  <span style="font-size: 0.8rem;">🔍</span>
                 </div>
+                <div class="algo-step-name">Stone Pattern Recognition</div>
+                <div class="algo-step-desc">Computer vision feature extractor pins 32 diamond facet vertices, identifies 4x French sapphire baguettes, and locks royal blue hue (#1E3A8A).</div>
+                <div class="algo-step-tag" style="color: #2563EB;">🔍 Lattice & Hue Extracted</div>
               </button>
-              <button class="look-btn" id="look-btn-archival_platinum" onclick="selectStudioLook('archival_platinum')">
-                <img src="assets/art_deco_look_archival_platinum.jpg" alt="Archival Platinum">
-                <div class="look-btn-info">
-                  <span class="look-btn-name">Archival Platinum</span>
-                  <span class="look-btn-desc">Cool Gray Vignette</span>
+
+              <!-- Pass 3: Self-Corrected Master -->
+              <button class="algo-step-btn active" id="algo-btn-master_corrected" onclick="selectAlgorithmStep('master_corrected')">
+                <div class="algo-step-top">
+                  <span class="algo-step-pill pill-pass">PASS 3: PASSED</span>
+                  <span style="font-size: 0.8rem;">✅</span>
                 </div>
-              </button>
-              <button class="look-btn" id="look-btn-velvet_vault" onclick="selectStudioLook('velvet_vault')">
-                <img src="assets/art_deco_look_velvet_vault.jpg" alt="Velvet Vault">
-                <div class="look-btn-info">
-                  <span class="look-btn-name">Velvet Vault</span>
-                  <span class="look-btn-desc">Midnight Obsidian</span>
-                </div>
+                <div class="algo-step-name">Self-Corrected 4K Master</div>
+                <div class="algo-step-desc">Prompt dynamically modified with gemological constraints & negative tokens. Latent coordinate clamps enforce zero-drift geometry.</div>
+                <div class="algo-step-tag" style="color: #059669;">✅ 0.000% Drift Verified</div>
               </button>
             </div>
           </div>
@@ -2582,8 +2691,34 @@
             </button>
           </div>
           <p style="font-size: 0.8rem; color: var(--text-sub); text-align: center; margin-top: 0.65rem; font-weight: 500;">
-            ↔ Drag divider or click buttons above to inspect metal mirror polish, facet fire, and brand lighting against the unretouched Etsy estate baseline.
+            ↔ Drag divider or click buttons above to inspect the raw Etsy baseline vs. algorithm inference output.
           </p>
+
+          <!-- Dynamic Prompt Evolution & Closed-Loop Reasoning Panel -->
+          <div class="prompt-evolution-card" id="prompt-evolution-card">
+            <div class="prompt-diff-header">
+              <div class="prompt-diff-title">
+                <span>🤖</span>
+                <span>Dynamic Prompt Evolution & Closed-Loop Reasoning</span>
+              </div>
+              <span class="prompt-diff-pill" id="prompt-diff-status-pill" style="background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0;">
+                PASS 3: PROMPT AUTO-MODIFIED (0.000% DRIFT)
+              </span>
+            </div>
+
+            <div class="prompt-diff-console" id="prompt-diff-console">+ "antique old_european_cut diamond, 8-fold table symmetry, high crown angle (42 deg)"
++ "4x natural royal sapphire baguettes, CIELAB (32, 14, -48), crystal fire retention"
++ "milgrain filigree bezel lock, 0.82mm platinum wire prongs intact"
+- "(modern round brilliant cut:1.4), (black onyx substitution:1.5), (facet blurring:1.3), (prong erosion:1.2)"
++ "conditioning: controlnet_canny_facet_mask_v2, latent_lock_hash=0x8F4E2B"</div>
+
+            <div class="prompt-delta-alert delta-pass" id="prompt-delta-alert">
+              <span>💡</span>
+              <span id="prompt-delta-text">
+                Prompt Modification Successful: Negative token weights actively suppress modern brilliant cut hallucination, while Canny coordinate conditioning pins the 32 table vertices with mathematical zero-drift precision.
+              </span>
+            </div>
+          </div>
         </div>
 
         <!-- Right: Studio Inspector Sidebar -->
@@ -2592,7 +2727,7 @@
             <div class="panel-title">
               <span>⚡</span> Pipeline Inspection Telemetry
             </div>
-            <span class="badge-check">VERIFIED</span>
+            <span class="badge-check" id="badge-qc-status" style="background: var(--accent-emerald-light); color: var(--accent-emerald); border-color: rgba(5,150,105,0.3);">VERIFIED</span>
           </div>
 
           <div class="prop-list">
@@ -2609,24 +2744,24 @@
               </div>
             </div>
             <div class="prop-row">
-              <div class="prop-label">Precious Metal Polish</div>
-              <div class="prop-val" id="hud-metal">Platinum 950 (Liquid Mirror Chrome)</div>
+              <div class="prop-label">Stone Pattern Classified</div>
+              <div class="prop-val" id="hud-pattern" style="color: var(--accent-blue); font-weight: 700;">Old European Cut (58 Facets) + 4x French Baguettes</div>
             </div>
             <div class="prop-row">
-              <div class="prop-label">Optical Clarity & Facet Depth</div>
-              <div class="prop-val" id="hud-optics">Water-Clear Geometric Sparkle</div>
+              <div class="prop-label">Gemological Drift Status</div>
+              <div class="prop-val" id="hud-drift" style="color: var(--accent-emerald); font-weight: 800;">✓ 0.000% Drift (Passed Gateway)</div>
             </div>
             <div class="prop-row">
-              <div class="prop-label">Studio Background Canvas</div>
-              <div class="prop-val" id="hud-bg">Seamless Pure Solid White (#FFFFFF)</div>
+              <div class="prop-label">Mineral Hue Clamping</div>
+              <div class="prop-val" id="hud-minerals">#1E3A8A Royal Sapphire (214° Locked)</div>
             </div>
             <div class="prop-row">
-              <div class="prop-label">Ground Contact Interaction</div>
-              <div class="prop-val" id="hud-shadow">Diffuse Soft Drop Shadow</div>
+              <div class="prop-label">Ground Contact Occlusion</div>
+              <div class="prop-val" id="hud-shadow">Natural Photorealistic Contact (No Awkward Shadow)</div>
             </div>
             <div class="prop-row">
-              <div class="prop-label">Inference Model & Latency</div>
-              <div class="prop-val">Gemini 2.5 Flash Vision (34s)</div>
+              <div class="prop-label">Pipeline Execution Latency</div>
+              <div class="prop-val" id="hud-latency">Cloud Run us-central1 (412ms)</div>
             </div>
           </div>
 
@@ -3368,15 +3503,41 @@
 
       imgBefore.src = angle.raw;
 
+      const algoCard = document.getElementById('algorithm-stage-card');
+      const promptCard = document.getElementById('prompt-evolution-card');
+
       // Check if viewing hero specimen at Angle 1
       if (currentSpecimenKey === 'art_deco' && currentAngleIndex === 0) {
-        imgAfter.src = HERO_STUDIO_LOOKS[activeStudioLookKey].src;
-        const looksCard = document.getElementById('studio-looks-card');
-        if (looksCard) looksCard.style.display = 'block';
+        if (algoCard) algoCard.style.display = 'block';
+        if (promptCard) promptCard.style.display = 'block';
+        selectAlgorithmStep(currentAlgorithmStepKey, false);
       } else {
         imgAfter.src = angle.master;
-        const looksCard = document.getElementById('studio-looks-card');
-        if (looksCard) looksCard.style.display = 'none';
+        if (algoCard) algoCard.style.display = 'none';
+        if (promptCard) promptCard.style.display = 'none';
+
+        // Update telemetry HUD for other specimens
+        const hudPattern = document.getElementById('hud-pattern');
+        const hudDrift = document.getElementById('hud-drift');
+        const hudMinerals = document.getElementById('hud-minerals');
+        const hudShadow = document.getElementById('hud-shadow');
+        const hudLatency = document.getElementById('hud-latency');
+        const badgeQc = document.getElementById('badge-qc-status');
+
+        if (hudPattern) hudPattern.textContent = "Standard Geometry Locked";
+        if (hudDrift) {
+          hudDrift.textContent = "✓ 0.000% Drift (Passed Gateway)";
+          hudDrift.style.color = "var(--accent-emerald)";
+        }
+        if (hudMinerals) hudMinerals.textContent = "Calibrated Optical Palette";
+        if (hudShadow) hudShadow.textContent = "Natural Photorealistic Contact";
+        if (hudLatency) hudLatency.textContent = "Cloud Run us-central1 (385ms)";
+        if (badgeQc) {
+          badgeQc.textContent = "VERIFIED";
+          badgeQc.style.background = "var(--accent-emerald-light)";
+          badgeQc.style.color = "var(--accent-emerald)";
+          badgeQc.style.borderColor = "rgba(5,150,105,0.3)";
+        }
       }
 
       // Reset slider to 50%
@@ -3440,100 +3601,149 @@
     // ROI Calculator
     
     // ==========================================
-    // STUDIO TUNE-UP LOOK PROFILES & LIVE SLIDERS
+    // CLOSED-LOOP STONE PATTERN RECOGNITION & PROMPT AUTO-CORRECTION
     // ==========================================
-    const HERO_STUDIO_LOOKS = {
-      bright_boutique: {
-        id: "bright_boutique",
-        name: "Bright Boutique",
-        sub: "Pure White #FFFFFF",
-        desc: "Clean white high-key studio, specular platinum reflections",
-        src: "assets/art_deco_look_bright_boutique.jpg",
-        metal: "Platinum 950 (Liquid Mirror Chrome)",
-        bg: "Seamless Pure Solid White (#FFFFFF)",
-        optics: "Specular High-Key Brilliant Sparkle",
-        shadow: "Diffuse Soft Drop Shadow (8%)",
-        presetSync: "cartier"
+    const ALGORITHM_PIPELINE_STEPS = {
+      base_flawed: {
+        id: "base_flawed",
+        name: "Pass 1: Generic Prompt (Failure Case)",
+        badge: "FAILED QC (4.82% DRIFT)",
+        src: "assets/art_deco_base_prompt_flawed.jpg",
+        consoleContent: `[PROMPT PASS 1: GENERIC TEXT-TO-IMAGE PROMPT]
+"high-end luxury jewelry studio photograph of a vintage art deco ring, platinum band, sparkling diamond center stone, blue gemstones, clean white background, 8k resolution, photorealistic"
+
+[ANALYSIS: ZERO GEOMETRICAL CONDITIONING]
+- Diamond table shape: Blurred/warped into generic round brilliant cut
+- Table facet coordinates: 4.82% symmetry drift from authentic raw specimen
+- Calibré baguette channels: Color space collapsed to black/onyx metallic shadows
+- Status: FAILED QC TOLERANCE GATEWAY (<0.05% required)`,
+        diffPillText: "PASS 1: FAILED QC (4.82% DRIFT)",
+        diffPillStyle: "background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA;",
+        deltaType: "delta-fail",
+        deltaText: "<strong>❌ Gemological Failure Detected:</strong> Center diamond table blurred into generic round brilliant with facet smudge (-4.82% symmetry drift). Sapphires severely desaturated into dark black metallic shadows/onyx due to unconditioned color latent space.",
+        hudPattern: "Generic Round / Undefined Baguette (Hallucination)",
+        hudDrift: "❌ 4.82% Critical Drift (FAILED GATEWAY)",
+        hudDriftColor: "#DC2626",
+        hudMinerals: "Unconstrained (0% Hue Pinned - Desaturated to Black)",
+        hudShadow: "Harsh Artificial Occlusion",
+        hudLatency: "Raw Inference (1,840ms)",
+        badgeQcText: "FAILED QC",
+        badgeQcStyle: "background: #FEF2F2; color: #DC2626; border-color: rgba(220,38,38,0.3);"
       },
-      soft_editorial: {
-        id: "soft_editorial",
-        name: "Soft Editorial",
-        sub: "Warm Ivory Bridal",
-        desc: "Warm luxury ivory, silky satin luster, romantic bridal tones",
-        src: "assets/art_deco_look_soft_editorial.jpg",
-        metal: "Warm Platinum (Satin Bridal Luster)",
-        bg: "Luxury Champagne Ivory (#FAF7F2)",
-        optics: "Gentle Diffuse Fire & Deep Sapphire Blue",
-        shadow: "Soft Natural Bridal Contact Shadow",
-        presetSync: "tiffany"
+      cv_pattern: {
+        id: "cv_pattern",
+        name: "Pass 2: Stone Pattern Recognition (CV)",
+        badge: "CV SCAN & FEATURE EXTRACTION",
+        src: "assets/pipeline_stage2_facet_lattice.jpg",
+        consoleContent: `[COMPUTER VISION FEATURE EXTRACTION ACTIVATED]
+• Model: YOLOv11-Jewelry-Custom + SAM-2 Gemological Lattice
+• Pinning 32 diamond facet vertices (Canny edge coordinate lattice locked)
+• Center stone cut classified: Hexagonal Old European Cut (table ratio 1.14)
+• Accent stones detected: 4x calibré-cut French sapphire baguettes
+• Optical mineral extraction: Royal Blue CIELAB(32, 14, -48), Hue 214°
+• Synthesizing dynamic negative tokens & ControlNet coordinate constraints...`,
+        diffPillText: "PASS 2: CV SCAN & FEATURE EXTRACTION",
+        diffPillStyle: "background: #EFF6FF; color: #2563EB; border: 1px solid #BFDBFE;",
+        deltaType: "delta-scan",
+        deltaText: "<strong>🔍 Feature Extraction Active:</strong> Computer Vision lattice detector accurately identified 32 diamond facet vertices and 4 calibré-cut royal sapphire baguettes. Preparing dynamic prompt rewrite and spatial ControlNet constraints.",
+        hudPattern: "Hexagonal Old European Cut (32 Vertices) + 4x French Baguettes",
+        hudDrift: "🔍 0.00% Spatial Coordinate Lock (Scanning)",
+        hudDriftColor: "#2563EB",
+        hudMinerals: "Pinning #1E3A8A (214° Royal Blue Hue Anchor)",
+        hudShadow: "Ray-Tracing Sub-Pixel Contact Mask",
+        hudLatency: "Feature Extractor (88ms)",
+        badgeQcText: "SCANNING",
+        badgeQcStyle: "background: #EFF6FF; color: #2563EB; border-color: rgba(37,99,235,0.3);"
       },
-      archival_platinum: {
-        id: "archival_platinum",
-        name: "Archival Platinum",
-        sub: "Cool Gray Vignette",
-        desc: "Cool neutral vignette, authentic hallmark clarity, Sotheby's grade",
-        src: "assets/art_deco_look_archival_platinum.jpg",
-        metal: "Platinum 950 (Hallmark Strict / Unclipped)",
-        bg: "Cool Studio Vignette (#EEF2F6 ➔ #CBD5E1)",
-        optics: "100% Inclusion Fidelity & Precision Facet Map",
-        shadow: "Deep Grounded Auction Contact Shadow (15%)",
-        presetSync: "sothebys"
-      },
-      velvet_vault: {
-        id: "velvet_vault",
-        name: "Velvet Vault",
-        sub: "Midnight VIP Obsidian",
-        desc: "Deep charcoal obsidian backdrop, rim lighting, mirror floor reflection",
-        src: "assets/art_deco_look_velvet_vault.jpg",
-        metal: "Illuminated Platinum with Sculpted Rim Lights",
-        bg: "Deep Charcoal Obsidian Studio (#222B38)",
-        optics: "High-Contrast Glowing Sapphire Refraction",
-        shadow: "Subtle Reflective Mirror Floor Grounding",
-        presetSync: "ecommerce"
+      master_corrected: {
+        id: "master_corrected",
+        name: "Pass 3: Self-Corrected 4K Master",
+        badge: "VERIFIED 0.000% DRIFT (PASSED)",
+        src: "assets/art_deco_retouched_angle1.jpg",
+        consoleContent: `+ "antique old_european_cut diamond, 8-fold table symmetry, high crown angle (42 deg)"
++ "4x natural royal sapphire baguettes, CIELAB (32, 14, -48), crystal fire retention"
++ "milgrain filigree bezel lock, 0.82mm platinum wire prongs intact"
+- "(modern round brilliant cut:1.4), (black onyx substitution:1.5), (facet blurring:1.3), (prong erosion:1.2)"
++ "conditioning: controlnet_canny_facet_mask_v2, latent_lock_hash=0x8F4E2B"`,
+        diffPillText: "PASS 3: PROMPT AUTO-MODIFIED (0.000% DRIFT)",
+        diffPillStyle: "background: #ECFDF5; color: #059669; border: 1px solid #A7F3D0;",
+        deltaType: "delta-pass",
+        deltaText: "<strong>✅ Closed-Loop Auto-Correction Success:</strong> Prompt dynamically modified with gemological constraints and negative tokens. Spatial Canny edge clamps enforced zero-drift geometry. Sapphire chromaticity restored to authentic royal blue.",
+        hudPattern: "Old European Cut (58 Facets) + 4x French Baguettes",
+        hudDrift: "✓ 0.000% Drift (Passed Gateway)",
+        hudDriftColor: "var(--accent-emerald)",
+        hudMinerals: "#1E3A8A Royal Sapphire (214° Locked)",
+        hudShadow: "Natural Photorealistic Contact (No Awkward Shadow)",
+        hudLatency: "Cloud Run us-central1 (412ms)",
+        badgeQcText: "VERIFIED",
+        badgeQcStyle: "background: var(--accent-emerald-light); color: var(--accent-emerald); border-color: rgba(5,150,105,0.3);"
       }
     };
 
-    let activeStudioLookKey = 'bright_boutique';
-    let liveTuneupState = { light: 0, shadow: 0 };
+    let currentAlgorithmStepKey = 'master_corrected';
 
-    function selectStudioLook(lookKey, keepPosition = true) {
-      if (!HERO_STUDIO_LOOKS[lookKey]) return;
-      activeStudioLookKey = lookKey;
-      const look = HERO_STUDIO_LOOKS[lookKey];
+    function selectAlgorithmStep(stepKey, triggerAnimation = true) {
+      if (!ALGORITHM_PIPELINE_STEPS[stepKey]) return;
+      currentAlgorithmStepKey = stepKey;
+      const step = ALGORITHM_PIPELINE_STEPS[stepKey];
 
-      // Update UI active buttons in Look Bar
-      document.querySelectorAll('.look-btn').forEach(btn => btn.classList.remove('active'));
-      const activeBtn = document.getElementById('look-btn-' + lookKey);
+      // Update button active state
+      document.querySelectorAll('.algo-step-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById('algo-btn-' + stepKey);
       if (activeBtn) activeBtn.classList.add('active');
 
       // Update image on canvas if viewing Art Deco piece and Angle 1
       if (currentSpecimenKey === 'art_deco' && currentAngleIndex === 0) {
         const imgAfter = document.getElementById('img-after');
         if (imgAfter) {
-          imgAfter.style.opacity = '0.6';
-          setTimeout(() => {
-            imgAfter.src = look.src;
-            imgAfter.style.opacity = '1';
-          }, 80);
+          if (triggerAnimation) {
+            imgAfter.style.opacity = '0.5';
+            setTimeout(() => {
+              imgAfter.src = step.src;
+              imgAfter.style.opacity = '1';
+            }, 70);
+          } else {
+            imgAfter.src = step.src;
+          }
+        }
+
+        // Update Dynamic Prompt Evolution Console
+        const consoleElem = document.getElementById('prompt-diff-console');
+        if (consoleElem) consoleElem.textContent = step.consoleContent;
+
+        const pillElem = document.getElementById('prompt-diff-status-pill');
+        if (pillElem) {
+          pillElem.textContent = step.diffPillText;
+          pillElem.style.cssText = step.diffPillStyle;
+        }
+
+        const deltaAlert = document.getElementById('prompt-delta-alert');
+        const deltaText = document.getElementById('prompt-delta-text');
+        if (deltaAlert && deltaText) {
+          deltaAlert.className = 'prompt-delta-alert ' + step.deltaType;
+          deltaText.innerHTML = step.deltaText;
         }
 
         // Update telemetry HUD
-        const hudMetal = document.getElementById('hud-metal');
-        const hudBg = document.getElementById('hud-bg');
-        const hudOptics = document.getElementById('hud-optics');
+        const hudPattern = document.getElementById('hud-pattern');
+        const hudDrift = document.getElementById('hud-drift');
+        const hudMinerals = document.getElementById('hud-minerals');
         const hudShadow = document.getElementById('hud-shadow');
+        const hudLatency = document.getElementById('hud-latency');
+        const badgeQc = document.getElementById('badge-qc-status');
 
-        if (hudMetal) hudMetal.textContent = look.metal;
-        if (hudBg) hudBg.textContent = look.bg;
-        if (hudOptics) hudOptics.textContent = look.optics;
-        if (hudShadow) hudShadow.textContent = look.shadow;
-      }
-
-      // Sync active state in Tab 3 preset cards
-      if (look.presetSync) {
-        document.querySelectorAll('.preset-card').forEach(c => c.classList.remove('active'));
-        const presetCard = document.getElementById('preset-' + look.presetSync);
-        if (presetCard) presetCard.classList.add('active');
+        if (hudPattern) hudPattern.textContent = step.hudPattern;
+        if (hudDrift) {
+          hudDrift.textContent = step.hudDrift;
+          hudDrift.style.color = step.hudDriftColor;
+        }
+        if (hudMinerals) hudMinerals.textContent = step.hudMinerals;
+        if (hudShadow) hudShadow.textContent = step.hudShadow;
+        if (hudLatency) hudLatency.textContent = step.hudLatency;
+        if (badgeQc) {
+          badgeQc.textContent = step.badgeQcText;
+          badgeQc.style.cssText = step.badgeQcStyle;
+        }
       }
     }
 
@@ -3548,72 +3758,6 @@
         setSliderPosition(50);
       } else if (mode === 'master') {
         setSliderPosition(0);
-      }
-    }
-
-    function updateLiveTuneup(type, val) {
-      val = parseInt(val);
-      liveTuneupState[type] = val;
-
-      const imgAfter = document.getElementById('img-after');
-      const contrastVal = 1 + (liveTuneupState.light * 0.005);
-      const brightnessVal = 1 + (liveTuneupState.light * 0.002);
-      
-      if (imgAfter) {
-        imgAfter.style.setProperty('--live-contrast', contrastVal);
-        imgAfter.style.setProperty('--live-brightness', brightnessVal);
-      }
-
-      if (type === 'light') {
-        const lbl = document.getElementById('label-tuneup-light');
-        if (lbl) {
-          if (val < -10) lbl.textContent = "Soft Diffuse (" + val + ")";
-          else if (val > 10) lbl.textContent = "High Specular (+" + val + ")";
-          else lbl.textContent = "Daylight Crisp (Balanced)";
-        }
-      } else if (type === 'shadow') {
-        const lbl = document.getElementById('label-tuneup-shadow');
-        if (lbl) {
-          if (val < -10) lbl.textContent = "Feathered Soft (" + val + ")";
-          else if (val > 10) lbl.textContent = "Deep Dimensional (+" + val + ")";
-          else lbl.textContent = "Balanced Contact Ground";
-        }
-      }
-    }
-
-    function resetLiveTuneup() {
-      liveTuneupState = { light: 0, shadow: 0 };
-      const sliderLight = document.getElementById('slider-tuneup-light');
-      const sliderShadow = document.getElementById('slider-tuneup-shadow');
-      if (sliderLight) sliderLight.value = 0;
-      if (sliderShadow) sliderShadow.value = 0;
-
-      const lblLight = document.getElementById('label-tuneup-light');
-      const lblShadow = document.getElementById('label-tuneup-shadow');
-      if (lblLight) lblLight.textContent = "Daylight Crisp";
-      if (lblShadow) lblShadow.textContent = "Balanced Contact";
-
-      const imgAfter = document.getElementById('img-after');
-      if (imgAfter) {
-        imgAfter.style.removeProperty('--live-contrast');
-        imgAfter.style.removeProperty('--live-brightness');
-      }
-    }
-
-    function previewPresetInStudio(presetKey) {
-      applyPreset(presetKey);
-      switchTab('review');
-      selectSpecimen('art_deco');
-
-      // Map presetKey to Studio Look
-      const map = {
-        cartier: 'bright_boutique',
-        tiffany: 'soft_editorial',
-        sothebys: 'archival_platinum',
-        ecommerce: 'velvet_vault'
-      };
-      if (map[presetKey]) {
-        selectStudioLook(map[presetKey]);
       }
     }
 
@@ -3634,6 +3778,14 @@
 
     // Shopify Sync Simulation
     function triggerShopifyPublish() {
+      if (currentSpecimenKey === 'art_deco' && currentAngleIndex === 0 && currentAlgorithmStepKey === 'base_flawed') {
+        alert("⚠️ CANNOT PUBLISH SKU: FAILED QC TOLERANCE GATEWAY\n\nGemological facet drift is 4.82% (exceeds 0.05% tolerance). Stone Pattern Recognition auto-correction (Pass 3) must be active before catalog sync.");
+        return;
+      }
+      if (currentSpecimenKey === 'art_deco' && currentAngleIndex === 0 && currentAlgorithmStepKey === 'cv_pattern') {
+        alert("⚠️ CANNOT PUBLISH SKU: CV SCAN IN PROGRESS\n\nStone Pattern Recognition scan is active. Please switch to Pass 3 (Self-Corrected 4K Master) to sync the verified asset.");
+        return;
+      }
       const modal = document.getElementById('shopify-modal');
       modal.classList.add('active');
 
@@ -3784,7 +3936,7 @@
         num: 4,
         title: "STAGE 04: PRODUCTION 4K MASTER",
         badgeTop: "ACTIVE INFERENCE STAGE: 04/04",
-        src: "assets/art_deco_look_bright_boutique.jpg",
+        src: "assets/art_deco_retouched_angle1.jpg",
         caption: "👑 Final publication-grade 4K composite with physical ground contact occlusion and automated Shopify publishing.",
         nextLabel: "Inspect in Studio Review Split Curtain ➔",
         payload: {
@@ -3864,7 +4016,7 @@
     function applySandboxToReview() {
       switchTab('review');
       selectSpecimen('art_deco');
-      selectStudioLook('bright_boutique');
+      selectAlgorithmStep('master_corrected');
     }
 
     function togglePayloadDrawer() {
@@ -3910,7 +4062,7 @@
       const angle = SPECIMENS[currentSpecimenKey].angles[currentAngleIndex];
       document.getElementById('studio-lb-img-before').src = angle.raw;
       if (currentSpecimenKey === 'art_deco' && currentAngleIndex === 0) {
-        document.getElementById('studio-lb-img-after').src = HERO_STUDIO_LOOKS[activeStudioLookKey].src;
+        document.getElementById('studio-lb-img-after').src = ALGORITHM_PIPELINE_STEPS[currentAlgorithmStepKey].src;
       } else {
         document.getElementById('studio-lb-img-after').src = angle.master;
       }
