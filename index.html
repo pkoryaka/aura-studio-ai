@@ -184,114 +184,141 @@
                 </div>
             </div>
 
-            <!-- Multi-Angle Image Selector Bar -->
-            <div id="review-thumb-bar" class="flex items-center gap-3 p-4 bg-white border border-[#E5E7EB] rounded-2xl shadow-xs overflow-x-auto">
-                <!-- Populated via JS -->
+            <!-- Row 2: Dedicated Separate Angle Views Bar -->
+            <div class="bg-white border border-[#E5E7EB] rounded-2xl px-4 py-2 flex items-center justify-between gap-3 shadow-xs min-h-[68px]">
+                <div id="review-thumb-bar" class="flex items-center gap-3 overflow-x-auto w-full min-h-[56px] py-1.5">
+                    <!-- Populated via JS -->
+                </div>
             </div>
 
-            <!-- Side-by-Side Comparison Gallery -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Row 3: Symmetrical Side-by-Side Comparison (Max Fit Screen) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-3.5">
                 <!-- Left Card: Original Raw Upload -->
-                <div class="bg-white border border-[#E5E7EB] rounded-2xl p-6 shadow-xs flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between mb-4 pb-3 border-b border-[#F1F3F5]">
-                            <span class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#666666]" id="review-raw-label">
+                <div class="bg-white border border-slate-200 rounded-2xl shadow-xs overflow-hidden flex flex-col justify-between">
+                    <div class="bg-slate-50 border-b border-slate-200 px-3.5 py-1.5 flex items-center justify-between gap-2 overflow-hidden whitespace-nowrap">
+                        <div class="flex items-center space-x-2 shrink-0 min-w-0">
+                            <div class="w-2 h-2 rounded-full bg-slate-400 shrink-0"></div>
+                            <span class="text-xs md:text-sm font-bold uppercase tracking-wider text-slate-800 whitespace-nowrap truncate" id="review-raw-label">
                                 Original Raw Photo (Angle 1)
                             </span>
-                            <div class="flex items-center space-x-2">
-                                <span class="text-[11px] font-mono text-[#999999] bg-[#F8F9FA] px-2 py-0.5 rounded border border-[#E5E7EB]">Camera Raw</span>
-                                <button type="button" onclick="dismissActiveAngle()" title="Exclude this angle ID from console review" class="inline-flex items-center text-[10px] font-semibold text-[#666666] hover:text-rose-600 bg-[#F8F9FA] hover:bg-rose-50 border border-[#E5E7EB] hover:border-rose-200 px-2 py-0.5 rounded-lg transition">
-                                    <i data-lucide="eye-off" class="w-3 h-3 mr-1"></i> Exclude Angle
-                                </button>
-                            </div>
                         </div>
-                        <div class="h-[420px] bg-[#FAFBFD] rounded-xl border border-[#F1F3F5] flex items-center justify-center p-3 overflow-hidden">
-                            <img id="review-raw-img" src="" alt="Original Raw" class="max-h-full max-w-full object-contain rounded-lg transition-opacity duration-150">
+                        <span class="text-xs font-mono font-bold bg-white text-slate-600 px-2 py-0.5 rounded-md border border-slate-200 shrink-0 whitespace-nowrap" id="review-raw-badge">Camera Raw</span>
+                    </div>
+                    <div class="p-2 flex items-center justify-center bg-[#FAFBFD]">
+                        <div class="h-[38vh] max-h-[360px] min-h-[220px] w-full bg-[#F8F9FA] rounded-xl border border-slate-100 flex items-center justify-center p-2">
+                            <img id="review-raw-img" src="" alt="Original" class="max-h-full max-w-full object-contain rounded-lg transition-opacity duration-150">
                         </div>
                     </div>
                 </div>
 
                 <!-- Right Card: 4K Retouched Master -->
-                <div class="bg-white border border-[#E5E7EB] rounded-2xl p-6 shadow-xs flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between mb-4 pb-3 border-b border-[#F1F3F5]">
-                            <span class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#059669] flex items-center gap-1.5" id="review-retouched-label">
-                                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Retouched Master (4K WebP)
+                <div class="bg-white border border-slate-200 rounded-2xl shadow-xs overflow-hidden flex flex-col justify-between">
+                    <div class="bg-slate-50 border-b border-slate-200 px-3.5 py-1.5 flex items-center justify-between gap-2 overflow-hidden whitespace-nowrap">
+                        <div class="flex items-center space-x-2 shrink-0 min-w-0">
+                            <div class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></div>
+                            <span class="text-xs md:text-sm font-bold uppercase tracking-wider text-slate-800 flex items-center gap-1.5 whitespace-nowrap truncate" id="review-retouched-label">
+                                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#2EA3F2] shrink-0"></i> Retouched Master (Angle 1)
                             </span>
-                            <span class="text-[11px] font-mono text-[#059669] bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-100" id="review-retouched-badge">Studio Standard</span>
                         </div>
-                        <div class="h-[420px] bg-[#FAFBFD] rounded-xl border border-[#F1F3F5] flex items-center justify-center p-3 relative overflow-hidden">
+                        <span class="text-xs font-mono font-bold bg-white text-slate-600 px-2 py-0.5 rounded-md border border-slate-200 shrink-0 whitespace-nowrap" id="review-retouched-badge">Studio Standard</span>
+                    </div>
+                    <div class="p-2 flex items-center justify-center bg-[#FAFBFD]">
+                        <div class="h-[38vh] max-h-[360px] min-h-[220px] w-full bg-[#F8F9FA] rounded-xl border border-slate-100 flex items-center justify-center p-2 relative overflow-hidden">
                             <img id="review-retouched-img" src="" alt="Retouched Master" class="max-h-full max-w-full object-contain rounded-lg transition-opacity duration-150">
                             
-                            <!-- Non-Intrusive Floating Retouch Progress Pill (Images NEVER disappear) -->
-                            <div id="retouch-progress-pill" class="hidden absolute top-3 right-3 bg-[#111215]/90 backdrop-blur-md text-white text-[11px] font-semibold px-3.5 py-1.5 rounded-full shadow-xl flex items-center space-x-2 border border-white/20 z-20">
-                                <div class="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                            <!-- Non-Intrusive Floating Retouch Progress Pill -->
+                            <div id="retouch-progress-pill" class="hidden absolute top-2 right-2 bg-[#111215]/90 backdrop-blur-md text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg flex items-center space-x-1.5 border border-white/20 z-20">
+                                <div class="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                                 <span id="spinner-msg" class="tracking-wide">Generating Variation...</span>
                             </div>
 
-                            <!-- No Candidate Placeholder (Only shown if angle has zero retouched versions) -->
-                            <div id="no-candidate-box" class="hidden text-center p-6">
-                                <div class="w-12 h-12 rounded-full bg-slate-100 text-slate-400 mx-auto flex items-center justify-center mb-3">
-                                    <i data-lucide="image" class="w-6 h-6"></i>
+                            <!-- No Candidate Placeholder -->
+                            <div id="no-candidate-box" class="hidden text-center p-3">
+                                <div class="w-8 h-8 rounded-full bg-slate-100 text-slate-400 mx-auto flex items-center justify-center mb-2">
+                                    <i data-lucide="image" class="w-4 h-4"></i>
                                 </div>
-                                <h4 class="text-sm font-semibold text-[#111215] mb-1">No Variation Yet</h4>
-                                <p class="text-xs text-[#666666] max-w-xs mb-4">Click below to generate the first in-place retouching variation.</p>
-                                <button onclick="reRollModel()" class="inline-flex items-center px-4 py-2 rounded-xl text-xs font-bold text-white bg-[#111215] hover:bg-black transition">
-                                    <i data-lucide="zap" class="w-3.5 h-3.5 mr-1.5 text-[#2EA3F2]"></i> Run Initial Retouch
+                                <h4 class="text-xs font-bold text-[#111215] mb-0.5">No Variation Yet</h4>
+                                <p class="text-[11px] text-[#666666] max-w-xs mb-2">Click below to generate the first in-place retouching variation.</p>
+                                <button onclick="reRollModel()" class="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-bold text-white bg-[#111215] hover:bg-black transition cursor-pointer">
+                                    <i data-lucide="zap" class="w-3 h-3 mr-1 text-[#2EA3F2]"></i> Run Initial Retouch
                                 </button>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
 
-                    <!-- Retouched Variations History Gallery Tray -->
-                    <div id="variations-gallery-section" class="mt-4 pt-3 border-t border-[#F1F3F5]">
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="text-[10px] font-bold uppercase tracking-wider text-[#666666] flex items-center">
-                                <i data-lucide="layers" class="w-3.5 h-3.5 mr-1.5 text-[#2EA3F2]"></i> Retouched Variations Gallery
-                            </span>
-                            <span id="variations-count-badge" class="text-[9px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">3 Candidates</span>
+            <!-- Row 4: Compact Full-Width Variations History Gallery Tray -->
+            <div id="variations-gallery-section" class="bg-white border border-[#E5E7EB] rounded-2xl px-4 py-2 shadow-xs">
+                <div class="flex items-center justify-between mb-1.5">
+                    <span class="text-xs font-bold uppercase tracking-wider text-[#666666] flex items-center">
+                        <i data-lucide="layers" class="w-3.5 h-3.5 mr-1.5 text-[#2EA3F2]"></i> Retouched Variations Gallery
+                    </span>
+                    <div class="flex items-center space-x-2">
+                        <span id="variations-count-badge" class="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-md border border-emerald-100">1 Candidate</span>
+                        <button onclick="clearProductVariations()" title="Reset candidate variations for this item" class="text-xs font-medium text-[#888888] hover:text-rose-600 hover:bg-rose-50 px-2 py-0.5 rounded-md border border-[#E5E7EB] hover:border-rose-200 transition flex items-center gap-1 cursor-pointer">
+                            <i data-lucide="rotate-ccw" class="w-3 h-3"></i>
+                            <span>Reset Candidates</span>
+                        </button>
+                    </div>
+                </div>
+                <div id="variations-thumbs-bar" class="flex items-center gap-2 overflow-x-auto pb-0.5 min-h-[44px]">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+
+            <!-- AI Learned Success Banner with Editable Category Name & Yes/No Controls -->
+            <div id="ai-learned-card" class="hidden bg-emerald-50/95 border-2 border-emerald-300 rounded-2xl p-4 shadow-sm space-y-3">
+                <div class="flex items-start justify-between gap-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                            <i data-lucide="sparkles" class="w-4 h-4"></i>
                         </div>
-                        <div id="variations-thumbs-bar" class="flex items-center gap-2 overflow-x-auto pb-1 min-h-[56px]">
-                            <!-- Populated via JS -->
+                        <div>
+                            <h4 class="text-xs md:text-sm font-bold text-emerald-950">Save this retouch configuration as a new Category for future listings?</h4>
+                            <p class="text-[11px] text-emerald-700 mt-0.5">Edit the proposed category name below if desired, then click Yes to save or No to skip.</p>
                         </div>
+                    </div>
+                    <button onclick="dismissLearnedCategory()" class="text-emerald-700 hover:text-emerald-900 p-1 rounded-lg hover:bg-emerald-100 transition cursor-pointer" title="Dismiss">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 pt-1">
+                    <div class="flex-1 relative">
+                        <label class="block text-[10px] font-bold uppercase tracking-wider text-emerald-900 mb-1">Category Name (Editable):</label>
+                        <input type="text" id="ai-learned-cat-name" value="" placeholder="Enter category name..." class="w-full bg-white border border-emerald-300 rounded-xl px-3 py-2 text-xs font-bold text-[#111215] focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 shadow-2xs">
+                    </div>
+                    <div class="flex items-center gap-2 self-end sm:self-auto sm:mt-5">
+                        <button onclick="saveLearnedCategoryConfirm()" class="px-4 py-2 rounded-xl text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-800 transition flex items-center space-x-1.5 shadow-xs cursor-pointer">
+                            <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                            <span>Yes, Save Category</span>
+                        </button>
+                        <button onclick="dismissLearnedCategory()" class="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-700 bg-white hover:bg-slate-100 border border-slate-300 transition flex items-center space-x-1 cursor-pointer">
+                            <i data-lucide="x" class="w-3.5 h-3.5 text-slate-500"></i>
+                            <span>No</span>
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <!-- AI Learned Success Banner (Appears when custom/vision retouch finishes) -->
-            <div id="ai-learned-card" class="hidden bg-emerald-50 border border-emerald-200 rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-xs">
-                <div class="flex items-center space-x-3">
-                    <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0">
-                        <i data-lucide="sparkles" class="w-4 h-4"></i>
-                    </div>
-                    <div>
-                        <h4 class="text-xs font-bold text-emerald-950">✨ Successfully retouched with AI-detected custom traits!</h4>
-                        <p class="text-[11px] text-emerald-700">Satisfied with this piece? Save this configuration as a new Category or Subcategory for future items.</p>
-                    </div>
-                </div>
-                <button onclick="saveLearnedCategory()" class="shrink-0 px-4 py-2 rounded-xl text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-800 transition flex items-center space-x-1.5 shadow-xs">
-                    <i data-lucide="save" class="w-3.5 h-3.5"></i>
-                    <span>Save as New Category</span>
-                </button>
-            </div>
-
-            <!-- Action Buttons Bar -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-3 pt-2">
-                <button onclick="approveProduct()" class="w-full py-4 px-4 rounded-xl font-bold text-xs text-white bg-[#059669] hover:bg-[#047857] shadow-xs transition flex items-center justify-center space-x-1.5">
+            <!-- Row 5: Action Buttons Bar (+2pt enlarged fonts & crisp icons) -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5 pt-0.5">
+                <button onclick="approveProduct()" id="btn-publish-angle" class="w-full py-2.5 px-3 rounded-xl font-bold text-xs md:text-sm text-white bg-[#059669] hover:bg-[#047857] shadow-xs transition flex items-center justify-center space-x-2 cursor-pointer">
                     <i data-lucide="check" class="w-4 h-4"></i>
-                    <span>APPROVE & PUBLISH LIVE</span>
+                    <span id="btn-publish-angle-text">PUBLISH</span>
                 </button>
-                <button onclick="reRollModel()" class="w-full py-4 px-4 rounded-xl font-semibold text-xs text-[#222222] bg-white hover:bg-[#F8F9FA] border border-[#E5E7EB] transition flex items-center justify-center space-x-1.5">
+                <button onclick="reRollModel()" class="w-full py-2.5 px-3 rounded-xl font-bold text-xs md:text-sm text-[#222222] bg-white hover:bg-[#F8F9FA] border border-[#E5E7EB] transition flex items-center justify-center space-x-2 cursor-pointer shadow-xs">
                     <i data-lucide="refresh-cw" class="w-4 h-4 text-[#666666]"></i>
                     <span>RE-ROLL</span>
                 </button>
-                <button onclick="openCategoryRetouchModal()" class="w-full py-4 px-4 rounded-xl font-bold text-xs text-[#111215] bg-amber-50 hover:bg-amber-100 border border-amber-200 transition flex items-center justify-center space-x-1.5 shadow-xs">
+                <button onclick="openCategoryRetouchModal()" class="w-full py-2.5 px-3 rounded-xl font-bold text-xs md:text-sm text-[#111215] bg-amber-50 hover:bg-amber-100 border border-amber-200 transition flex items-center justify-center space-x-2 shadow-xs cursor-pointer">
                     <i data-lucide="tag" class="w-4 h-4 text-amber-600"></i>
                     <span>RETOUCH WITH CATEGORY</span>
                 </button>
-                <button onclick="startVisionScan()" class="w-full py-4 px-4 rounded-xl font-bold text-xs text-[#111215] bg-sky-50 hover:bg-sky-100 border border-sky-200 transition flex items-center justify-center space-x-1.5 shadow-xs">
+                <button onclick="startVisionScan()" class="w-full py-2.5 px-3 rounded-xl font-bold text-xs md:text-sm text-[#111215] bg-sky-50 hover:bg-sky-100 border border-sky-200 transition flex items-center justify-center space-x-2 shadow-xs cursor-pointer">
                     <i data-lucide="wand-2" class="w-4 h-4 text-[#2EA3F2]"></i>
-                    <span>AI VISION SCAN</span>
+                    <span>Recognise with AI and retouch</span>
                 </button>
             </div>
         </section>
@@ -698,9 +725,7 @@
                         retouched_url: "assets/art_deco_retouched_angle1.jpg",
                         retouched_id: "9423723987101_A1_Master",
                         variations: [
-                            { url: "assets/art_deco_base_prompt_flawed.jpg", label: "v1 (Raw Base Diffusion)" },
-                            { url: "assets/pipeline_stage2_facet_lattice.jpg", label: "v2 (CV Lattice Scan)" },
-                            { url: "assets/art_deco_retouched_angle1.jpg", label: "v3 (4K Master WebP)" }
+                            { url: "assets/art_deco_retouched_angle1.jpg", label: "v1 Master WebP" }
                         ]
                     },
                     "angle_2": {
@@ -1422,29 +1447,45 @@
                     rec.variations.push(newVar);
                     renderVariationsGallery(current_image_id, rec.variations, rec.retouched_url);
                 }
+                if (lastVisionAnalysis) {
+                    const catInput = document.getElementById('ai-learned-cat-name');
+                    if (catInput) catInput.value = lastVisionAnalysis.suggested_category_name || '';
+                }
                 document.getElementById('ai-learned-card').classList.remove('hidden');
                 showToast("AI Vision retouch deployed! Custom traits applied.", true);
                 if (window.lucide) window.lucide.createIcons();
             }, 1400);
         }
 
-        function saveLearnedCategory() {
-            if (!lastVisionAnalysis) return;
-            const catName = document.getElementById('vision-cat-name').value || lastVisionAnalysis.suggested_category_name;
-            const prompt = document.getElementById('vision-prompt').value || lastVisionAnalysis.tailored_prompt;
+        function dismissLearnedCategory() {
+            document.getElementById('ai-learned-card').classList.add('hidden');
+        }
 
+        function saveLearnedCategoryConfirm() {
+            const inputVal = document.getElementById('ai-learned-cat-name').value.trim();
+            const catName = inputVal || (lastVisionAnalysis && lastVisionAnalysis.suggested_category_name) || "Custom Luxury Jewelry";
+            const prompt = (lastVisionAnalysis && lastVisionAnalysis.tailored_prompt) || "";
             const newCat = {
-                id: 'learned_' + Date.now(),
+                id: 'cat_' + Date.now(),
                 name: catName,
-                type: lastVisionAnalysis.gemstone_type,
+                type: (lastVisionAnalysis && lastVisionAnalysis.gemstone_type) || "Natural Gemstone",
                 description: `AI-learned from product #${current_product_id} with ${activeVisionMetal} setting.`,
                 golden_prompt: prompt,
-                traits: lastVisionAnalysis.detected_traits
+                traits: (lastVisionAnalysis && lastVisionAnalysis.detected_traits) || []
             };
-
             categoriesData.push(newCat);
             document.getElementById('ai-learned-card').classList.add('hidden');
-            showToast(`Saved '${catName}' as a permanent Category in library!`, true);
+            showToast(`Saved '${catName}' to Category Library!`, true);
+        }
+
+        function clearProductVariations() {
+            const prod = allProducts[current_product_id];
+            if (prod && prod.images[current_image_id]) {
+                const rec = prod.images[current_image_id];
+                rec.variations = [{ url: rec.retouched_url, label: 'v1 Master WebP' }];
+                renderVariationsGallery(current_image_id, rec.variations, rec.retouched_url);
+                showToast("Candidate variations reset to active master.");
+            }
         }
 
         // -------------------------------------------------------------
