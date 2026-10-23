@@ -70,3 +70,9 @@ graph LR
 **Petro Koriaka**  
 *AI Automation Architect & Enterprise Systems Engineer*  
 Upwork: [Petro Koriaka](https://www.upwork.com/)
+
+---
+
+## License
+
+This project is licensed under the [MIT License](LICENSE) — intended as an open reference architecture and demonstration system for e-commerce studios.
