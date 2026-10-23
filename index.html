@@ -177,9 +177,9 @@
                     <p class="text-xs text-[#666666] mt-0.5 flex flex-wrap items-center gap-2">
                         <span>Product ID: <span id="review-id-label" class="font-mono text-[#222222]">#9423723987101</span> (<span id="review-photo-count">3</span> Studio Angles attached)</span>
                         <span class="text-slate-300">•</span>
-                        <a id="review-real-picture-link" href="assets/art_deco_sapphire_angle1_perspective.jpg" target="_blank" class="inline-flex items-center text-[#2EA3F2] hover:text-[#1d82c4] font-semibold underline underline-offset-2 transition" title="Open full-resolution real camera picture in new tab">
+                        <a id="review-real-picture-link" href="https://www.etsy.com/listing/4496447107/art-deco-aquamarine-ring-silver-sapphire" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-[#2EA3F2] hover:text-[#1d82c4] font-semibold underline underline-offset-2 transition" title="Open original online source listing where this item and photos were taken from">
                             <i data-lucide="external-link" class="w-3.5 h-3.5 mr-1"></i>
-                            <span>View Real Picture</span>
+                            <span id="review-real-picture-label">View Original Source (Where Taken From)</span>
                         </a>
                     </p>
                 </div>
@@ -210,8 +210,8 @@
                             </span>
                         </div>
                         <div class="flex items-center space-x-2 shrink-0">
-                            <a id="review-raw-card-link" href="assets/art_deco_sapphire_angle1_perspective.jpg" target="_blank" class="text-xs font-semibold text-[#2EA3F2] hover:underline flex items-center gap-1" title="Open full-resolution real camera photo in new tab">
-                                <i data-lucide="external-link" class="w-3 h-3"></i> Real Picture
+                            <a id="review-raw-card-link" href="https://www.etsy.com/listing/4496447107/art-deco-aquamarine-ring-silver-sapphire" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-[#2EA3F2] hover:underline flex items-center gap-1" title="Open original online source listing where this item was taken from">
+                                <i data-lucide="external-link" class="w-3 h-3"></i> Original Source
                             </a>
                             <span class="text-xs font-mono font-bold bg-white text-slate-600 px-2 py-0.5 rounded-md border border-slate-200 shrink-0 whitespace-nowrap" id="review-raw-badge">Camera Raw</span>
                         </div>
@@ -733,6 +733,8 @@
                 badge_text: "Pending Review",
                 badge_icon: "clock",
                 photo_count: 3,
+                source_url: "https://www.etsy.com/listing/4496447107/art-deco-aquamarine-ring-silver-sapphire",
+                source_label: "Etsy Antique Art Deco Listing",
                 images: {
                     "angle_1": {
                         raw_url: "assets/art_deco_sapphire_angle1_perspective.jpg",
@@ -772,6 +774,8 @@
                 badge_text: "Published Live",
                 badge_icon: "check-circle",
                 photo_count: 3,
+                source_url: "https://www.etsy.com/listing/4353179347/vintage-1990-s-14-ct-rolled-gold-ruby",
+                source_label: "Etsy 1930s Vintage Solitaire Listing",
                 images: {
                     "angle_1": {
                         raw_url: "assets/vintage_solitaire_angle1_perspective.jpg",
@@ -811,6 +815,8 @@
                 badge_text: "Published Live",
                 badge_icon: "check-circle",
                 photo_count: 3,
+                source_url: "https://www.etsy.com/search?q=4.60+Crt+Natural+Ethiopian+Black+Opal",
+                source_label: "Etsy Ethiopian Opal Benchmark",
                 images: {
                     "angle_1": {
                         raw_url: "assets/opal_black_angle1_vertical.jpg",
@@ -1089,6 +1095,22 @@
                 badge.innerHTML = '<i data-lucide="clock" class="w-3.5 h-3.5 mr-1.5"></i> In The Line (Pending)';
             }
 
+            // Update Real Picture Source Link (external provenance where it was taken from)
+            const realLink = document.getElementById('review-real-picture-link');
+            const realLabel = document.getElementById('review-real-picture-label');
+            if (realLink) {
+                realLink.href = prod.source_url || '#';
+                realLink.title = `Open original online source listing where this item and photos were taken from (${prod.source_label || 'Etsy'})`;
+                if (realLabel) {
+                    realLabel.innerText = prod.source_label ? `View Original Source (${prod.source_label})` : 'View Original Source (Where Taken From)';
+                }
+            }
+            const rawCardLink = document.getElementById('review-raw-card-link');
+            if (rawCardLink) {
+                rawCardLink.href = prod.source_url || '#';
+                rawCardLink.title = `Open original source listing where this item was taken from`;
+            }
+
             // Build Angle Thumbnails Bar
             const thumbBar = document.getElementById('review-thumb-bar');
             thumbBar.innerHTML = '<span class="text-xs font-semibold uppercase tracking-wider text-[#666666] mr-2">Product Angles:</span>';
@@ -1121,10 +1143,6 @@
             // 1. Raw photo update
             document.getElementById('review-raw-img').src = rec.raw_url;
             document.getElementById('review-raw-label').innerText = `Original Raw Photo (Angle ${idx + 1} — ID: ${imgId})`;
-            const realLink = document.getElementById('review-real-picture-link');
-            if (realLink) realLink.href = rec.raw_url;
-            const rawCardLink = document.getElementById('review-raw-card-link');
-            if (rawCardLink) rawCardLink.href = rec.raw_url;
             const rawImgAnchor = document.getElementById('review-raw-img-anchor');
             if (rawImgAnchor) rawImgAnchor.href = rec.raw_url;
 
