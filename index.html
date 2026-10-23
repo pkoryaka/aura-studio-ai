@@ -1,1148 +1,1586 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aura Studio AI — Change the setting. Not the stone.</title>
-  <meta name="description" content="Autonomous high-jewelry product imaging that preserves authentic gemological geometry. Engineered by Petro Koriaka.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg-page: #FAF9F6;
-      --bg-card: #FFFFFF;
-      --border-subtle: #E7E5E0;
-      --border-medium: #D1CFCA;
-      --text-main: #1C1917;
-      --text-sub: #57534E;
-      --text-muted: #78716C;
-      --accent-sapphire: #1E3A8A;
-      --accent-sapphire-light: #EFF6FF;
-      --accent-emerald: #047857;
-      --accent-emerald-light: #ECFDF5;
-      --accent-red: #B91C1C;
-      --accent-red-light: #FEF2F2;
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
-      --shadow-md: 0 8px 24px -4px rgba(28,25,23,0.06);
-      --shadow-lg: 0 20px 40px -12px rgba(28,25,23,0.1);
-      --font-serif: 'Cormorant Garamond', Georgia, serif;
-      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background-color: var(--bg-page);
-      color: var(--text-main);
-      font-family: var(--font-sans);
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-      padding-bottom: 4rem;
-    }
-
-    /* Container */
-    .container {
-      max-width: 1240px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    }
-
-    /* Header */
-    header {
-      padding: 1.75rem 0 1.5rem;
-      border-bottom: 1px solid var(--border-subtle);
-      background: #FAF9F6;
-    }
-
-    .header-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .author-info {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .author-name {
-      font-size: 0.95rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-main);
-    }
-
-    .author-title {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .btn-github {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.5rem 0.9rem;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-medium);
-      background: #FFFFFF;
-      color: var(--text-sub);
-      font-size: 0.82rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.15s ease;
-    }
-
-    .btn-github:hover {
-      border-color: var(--text-main);
-      color: var(--text-main);
-    }
-
-    .btn-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.55rem 1.15rem;
-      border-radius: var(--radius-sm);
-      background: var(--text-main);
-      color: #FFFFFF;
-      font-size: 0.84rem;
-      font-weight: 600;
-      text-decoration: none;
-      border: 1px solid var(--text-main);
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-
-    .btn-cta:hover {
-      background: #332F2C;
-      border-color: #332F2C;
-      transform: translateY(-1px);
-    }
-
-    /* Hero Section */
-    .hero-title-area {
-      text-align: center;
-      padding: 3rem 0 2.25rem;
-    }
-
-    .hero-heading {
-      font-family: var(--font-serif);
-      font-size: 3.25rem;
-      font-weight: 600;
-      line-height: 1.15;
-      color: var(--text-main);
-      margin-bottom: 0.75rem;
-      letter-spacing: -0.01em;
-    }
-
-    .hero-subheading {
-      font-size: 1.1rem;
-      color: var(--text-sub);
-      max-width: 680px;
-      margin: 0 auto;
-      font-weight: 400;
-      line-height: 1.6;
-    }
-
-    /* Comparison Workspace (2-Column Grid) */
-    .showcase-grid {
-      display: grid;
-      grid-template-columns: 1fr 340px;
-      gap: 1.75rem;
-      align-items: start;
-      margin-bottom: 2rem;
-    }
-
-    @media (max-width: 1024px) {
-      .showcase-grid {
-        grid-template-columns: 1fr;
-      }
-      .hero-heading {
-        font-size: 2.5rem;
-      }
-    }
-
-    /* Left: Comparison Frame */
-    .comparison-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      padding: 1rem;
-      box-shadow: var(--shadow-md);
-    }
-
-    .slider-stage {
-      position: relative;
-      width: 100%;
-      height: 520px;
-      background: #F3F1EC;
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      user-select: none;
-      touch-action: pan-y;
-      cursor: ew-resize;
-    }
-
-    .slider-img-after {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      background: #FFFFFF;
-      pointer-events: none;
-    }
-
-    .slider-before-wrapper {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 50%;
-      overflow: hidden;
-      pointer-events: none;
-      z-index: 2;
-      background: #FFFFFF;
-      border-right: 1.5px solid rgba(255, 255, 255, 0.95);
-      box-shadow: 2px 0 10px rgba(0,0,0,0.15);
-    }
-
-    .slider-img-before {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      object-fit: contain;
-      pointer-events: none;
-    }
-
-    /* Divider & Knob */
-    .slider-divider-line {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 50%;
-      width: 2px;
-      background: #FFFFFF;
-      transform: translateX(-50%);
-      z-index: 5;
-      pointer-events: none;
-      box-shadow: 0 0 8px rgba(0,0,0,0.3);
-    }
-
-    .slider-handle {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: #FFFFFF;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.18);
-      border: 1px solid var(--border-subtle);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--text-main);
-      z-index: 6;
-      cursor: ew-resize;
-    }
-
-    /* Floating Badges inside Viewer */
-    .view-badge {
-      position: absolute;
-      top: 1rem;
-      padding: 0.4rem 0.8rem;
-      border-radius: 6px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      z-index: 4;
-      pointer-events: none;
-      backdrop-filter: blur(8px);
-    }
-
-    .badge-generic {
-      left: 1rem;
-      background: rgba(254, 242, 242, 0.92);
-      color: var(--accent-red);
-      border: 1px solid rgba(185, 28, 28, 0.2);
-    }
-
-    .badge-protected {
-      right: 1rem;
-      background: rgba(239, 246, 255, 0.94);
-      color: var(--accent-sapphire);
-      border: 1px solid rgba(30, 58, 138, 0.2);
-    }
-
-    /* Quick View Navigation Bar */
-    .slider-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 0.85rem;
-      padding: 0 0.25rem;
-      gap: 1rem;
-    }
-
-    .quick-view-pills {
-      display: flex;
-      gap: 0.4rem;
-    }
-
-    .quick-pill {
-      padding: 0.35rem 0.75rem;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-subtle);
-      background: var(--bg-page);
-      color: var(--text-sub);
-      font-size: 0.76rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-
-    .quick-pill:hover {
-      border-color: var(--border-medium);
-      color: var(--text-main);
-    }
-
-    .quick-pill.active {
-      background: var(--text-main);
-      color: #FFFFFF;
-      border-color: var(--text-main);
-    }
-
-    .drag-hint {
-      font-size: 0.76rem;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    /* Right: Source Benchmark Card */
-    .source-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      padding: 1.25rem;
-      box-shadow: var(--shadow-sm);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .source-header-label {
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 0.75rem;
-    }
-
-    .source-thumb-frame {
-      width: 100%;
-      height: 220px;
-      border-radius: var(--radius-sm);
-      overflow: hidden;
-      background: #F3F1EC;
-      border: 1px solid var(--border-subtle);
-      margin-bottom: 1rem;
-    }
-
-    .source-thumb-frame img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      background: #FAF9F6;
-    }
-
-    .source-meta-title {
-      font-size: 0.92rem;
-      font-weight: 700;
-      color: var(--text-main);
-      margin-bottom: 0.35rem;
-      line-height: 1.35;
-    }
-
-    .source-meta-desc {
-      font-size: 0.8rem;
-      color: var(--text-sub);
-      line-height: 1.5;
-      margin-bottom: 0.85rem;
-    }
-
-    .source-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      font-size: 0.78rem;
-      color: var(--accent-sapphire);
-      text-decoration: underline;
-      font-weight: 600;
-      margin-bottom: 1rem;
-    }
-
-    .source-quote-box {
-      margin-top: auto;
-      padding: 0.85rem;
-      border-radius: var(--radius-sm);
-      background: #F9F8F5;
-      border-left: 3px solid var(--accent-sapphire);
-      font-size: 0.8rem;
-      color: var(--text-sub);
-      line-height: 1.45;
-      font-style: italic;
-    }
-
-    /* Measured Proof Strip (3 Cards) */
-    .proof-strip {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-      margin-bottom: 1.75rem;
-    }
-
-    @media (max-width: 768px) {
-      .proof-strip {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .proof-item {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 1.25rem 1.35rem;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .proof-stat {
-      font-size: 1.75rem;
-      font-weight: 700;
-      color: var(--text-main);
-      line-height: 1.1;
-      margin-bottom: 0.35rem;
-      letter-spacing: -0.02em;
-    }
-
-    .proof-stat.stat-emerald {
-      color: var(--accent-emerald);
-    }
-
-    .proof-stat.stat-sapphire {
-      color: var(--accent-sapphire);
-    }
-
-    .proof-label {
-      font-size: 0.84rem;
-      font-weight: 700;
-      color: var(--text-main);
-      margin-bottom: 0.25rem;
-    }
-
-    .proof-detail {
-      font-size: 0.78rem;
-      color: var(--text-sub);
-      line-height: 1.5;
-    }
-
-    /* Accordion / Proof Disclosure Section */
-    .accordion-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      margin-bottom: 2rem;
-      overflow: hidden;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .accordion-trigger {
-      width: 100%;
-      background: transparent;
-      border: none;
-      padding: 1.25rem 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      text-align: left;
-      font-family: var(--font-sans);
-      transition: background 0.15s ease;
-    }
-
-    .accordion-trigger:hover {
-      background: #F9F8F5;
-    }
-
-    .accordion-title-wrap {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .accordion-icon {
-      font-size: 1rem;
-      color: var(--accent-sapphire);
-    }
-
-    .accordion-title {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--text-main);
-    }
-
-    .accordion-badge {
-      font-size: 0.72rem;
-      font-weight: 600;
-      padding: 0.25rem 0.6rem;
-      border-radius: 4px;
-      background: var(--accent-sapphire-light);
-      color: var(--accent-sapphire);
-      border: 1px solid rgba(30, 58, 138, 0.15);
-    }
-
-    .accordion-arrow {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      transition: transform 0.2s ease;
-    }
-
-    .accordion-trigger.open .accordion-arrow {
-      transform: rotate(180deg);
-    }
-
-    .accordion-content {
-      display: none;
-      padding: 0 1.5rem 1.5rem;
-      border-top: 1px solid var(--border-subtle);
-      background: #FFFFFF;
-    }
-
-    .accordion-content.open {
-      display: block;
-    }
-
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-      padding-top: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    @media (max-width: 768px) {
-      .steps-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .step-box {
-      border-left: 2px solid var(--border-medium);
-      padding-left: 1rem;
-    }
-
-    .step-num {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--accent-sapphire);
-      margin-bottom: 0.25rem;
-    }
-
-    .step-title {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--text-main);
-      margin-bottom: 0.35rem;
-    }
-
-    .step-desc {
-      font-size: 0.78rem;
-      color: var(--text-sub);
-      line-height: 1.55;
-      margin-bottom: 0.5rem;
-    }
-
-    .step-tech {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      font-family: monospace;
-      font-weight: 600;
-    }
-
-    .case-example-box {
-      background: #F9F8F5;
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-sm);
-      padding: 1rem 1.25rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .case-example-text {
-      font-size: 0.8rem;
-      color: var(--text-sub);
-      line-height: 1.5;
-    }
-
-    .case-example-text strong {
-      color: var(--text-main);
-    }
-
-    .btn-wireframe-toggle {
-      padding: 0.45rem 0.85rem;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--accent-sapphire);
-      background: #FFFFFF;
-      color: var(--accent-sapphire);
-      font-size: 0.76rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-
-    .btn-wireframe-toggle:hover {
-      background: var(--accent-sapphire);
-      color: #FFFFFF;
-    }
-
-    /* Production Workflow Banner */
-    .workflow-banner {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      padding: 2.25rem 2rem;
-      text-align: center;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .workflow-title {
-      font-family: var(--font-serif);
-      font-size: 1.75rem;
-      font-weight: 600;
-      color: var(--text-main);
-      margin-bottom: 0.5rem;
-    }
-
-    .workflow-sub {
-      font-size: 0.92rem;
-      color: var(--text-sub);
-      max-width: 620px;
-      margin: 0 auto 1.5rem;
-      line-height: 1.6;
-    }
-
-    .workflow-pipeline-strip {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.6rem 1.25rem;
-      background: #F9F8F5;
-      border: 1px solid var(--border-subtle);
-      border-radius: 999px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--text-sub);
-      margin-bottom: 1.75rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .pipeline-arrow {
-      color: var(--border-medium);
-    }
-
-    /* Contact Modal */
-    .modal-backdrop {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(28, 25, 23, 0.6);
-      backdrop-filter: blur(4px);
-      z-index: 1000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
-    }
-
-    .modal-backdrop.active {
-      display: flex;
-    }
-
-    .modal-card {
-      background: #FFFFFF;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-subtle);
-      max-width: 540px;
-      width: 100%;
-      padding: 2rem;
-      box-shadow: var(--shadow-lg);
-      position: relative;
-    }
-
-    .modal-close-btn {
-      position: absolute;
-      top: 1.25rem;
-      right: 1.25rem;
-      background: transparent;
-      border: none;
-      font-size: 1.25rem;
-      color: var(--text-muted);
-      cursor: pointer;
-    }
-
-    .modal-header {
-      margin-bottom: 1.25rem;
-    }
-
-    .modal-title {
-      font-family: var(--font-serif);
-      font-size: 1.75rem;
-      font-weight: 700;
-      color: var(--text-main);
-      margin-bottom: 0.25rem;
-    }
-
-    .modal-sub {
-      font-size: 0.85rem;
-      color: var(--text-sub);
-      line-height: 1.5;
-    }
-
-    .inquiry-box {
-      background: #F9F8F5;
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-sm);
-      padding: 1rem;
-      font-size: 0.82rem;
-      color: var(--text-main);
-      line-height: 1.5;
-      margin-bottom: 1.25rem;
-      user-select: all;
-    }
-
-    .modal-btn-row {
-      display: flex;
-      gap: 0.75rem;
-    }
-
-    .modal-btn-row .btn-cta {
-      flex: 1;
-      justify-content: center;
-      padding: 0.75rem;
-    }
-
-    .btn-copy {
-      padding: 0.75rem 1rem;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border-medium);
-      background: #FFFFFF;
-      font-size: 0.84rem;
-      font-weight: 600;
-      color: var(--text-main);
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA STUDIO AI — High-Jewelry Retouch Console & Automated Pipeline</title>
+    <meta name="description" content="Production-grade AI image retouching console for high-jewelry and gemstones. Preserves facet geometry, optical fire, and authentic metal luster.">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .nav-tab-btn.active {
+            background-color: #FFFFFF;
+            color: #111215;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+            font-weight: 600;
+        }
+        .catalog-filter-btn.active {
+            border-bottom: 2px solid #111215;
+            color: #111215;
+            font-weight: 700;
+        }
+        /* Custom scrollbar for gallery and trays */
+        ::-webkit-scrollbar {
+            height: 6px;
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F1F3F5;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D1D5DB;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9CA3AF;
+        }
+    </style>
 </head>
-<body>
+<body class="bg-[#F8F9FA] text-[#222222] min-h-screen antialiased flex flex-col justify-between">
 
-  <!-- Top Navigation Header -->
-  <header>
-    <div class="container header-inner">
-      <div class="author-info">
-        <span class="author-name">Petro Koriaka</span>
-        <span class="author-title">AI Automation Architect • Multimodal Vision Systems</span>
-      </div>
-      <div class="header-actions">
-        <a href="https://github.com/pkoryaka/aura-studio-ai" target="_blank" rel="noopener noreferrer" class="btn-github">
-          <span>GitHub</span> ↗
-        </a>
-        <button class="btn-cta" onclick="openContactModal()">
-          Discuss your project ↗
-        </button>
-      </div>
+    <!-- ========================================================================= -->
+    <!-- TOP NAVIGATION BAR -->
+    <!-- ========================================================================= -->
+    <header class="border-b border-[#E5E7EB] bg-white sticky top-0 z-50 shadow-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 py-3 flex items-center justify-between gap-4">
+            
+            <!-- Brand Mark -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('catalog')">
+                <div class="w-9 h-9 rounded-xl bg-[#111215] flex items-center justify-center text-white shadow-xs">
+                    <i data-lucide="gem" class="w-4 h-4 text-[#2EA3F2]"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="text-sm font-bold tracking-tight uppercase text-[#111215]">
+                            Aura Studio <span class="text-[10px] font-mono font-medium tracking-widest text-[#2EA3F2] ml-0.5">AI</span>
+                        </h1>
+                        <span class="inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] font-mono bg-emerald-50 text-emerald-700 border border-emerald-200">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse mr-1"></span> Live v2.6
+                        </span>
+                    </div>
+                    <p class="text-[10px] text-[#666666] leading-none mt-0.5">Automated High-Jewelry Retouch Console</p>
+                </div>
+            </div>
+
+            <!-- Unified 3-Tab Navigator -->
+            <div class="flex items-center space-x-1 bg-[#F1F3F5] p-1 rounded-2xl border border-[#E5E7EB]">
+                <button onclick="switchTab('catalog')" id="tab-btn-catalog" class="nav-tab-btn active px-4 py-1.5 rounded-xl text-xs font-semibold text-[#666666] hover:text-[#111215] transition flex items-center space-x-1.5">
+                    <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
+                    <span>Catalog Queue</span>
+                    <span id="tab-catalog-badge" class="ml-1 bg-white text-[#111215] px-1.5 py-0.2 rounded-full text-[10px] font-mono border">3</span>
+                </button>
+                <button onclick="switchTab('review')" id="tab-btn-review" class="nav-tab-btn px-4 py-1.5 rounded-xl text-xs font-semibold text-[#666666] hover:text-[#111215] transition flex items-center space-x-1.5">
+                    <i data-lucide="scan" class="w-3.5 h-3.5 text-[#2EA3F2]"></i>
+                    <span>Studio Review</span>
+                </button>
+                <button onclick="switchTab('categories')" id="tab-btn-categories" class="nav-tab-btn px-4 py-1.5 rounded-xl text-xs font-semibold text-[#666666] hover:text-[#111215] transition flex items-center space-x-1.5">
+                    <i data-lucide="book-open" class="w-3.5 h-3.5 text-amber-500"></i>
+                    <span>Categories & Prompts</span>
+                </button>
+            </div>
+
+            <!-- Right Utilities & Upwork CTA -->
+            <div class="flex items-center space-x-2.5">
+                <button onclick="openShopifyModal()" title="View Shopify Admin Integration" class="inline-flex items-center text-xs font-medium text-[#666666] hover:text-[#111215] bg-[#F8F9FA] hover:bg-[#E5E7EB] px-3 py-1.5 rounded-xl border border-[#E5E7EB] transition">
+                    <i data-lucide="shopping-bag" class="w-3.5 h-3.5 mr-1.5 text-emerald-600"></i>
+                    <span class="hidden sm:inline">Shopify Admin</span>
+                </button>
+                <button onclick="openContactModal()" class="inline-flex items-center text-xs font-bold text-white bg-[#111215] hover:bg-black px-3.5 py-1.5 rounded-xl shadow-xs transition space-x-1.5">
+                    <i data-lucide="message-square" class="w-3.5 h-3.5 text-[#2EA3F2]"></i>
+                    <span>Discuss Project ↗</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========================================================================= -->
+    <!-- MAIN CONTENT CONTAINER -->
+    <!-- ========================================================================= -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-8 py-8 flex-1 w-full">
+        
+        <!-- ========================================================================= -->
+        <!-- TAB 1: CATALOG QUEUE PANE -->
+        <!-- ========================================================================= -->
+        <section id="pane-catalog" class="space-y-8">
+            <!-- Metrics Summary Cards -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-white border border-[#E5E7EB] rounded-2xl p-5 shadow-xs">
+                    <span class="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#666666] block mb-1">Total Catalog</span>
+                    <span id="metric-total" class="text-2xl font-extrabold text-[#111215]">3</span>
+                </div>
+                <div class="bg-white border border-[#E5E7EB] rounded-2xl p-5 shadow-xs">
+                    <span class="text-[10px] font-semibold uppercase tracking-[0.12em] text-amber-600 block mb-1">In The Line</span>
+                    <span id="metric-pending" class="text-2xl font-extrabold text-amber-600">1</span>
+                </div>
+                <div class="bg-white border border-[#E5E7EB] rounded-2xl p-5 shadow-xs">
+                    <span class="text-[10px] font-semibold uppercase tracking-[0.12em] text-sky-600 block mb-1">Processing</span>
+                    <span id="metric-processing" class="text-2xl font-extrabold text-sky-600">0</span>
+                </div>
+                <div class="bg-white border border-[#E5E7EB] rounded-2xl p-5 shadow-xs">
+                    <span class="text-[10px] font-semibold uppercase tracking-[0.12em] text-emerald-600 block mb-1">Published Live</span>
+                    <span id="metric-published" class="text-2xl font-extrabold text-emerald-600">2</span>
+                </div>
+            </div>
+
+            <!-- Filter Tabs & Search Bar -->
+            <div class="bg-white border border-[#E5E7EB] rounded-2xl p-4 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div class="flex items-center space-x-1 border-b md:border-b-0 border-[#E5E7EB] pb-2 md:pb-0 text-xs text-[#666666] overflow-x-auto">
+                    <button onclick="filterCatalog('all')" id="cat-filter-all" class="catalog-filter-btn active px-4 py-2 hover:text-[#111215] transition whitespace-nowrap">
+                        All Items (3)
+                    </button>
+                    <button onclick="filterCatalog('pending')" id="cat-filter-pending" class="catalog-filter-btn px-4 py-2 hover:text-[#111215] transition whitespace-nowrap">
+                        In The Line (1)
+                    </button>
+                    <button onclick="filterCatalog('processing')" id="cat-filter-processing" class="catalog-filter-btn px-4 py-2 hover:text-[#111215] transition whitespace-nowrap">
+                        Processing (0)
+                    </button>
+                    <button onclick="filterCatalog('published')" id="cat-filter-published" class="catalog-filter-btn px-4 py-2 hover:text-[#111215] transition whitespace-nowrap">
+                        Published Live (2)
+                    </button>
+                </div>
+
+                <div class="relative max-w-xs w-full">
+                    <i data-lucide="search" class="w-4 h-4 text-[#999999] absolute left-3 top-1/2 transform -translate-y-1/2"></i>
+                    <input type="text" id="search-input" onkeyup="searchCatalog()" placeholder="Search title or ID..." class="w-full bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl pl-9 pr-4 py-2 text-xs text-[#222222] placeholder-[#999999] focus:outline-none focus:border-[#2EA3F2] transition">
+                </div>
+            </div>
+
+            <!-- Product Cards Grid -->
+            <div id="catalog-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Product cards rendered dynamically via JS -->
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- TAB 2: STUDIO REVIEW PANE -->
+        <!-- ========================================================================= -->
+        <section id="pane-review" class="hidden space-y-6">
+            <!-- Product Header with Quick Switcher -->
+            <div class="bg-white border border-[#E5E7EB] rounded-2xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xs">
+                <div class="flex-1">
+                    <div class="flex items-center space-x-3 mb-1">
+                        <span class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#666666]">Active Item</span>
+                        <select id="review-product-picker" onchange="loadProductIntoReview(this.value)" class="text-xs bg-[#F8F9FA] border border-[#E5E7EB] rounded-lg px-2.5 py-1 text-[#222222] font-semibold focus:outline-none focus:border-[#2EA3F2]">
+                            <!-- Options populated via JS -->
+                        </select>
+                    </div>
+                    <h2 id="review-title" class="text-xl font-bold text-[#111215] tracking-tight">Art Deco Ceylon Sapphire & Pavé Halo Ring</h2>
+                    <p class="text-xs text-[#666666] mt-0.5">Product ID: <span id="review-id-label" class="font-mono text-[#222222]">#9423723987101</span> (<span id="review-photo-count">3</span> Studio Angles attached)</p>
+                </div>
+                
+                <div class="flex items-center space-x-3">
+                    <span id="review-status-badge" class="inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-semibold border bg-amber-50 text-amber-700 border-amber-200">
+                        <i data-lucide="clock" class="w-3.5 h-3.5 mr-1.5"></i> In The Line (Pending)
+                    </span>
+                </div>
+            </div>
+
+            <!-- Multi-Angle Image Selector Bar -->
+            <div id="review-thumb-bar" class="flex items-center gap-3 p-4 bg-white border border-[#E5E7EB] rounded-2xl shadow-xs overflow-x-auto">
+                <!-- Populated via JS -->
+            </div>
+
+            <!-- Side-by-Side Comparison Gallery -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Left Card: Original Raw Upload -->
+                <div class="bg-white border border-[#E5E7EB] rounded-2xl p-6 shadow-xs flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4 pb-3 border-b border-[#F1F3F5]">
+                            <span class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#666666]" id="review-raw-label">
+                                Original Raw Photo (Angle 1)
+                            </span>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-[11px] font-mono text-[#999999] bg-[#F8F9FA] px-2 py-0.5 rounded border border-[#E5E7EB]">Camera Raw</span>
+                                <button type="button" onclick="dismissActiveAngle()" title="Exclude this angle ID from console review" class="inline-flex items-center text-[10px] font-semibold text-[#666666] hover:text-rose-600 bg-[#F8F9FA] hover:bg-rose-50 border border-[#E5E7EB] hover:border-rose-200 px-2 py-0.5 rounded-lg transition">
+                                    <i data-lucide="eye-off" class="w-3 h-3 mr-1"></i> Exclude Angle
+                                </button>
+                            </div>
+                        </div>
+                        <div class="h-[420px] bg-[#FAFBFD] rounded-xl border border-[#F1F3F5] flex items-center justify-center p-3 overflow-hidden">
+                            <img id="review-raw-img" src="" alt="Original Raw" class="max-h-full max-w-full object-contain rounded-lg transition-opacity duration-150">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Card: 4K Retouched Master -->
+                <div class="bg-white border border-[#E5E7EB] rounded-2xl p-6 shadow-xs flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4 pb-3 border-b border-[#F1F3F5]">
+                            <span class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#059669] flex items-center gap-1.5" id="review-retouched-label">
+                                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Retouched Master (4K WebP)
+                            </span>
+                            <span class="text-[11px] font-mono text-[#059669] bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-100" id="review-retouched-badge">Studio Standard</span>
+                        </div>
+                        <div class="h-[420px] bg-[#FAFBFD] rounded-xl border border-[#F1F3F5] flex items-center justify-center p-3 relative overflow-hidden">
+                            <img id="review-retouched-img" src="" alt="Retouched Master" class="max-h-full max-w-full object-contain rounded-lg transition-opacity duration-150">
+                            
+                            <!-- Non-Intrusive Floating Retouch Progress Pill (Images NEVER disappear) -->
+                            <div id="retouch-progress-pill" class="hidden absolute top-3 right-3 bg-[#111215]/90 backdrop-blur-md text-white text-[11px] font-semibold px-3.5 py-1.5 rounded-full shadow-xl flex items-center space-x-2 border border-white/20 z-20">
+                                <div class="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                <span id="spinner-msg" class="tracking-wide">Generating Variation...</span>
+                            </div>
+
+                            <!-- No Candidate Placeholder (Only shown if angle has zero retouched versions) -->
+                            <div id="no-candidate-box" class="hidden text-center p-6">
+                                <div class="w-12 h-12 rounded-full bg-slate-100 text-slate-400 mx-auto flex items-center justify-center mb-3">
+                                    <i data-lucide="image" class="w-6 h-6"></i>
+                                </div>
+                                <h4 class="text-sm font-semibold text-[#111215] mb-1">No Variation Yet</h4>
+                                <p class="text-xs text-[#666666] max-w-xs mb-4">Click below to generate the first in-place retouching variation.</p>
+                                <button onclick="reRollModel()" class="inline-flex items-center px-4 py-2 rounded-xl text-xs font-bold text-white bg-[#111215] hover:bg-black transition">
+                                    <i data-lucide="zap" class="w-3.5 h-3.5 mr-1.5 text-[#2EA3F2]"></i> Run Initial Retouch
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Retouched Variations History Gallery Tray -->
+                    <div id="variations-gallery-section" class="mt-4 pt-3 border-t border-[#F1F3F5]">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-[#666666] flex items-center">
+                                <i data-lucide="layers" class="w-3.5 h-3.5 mr-1.5 text-[#2EA3F2]"></i> Retouched Variations Gallery
+                            </span>
+                            <span id="variations-count-badge" class="text-[9px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">3 Candidates</span>
+                        </div>
+                        <div id="variations-thumbs-bar" class="flex items-center gap-2 overflow-x-auto pb-1 min-h-[56px]">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Learned Success Banner (Appears when custom/vision retouch finishes) -->
+            <div id="ai-learned-card" class="hidden bg-emerald-50 border border-emerald-200 rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-xs">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0">
+                        <i data-lucide="sparkles" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold text-emerald-950">✨ Successfully retouched with AI-detected custom traits!</h4>
+                        <p class="text-[11px] text-emerald-700">Satisfied with this piece? Save this configuration as a new Category or Subcategory for future items.</p>
+                    </div>
+                </div>
+                <button onclick="saveLearnedCategory()" class="shrink-0 px-4 py-2 rounded-xl text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-800 transition flex items-center space-x-1.5 shadow-xs">
+                    <i data-lucide="save" class="w-3.5 h-3.5"></i>
+                    <span>Save as New Category</span>
+                </button>
+            </div>
+
+            <!-- Action Buttons Bar -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-3 pt-2">
+                <button onclick="approveProduct()" class="w-full py-4 px-4 rounded-xl font-bold text-xs text-white bg-[#059669] hover:bg-[#047857] shadow-xs transition flex items-center justify-center space-x-1.5">
+                    <i data-lucide="check" class="w-4 h-4"></i>
+                    <span>APPROVE & PUBLISH LIVE</span>
+                </button>
+                <button onclick="reRollModel()" class="w-full py-4 px-4 rounded-xl font-semibold text-xs text-[#222222] bg-white hover:bg-[#F8F9FA] border border-[#E5E7EB] transition flex items-center justify-center space-x-1.5">
+                    <i data-lucide="refresh-cw" class="w-4 h-4 text-[#666666]"></i>
+                    <span>RE-ROLL</span>
+                </button>
+                <button onclick="openCategoryRetouchModal()" class="w-full py-4 px-4 rounded-xl font-bold text-xs text-[#111215] bg-amber-50 hover:bg-amber-100 border border-amber-200 transition flex items-center justify-center space-x-1.5 shadow-xs">
+                    <i data-lucide="tag" class="w-4 h-4 text-amber-600"></i>
+                    <span>RETOUCH WITH CATEGORY</span>
+                </button>
+                <button onclick="startVisionScan()" class="w-full py-4 px-4 rounded-xl font-bold text-xs text-[#111215] bg-sky-50 hover:bg-sky-100 border border-sky-200 transition flex items-center justify-center space-x-1.5 shadow-xs">
+                    <i data-lucide="wand-2" class="w-4 h-4 text-[#2EA3F2]"></i>
+                    <span>AI VISION SCAN</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- TAB 3: CATEGORIES & PROMPTS PANE -->
+        <!-- ========================================================================= -->
+        <section id="pane-categories" class="hidden">
+            <div class="bg-white border border-[#E5E7EB] rounded-3xl p-8 shadow-xs">
+                <div class="flex items-center justify-between pb-4 border-b border-[#F1F3F5] mb-6">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-lg bg-[#111215] flex items-center justify-center text-white">
+                            <i data-lucide="book-open" class="w-4 h-4 text-[#2EA3F2]"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-base font-bold text-[#111215] tracking-tight">Category & Golden Prompt Library</h3>
+                            <p class="text-[11px] text-[#666666]">Review, tune, and edit AI retouching directives for high-jewelry categories and gemstone types.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Left Column: Category List -->
+                    <div class="space-y-2 border-r border-[#F1F3F5] pr-4">
+                        <button onclick="initNewCategoryForm()" class="w-full py-2 px-3 mb-2 rounded-xl text-xs font-bold text-white bg-[#111215] hover:bg-black transition flex items-center justify-center space-x-1.5 shadow-xs">
+                            <i data-lucide="plus-circle" class="w-3.5 h-3.5 text-[#2EA3F2]"></i>
+                            <span>+ Create New Category</span>
+                        </button>
+                        <div class="relative mb-3">
+                            <i data-lucide="search" class="w-3.5 h-3.5 text-[#999999] absolute left-3 top-1/2 transform -translate-y-1/2"></i>
+                            <input type="text" id="cat-search" onkeyup="filterCategoriesList()" placeholder="Filter categories..." class="w-full bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl pl-8 pr-3 py-1.5 text-[11px] text-[#222222] focus:outline-none focus:border-[#2EA3F2]">
+                        </div>
+                        <div id="cat-list-container" class="space-y-1.5 max-h-[50vh] overflow-y-auto pr-1">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Category Editor -->
+                    <div class="md:col-span-2 space-y-4">
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block font-semibold text-[#222222] uppercase tracking-wider text-[10px] mb-1">Category Name</label>
+                                <input type="text" id="edit-cat-name" placeholder="e.g. Australian Sapphire Halo Ring" class="w-full bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl p-2.5 text-xs text-[#222222] font-bold focus:outline-none focus:border-[#2EA3F2]">
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-[#222222] uppercase tracking-wider text-[10px] mb-1">Gemstone Type</label>
+                                <input type="text" id="edit-cat-type" placeholder="e.g. Natural Corundum" class="w-full bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl p-2.5 text-xs text-[#666666] focus:outline-none focus:border-[#2EA3F2]">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-[#222222] uppercase tracking-wider text-[10px] mb-1">Gemology Description</label>
+                            <textarea id="edit-cat-desc" rows="2" placeholder="Provide physical origin, optical phenomena, and body tone notes..." class="w-full bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl p-2.5 text-xs text-[#444444] focus:outline-none focus:border-[#2EA3F2]"></textarea>
+                        </div>
+
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <label class="font-semibold text-[#222222] uppercase tracking-wider text-[10px]">Golden AI Retouch Directive (In-Place Diffusion)</label>
+                                <span id="prompt-tag-badge" class="text-[9px] font-mono text-[#059669] bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">Live Active Prompt</span>
+                            </div>
+                            <textarea id="edit-cat-prompt" rows="4" placeholder="edit image to remove background, place on clean pure solid white studio background with soft contact shadow..." class="w-full bg-[#111215] text-[#F8F9FA] font-mono text-xs rounded-xl p-3 focus:outline-none focus:ring-1 focus:ring-[#2EA3F2] leading-relaxed"></textarea>
+                        </div>
+
+                        <div>
+                            <label class="block font-semibold text-[#222222] uppercase tracking-wider text-[10px] mb-1">Specific Physical Traits (Comma-Separated)</label>
+                            <input type="text" id="edit-cat-traits" placeholder="e.g. Split-Shank, Pave Diamonds, Bezel Setting" class="w-full bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl p-2.5 text-xs text-[#222222] focus:outline-none focus:border-[#2EA3F2]">
+                        </div>
+
+                        <div class="pt-4 border-t border-[#F1F3F5] flex items-center justify-between">
+                            <span id="cat-save-msg" class="text-xs font-semibold text-emerald-600"></span>
+                            <button onclick="saveActiveCategory()" id="btn-save-cat" class="px-6 py-2.5 rounded-xl text-xs font-bold text-white bg-[#111215] hover:bg-black transition shadow-xs flex items-center space-x-1.5">
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>
+                                <span id="save-cat-btn-text">Save Category Changes</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========================================================================= -->
+    <!-- FOOTER -->
+    <!-- ========================================================================= -->
+    <footer class="border-t border-[#E5E7EB] bg-white py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 flex flex-col md:flex-row items-center justify-between text-xs text-[#666666] gap-3">
+            <div>
+                <p class="font-medium text-[#111215]">Aura Studio AI — Autonomous High-Jewelry Imaging Architecture</p>
+                <p class="text-[11px] mt-0.5">Designed & Engineered by <span class="font-semibold text-[#111215]">Petro Koriaka</span> (AI Automation Architect)</p>
+            </div>
+            <div class="flex items-center space-x-4 text-[11px]">
+                <button onclick="switchTab('catalog')" class="hover:text-[#111215]">Queue</button>
+                <button onclick="switchTab('review')" class="hover:text-[#111215]">Studio Review</button>
+                <button onclick="switchTab('categories')" class="hover:text-[#111215]">Categories & Prompts</button>
+                <button onclick="openContactModal()" class="font-bold text-[#2EA3F2] hover:underline">Discuss Your Studio Pipeline ↗</button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========================================================================= -->
+    <!-- MODAL 1: RETOUCH WITH EXISTING CATEGORY -->
+    <!-- ========================================================================= -->
+    <div id="cat-retouch-modal" class="fixed inset-0 bg-[#111215]/50 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white border border-[#E5E7EB] rounded-3xl max-w-xl w-full p-8 shadow-2xl">
+            <div class="flex items-center justify-between mb-6 pb-4 border-b border-[#F1F3F5]">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center">
+                        <i data-lucide="tag" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-semibold uppercase tracking-[0.15em] text-[#666666] block">Category Retouch</span>
+                        <h3 class="text-base font-bold text-[#111215] tracking-tight">Retouch with Existing Category</h3>
+                    </div>
+                </div>
+                <button onclick="closeCategoryRetouchModal()" class="text-[#666666] hover:text-[#111215] p-1 rounded-lg hover:bg-[#F8F9FA] transition">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <div class="space-y-4 text-xs">
+                <div>
+                    <label class="block font-semibold text-[#222222] uppercase tracking-wider text-[10px] mb-1.5">Select Category from Library</label>
+                    <select id="cr-category-select" onchange="onCategoryRetouchSelect(this.value)" class="w-full bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl p-3 text-xs font-bold text-[#222222] focus:outline-none focus:border-[#2EA3F2] transition">
+                        <!-- Populated via JS -->
+                    </select>
+                </div>
+
+                <div class="bg-[#F8F9FA] p-3.5 rounded-2xl border border-[#E5E7EB] space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] font-bold uppercase text-[#666666]" id="cr-gem-type">Natural Corundum</span>
+                        <span class="text-[9px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">Category Active</span>
+                    </div>
+                    <p id="cr-gem-desc" class="text-[11px] text-[#444444] leading-relaxed"></p>
+                    <div id="cr-gem-traits" class="flex flex-wrap gap-1 pt-1"></div>
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-[#222222] uppercase tracking-wider text-[10px] mb-1.5">Category Golden Prompt Directive</label>
+                    <textarea id="cr-prompt" rows="3" class="w-full bg-[#111215] text-[#F8F9FA] font-mono text-xs rounded-xl p-3 focus:outline-none focus:ring-1 focus:ring-[#2EA3F2] leading-relaxed"></textarea>
+                </div>
+
+                <div class="pt-4 border-t border-[#F1F3F5]">
+                    <button onclick="deployCategoryRetouch()" class="w-full py-3.5 rounded-xl text-xs font-bold text-white bg-[#111215] hover:bg-black transition shadow-xs flex items-center justify-center space-x-2">
+                        <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-400"></i>
+                        <span>DEPLOY RETOUCH WITH CATEGORY</span>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
-  </header>
 
-  <main class="container">
-    
-    <!-- Hero Headline Area -->
-    <section class="hero-title-area">
-      <h1 class="hero-heading">Change the setting. Not the stone.</h1>
-      <p class="hero-subheading">
-        Autonomous high-jewelry product imaging that protects authentic gemological geometry while placing inventory into publication-grade editorial studio light.
-      </p>
-    </section>
+    <!-- ========================================================================= -->
+    <!-- MODAL 2: AI VISION RECOGNITION & TRAIT REFINEMENT -->
+    <!-- ========================================================================= -->
+    <div id="vision-modal" class="fixed inset-0 bg-[#111215]/50 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white border border-[#E5E7EB] rounded-3xl max-w-2xl w-full p-8 shadow-2xl">
+            <div class="flex items-center justify-between mb-6 pb-4 border-b border-[#F1F3F5]">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-xl bg-[#111215] flex items-center justify-center text-white">
+                        <i data-lucide="scan" class="w-4 h-4 text-[#2EA3F2]"></i>
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-semibold uppercase tracking-[0.15em] text-[#666666] block">Level 2 Active Recognition</span>
+                        <h3 class="text-base font-bold text-[#111215] tracking-tight">AI Vision Trait Analysis (Gemini 2.5 Vision)</h3>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button type="button" onclick="startVisionScan(true)" title="Force a fresh AI Vision scan" class="text-[10px] font-semibold text-[#666666] hover:text-[#2EA3F2] flex items-center gap-1 border border-[#E5E7EB] hover:border-[#2EA3F2] px-2.5 py-1 rounded-xl transition bg-[#F8F9FA]">
+                        <i data-lucide="refresh-cw" class="w-3 h-3 text-[#2EA3F2]"></i>
+                        <span>Re-Scan</span>
+                    </button>
+                    <button onclick="closeVisionModal()" class="text-[#666666] hover:text-[#111215] p-1 rounded-lg hover:bg-[#F8F9FA] transition">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
 
-    <!-- Main Comparison Section (2-Column Layout) -->
-    <section class="showcase-grid">
-      
-      <!-- Left: 1:1 Split Comparison Viewport -->
-      <div class="comparison-card">
-        <div class="slider-stage" id="slider-stage">
-          
-          <!-- Master AI Output (Background / Right) -->
-          <img class="slider-img-after" id="img-after" src="assets/art_deco_retouched_angle1.jpg" alt="Geometry-Protected 4K Master">
+            <!-- Scanning Spinner State -->
+            <div id="vision-loading" class="py-12 flex flex-col items-center justify-center text-center">
+                <div class="w-12 h-12 border-4 border-[#E5E7EB] border-t-[#2EA3F2] rounded-full animate-spin mb-4"></div>
+                <h4 class="text-sm font-bold text-[#111215]">Inspecting Raw Photo Pixels...</h4>
+                <p class="text-xs text-[#666666] mt-1 max-w-sm">Gemini Vision is analyzing gemstone fire pattern, metal alloys, prong architecture, and pavé accent stones.</p>
+            </div>
 
-          <!-- Flawed Generic AI Output (Foreground / Left / Clamped) -->
-          <div class="slider-before-wrapper" id="before-wrapper">
-            <img class="slider-img-before" id="img-before" src="assets/art_deco_base_prompt_flawed.jpg" alt="Generic AI Output">
-          </div>
+            <!-- Vision Results State -->
+            <div id="vision-results" class="hidden space-y-4 text-xs">
+                <!-- Trait Highlights Grid -->
+                <div class="grid grid-cols-2 gap-3 bg-[#F8F9FA] p-4 rounded-2xl border border-[#E5E7EB]">
+                    <div>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-[#666666] block mb-0.5">Detected Gemstone</span>
+                        <span id="vision-gem" class="font-bold text-[#111215] text-xs"></span>
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-[#666666] block mb-0.5">Current Metal Selection</span>
+                        <span id="vision-metal-setting" class="font-bold text-[#111215] text-xs"></span>
+                    </div>
+                </div>
 
-          <!-- Divider & Knob -->
-          <div class="slider-divider-line" id="slider-divider">
-            <div class="slider-handle">◀ ▶</div>
-          </div>
+                <!-- 1-Click Metal Quick Selector Chips -->
+                <div>
+                    <label class="block font-semibold text-[#222222] uppercase tracking-wider text-[10px] mb-1.5">Correct Metal Type (1-Click Switcher)</label>
+                    <div class="flex flex-wrap gap-1.5" id="metal-quick-chips">
+                        <button type="button" onclick="setVisionMetal('Sterling Silver 925')" class="metal-btn px-2.5 py-1 rounded-lg text-[10px] font-semibold border bg-white text-[#222222] border-[#E5E7EB] hover:border-[#2EA3F2] transition">🔘 Sterling Silver 925</button>
+                        <button type="button" onclick="setVisionMetal('Platinum')" class="metal-btn px-2.5 py-1 rounded-lg text-[10px] font-semibold border bg-white text-[#222222] border-[#E5E7EB] hover:border-[#2EA3F2] transition">⚪ Platinum</button>
+                        <button type="button" onclick="setVisionMetal('18K White Gold')" class="metal-btn px-2.5 py-1 rounded-lg text-[10px] font-semibold border bg-white text-[#222222] border-[#E5E7EB] hover:border-[#2EA3F2] transition">⚪ 18K White Gold</button>
+                        <button type="button" onclick="setVisionMetal('18K Yellow Gold')" class="metal-btn px-2.5 py-1 rounded-lg text-[10px] font-semibold border bg-white text-[#222222] border-[#E5E7EB] hover:border-[#2EA3F2] transition">🟡 18K Yellow Gold</button>
+                        <button type="button" onclick="setVisionMetal('18K Rose Gold')" class="metal-btn px-2.5 py-1 rounded-lg text-[10px] font-semibold border bg-white text-[#222222] border-[#E5E7EB] hover:border-[#2EA3F2] transition">🟠 18K Rose Gold</button>
+                    </div>
+                </div>
 
-          <!-- Floating Identification Badges -->
-          <div class="view-badge badge-generic">Generic AI (4.82% Facet Drift • Black Sapphires)</div>
-          <div class="view-badge badge-protected" id="badge-protected-label">Geometry-Protected (0.00% Drift • Royal Sapphires)</div>
+                <div>
+                    <label class="block font-semibold text-[#222222] uppercase tracking-wider text-[10px] mb-1.5">Identified Micro-Traits</label>
+                    <div id="vision-traits-chips" class="flex flex-wrap gap-1.5"></div>
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-[#222222] uppercase tracking-wider text-[10px] mb-1.5">Proposed Category / Subcategory Name</label>
+                    <input type="text" id="vision-cat-name" class="w-full bg-[#F8F9FA] border border-[#E5E7EB] rounded-xl p-3 text-xs font-bold text-[#222222] focus:outline-none focus:border-[#2EA3F2]">
+                </div>
+
+                <div>
+                    <div class="flex items-center justify-between mb-1.5">
+                        <label class="font-semibold text-[#222222] uppercase tracking-wider text-[10px]">Tailored Golden Retouch Directive</label>
+                        <span class="text-[9px] font-mono text-[#059669] bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">Live Synced</span>
+                    </div>
+                    <textarea id="vision-prompt" rows="3" class="w-full bg-[#111215] text-[#F8F9FA] font-mono text-xs rounded-xl p-3 focus:outline-none focus:ring-1 focus:ring-[#2EA3F2] leading-relaxed"></textarea>
+                </div>
+
+                <div class="pt-4 border-t border-[#F1F3F5] flex space-x-3">
+                    <button onclick="deployVisionRetouch()" class="w-full py-3.5 rounded-xl text-xs font-bold text-white bg-[#111215] hover:bg-black transition shadow-xs flex items-center justify-center space-x-2">
+                        <i data-lucide="zap" class="w-3.5 h-3.5 text-[#2EA3F2]"></i>
+                        <span>DEPLOY RETOUCH WITH AI TRAITS</span>
+                    </button>
+                </div>
+            </div>
         </div>
-
-        <!-- Quick View Controls & Interaction Hint -->
-        <div class="slider-footer">
-          <div class="quick-view-pills">
-            <button class="quick-pill" id="pill-generic" onclick="setSliderView('generic')" title="Inspect Generic AI Output">
-              ⏮ 100% Generic AI
-            </button>
-            <button class="quick-pill active" id="pill-split" onclick="setSliderView('split')" title="Compare 50/50 Split">
-              ◀ 50/50 Split ▶
-            </button>
-            <button class="quick-pill" id="pill-protected" onclick="setSliderView('protected')" title="Inspect Geometry-Protected Master">
-              100% Geometry-Protected ⏭
-            </button>
-          </div>
-          <span class="drag-hint">↔ Drag center divider to compare fidelity</span>
-        </div>
-      </div>
-
-      <!-- Right: Benchmark Baseline Provenance -->
-      <aside class="source-card">
-        <div class="source-header-label">Authentic Benchmark Photo</div>
-        <div class="source-thumb-frame">
-          <img src="assets/art_deco_sapphire_angle1_perspective.jpg" alt="Raw Unedited Etsy Listing Baseline Photo">
-        </div>
-        <div class="source-meta-title">Art Deco Old European Cut Ring</div>
-        <p class="source-meta-desc">
-          Uncalibrated workshop listing photo with mounting wax, uneven daylight bloom, surface dust, and hand-carved platinum filigree.
-        </p>
-        <a href="https://www.etsy.com/listing/4432433810/old-european-with-blue-sapphire-baguette" target="_blank" rel="noopener noreferrer" class="source-link">
-          Etsy Estate Listing (#4432433810) ↗
-        </a>
-        <div class="source-quote-box">
-          “Same authentic ring. Same 32 table facets. Zero hallucination. New luxury studio setting.”
-        </div>
-      </aside>
-
-    </section>
-
-    <!-- Measured Proof Strip (2 Key Metrics + Occlusion) -->
-    <section class="proof-strip">
-      <div class="proof-item">
-        <div class="proof-stat stat-emerald">&lt; 0.05%</div>
-        <div class="proof-label">Facet Landmark Displacement</div>
-        <div class="proof-detail">
-          32 diamond table vertices mathematically pinned via sub-pixel Canny edge guidance (vs. 4.82% blur on generic diffusion).
-        </div>
-      </div>
-
-      <div class="proof-item">
-        <div class="proof-stat stat-sapphire">#1E3A8A</div>
-        <div class="proof-label">Gemstone Hue Retention</div>
-        <div class="proof-detail">
-          French-cut royal blue sapphire chrominance locked in CIELAB color space (vs. dead black shadow collapse on off-the-shelf AI).
-        </div>
-      </div>
-
-      <div class="proof-item">
-        <div class="proof-stat">True Contact</div>
-        <div class="proof-label">Grounded Contact Occlusion</div>
-        <div class="proof-detail">
-          Natural diffuse contact shadow calculated from 3D contour normals (no floating or artificial disconnected shadows).
-        </div>
-      </div>
-    </section>
-
-    <!-- Progressive Disclosure: How the System Protects Jewelry -->
-    <section class="accordion-card">
-      <button class="accordion-trigger" id="accordion-btn" onclick="toggleAccordion()">
-        <div class="accordion-title-wrap">
-          <span class="accordion-icon">▸</span>
-          <span class="accordion-title">See how the closed-loop pipeline protects the jewelry</span>
-          <span class="accordion-badge">Engineering Architecture</span>
-        </div>
-        <span class="accordion-arrow">▼</span>
-      </button>
-
-      <div class="accordion-content" id="accordion-panel">
-        <div class="steps-grid">
-          
-          <div class="step-box">
-            <div class="step-num">Step 01</div>
-            <div class="step-title">Recognize & Map Geometry</div>
-            <p class="step-desc">
-              Custom-trained computer vision detects defects (putty, scratches) and isolates jewelry geometry, pinning 32 facet vertices and 4 sapphire baguette channels.
-            </p>
-            <span class="step-tech">YOLOv11-Jewelry + SAM-2 HQ</span>
-          </div>
-
-          <div class="step-box">
-            <div class="step-num">Step 02</div>
-            <div class="step-title">Closed-Loop Auto-Correction</div>
-            <p class="step-desc">
-              The system benchmarks initial diffusion passes against the raw photo. Detected landmark drift automatically triggers injected gemological tokens, negative weights, and Canny coordinate clamps.
-            </p>
-            <span class="step-tech">ControlNet Canny + Dynamic Negative Prompts</span>
-          </div>
-
-          <div class="step-box">
-            <div class="step-num">Step 03</div>
-            <div class="step-title">Verify & Deploy to Commerce</div>
-            <p class="step-desc">
-              Only outputs passing the strict gemological landmark tolerance (&lt;0.05% displacement) advance to 4K WebP compression and automated Shopify variant attachment.
-            </p>
-            <span class="step-tech">Cloud Run (385ms) + Shopify Admin GraphQL</span>
-          </div>
-
-        </div>
-
-        <div class="case-example-box">
-          <div class="case-example-text">
-            <strong>Live Feedback Loop Example:</strong> When generic diffusion smudged the hexagonal table into a round brilliant and desaturated the sapphires to black (Pass 1), the system caught a 4.82% landmark error, auto-injected <code>authentic Old European cut table</code> constraints, and restored the royal blue sapphire spectrum.
-          </div>
-          <button class="btn-wireframe-toggle" id="btn-wireframe" onclick="toggleWireframeOverlay()">
-            👁️ Toggle CV Lattice Wireframe
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Production Workflow & Conversion Footer -->
-    <section class="workflow-banner">
-      <h2 class="workflow-title">Built for catalog workflows — not one-off image experiments.</h2>
-      <p class="workflow-sub">
-        Transform entire uncalibrated workshop catalogs into publication-ready luxury assets with automated Shopify sync and guaranteed zero stone distortion.
-      </p>
-
-      <div class="workflow-pipeline-strip">
-        <span>Raw Workshop Ingestion</span>
-        <span class="pipeline-arrow">➔</span>
-        <span>YOLOv11 Anomaly Segmentation</span>
-        <span class="pipeline-arrow">➔</span>
-        <span>CV Lattice Clamping</span>
-        <span class="pipeline-arrow">➔</span>
-        <span>Prompt Auto-Correction</span>
-        <span class="pipeline-arrow">➔</span>
-        <span>Shopify GraphQL Sync</span>
-      </div>
-
-      <div>
-        <button class="btn-cta" style="padding: 0.8rem 1.75rem; font-size: 0.95rem;" onclick="openContactModal()">
-          Discuss your catalog workflow ↗
-        </button>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Contact & Upwork Consulting Modal -->
-  <div class="modal-backdrop" id="contact-modal" onclick="handleModalBackdrop(event)">
-    <div class="modal-card">
-      <button class="modal-close-btn" onclick="closeContactModal()">&times;</button>
-      <div class="modal-header">
-        <h3 class="modal-title">Discuss Your Jewelry Catalog</h3>
-        <p class="modal-sub">
-          Bring one difficult raw product photo. I’ll assess your catalog pipeline, benchmark geometry preservation, and design your automated retouching workflow.
-        </p>
-      </div>
-
-      <div class="inquiry-box" id="inquiry-template">Hi Petro, I reviewed your jewelry vision pipeline case study. We have [X] jewelry SKUs that need automated high-fidelity retouching and geometry locking. Let's discuss an assessment.</div>
-
-      <div class="modal-btn-row">
-        <button class="btn-copy" id="btn-copy-template" onclick="copyInquiryText()">
-          Copy Template
-        </button>
-        <a href="https://www.upwork.com/freelancers/~01b5a2bf3c7e735497" target="_blank" rel="noopener noreferrer" class="btn-cta">
-          Open Petro's Upwork Profile ↗
-        </a>
-      </div>
     </div>
-  </div>
 
-  <script>
-    // Slider State & Logic
-    const stage = document.getElementById('slider-stage');
-    const beforeWrapper = document.getElementById('before-wrapper');
-    const divider = document.getElementById('slider-divider');
-    const imgBefore = document.getElementById('img-before');
-    const imgAfter = document.getElementById('img-after');
-    const protectedBadge = document.getElementById('badge-protected-label');
-    let isDragging = false;
-    let showingWireframe = false;
+    <!-- ========================================================================= -->
+    <!-- MODAL 3: SHOPIFY INTEGRATION OVERVIEW -->
+    <!-- ========================================================================= -->
+    <div id="shopify-modal" class="fixed inset-0 bg-[#111215]/50 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white border border-[#E5E7EB] rounded-3xl max-w-lg w-full p-8 shadow-2xl">
+            <div class="flex items-center justify-between mb-6 pb-4 border-b border-[#F1F3F5]">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center">
+                        <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-semibold uppercase tracking-[0.15em] text-[#666666] block">Shopify GraphQL Sync</span>
+                        <h3 class="text-base font-bold text-[#111215] tracking-tight">Direct Catalog Synchronization</h3>
+                    </div>
+                </div>
+                <button onclick="closeShopifyModal()" class="text-[#666666] hover:text-[#111215] p-1 rounded-lg hover:bg-[#F8F9FA] transition">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+            <div class="space-y-4 text-xs text-[#444444]">
+                <p>In production, this console directly integrates with your Shopify Admin via GraphQL Webhooks & Product APIs:</p>
+                <div class="bg-[#F8F9FA] border border-[#E5E7EB] p-4 rounded-2xl space-y-2.5">
+                    <div class="flex items-start gap-2">
+                        <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5"></i>
+                        <span><strong>Automatic Queue Ingestion:</strong> Detects new product drafts or raw angle uploads immediately via <code>products/create</code> webhooks.</span>
+                    </div>
+                    <div class="flex items-start gap-2">
+                        <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5"></i>
+                        <span><strong>Selective Publishing:</strong> On approval, updates main media with 4K retouched WebPs and preserves raw images in custom metafields.</span>
+                    </div>
+                    <div class="flex items-start gap-2">
+                        <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5"></i>
+                        <span><strong>Zero Catalog Downtime:</strong> Rejected candidate variations are automatically cleaned up without affecting customer browsing.</span>
+                    </div>
+                </div>
+                <div class="pt-2">
+                    <button onclick="closeShopifyModal()" class="w-full py-3 rounded-xl text-xs font-bold text-white bg-[#111215] hover:bg-black transition">
+                        Understood
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    function setSliderPosition(pct) {
-      pct = Math.max(0, Math.min(100, pct));
-      beforeWrapper.style.width = pct + '%';
-      divider.style.left = pct + '%';
+    <!-- ========================================================================= -->
+    <!-- MODAL 4: UPWORK PROJECT INQUIRY MODAL -->
+    <!-- ========================================================================= -->
+    <div id="contact-modal" class="fixed inset-0 bg-[#111215]/50 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white border border-[#E5E7EB] rounded-3xl max-w-lg w-full p-8 shadow-2xl">
+            <div class="flex items-center justify-between mb-6 pb-4 border-b border-[#F1F3F5]">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-xl bg-[#111215] text-white flex items-center justify-center">
+                        <i data-lucide="message-square" class="w-4 h-4 text-[#2EA3F2]"></i>
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-semibold uppercase tracking-[0.15em] text-[#666666] block">Consultation</span>
+                        <h3 class="text-base font-bold text-[#111215] tracking-tight">Deploy This Pipeline In Your Studio</h3>
+                    </div>
+                </div>
+                <button onclick="closeContactModal()" class="text-[#666666] hover:text-[#111215] p-1 rounded-lg hover:bg-[#F8F9FA] transition">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+            <div class="space-y-4 text-xs">
+                <p class="text-[#444444]">
+                    Are you looking to automate your high-jewelry or luxury product retouching pipeline with absolute gemological fidelity?
+                </p>
+                <div class="bg-[#F8F9FA] p-4 rounded-2xl border border-[#E5E7EB] space-y-2">
+                    <div class="text-[11px] font-bold text-[#111215]">What we deliver:</div>
+                    <ul class="list-disc list-inside space-y-1 text-[#555555]">
+                        <li>Custom Diffusion fine-tuning for your specific gemstones & metals</li>
+                        <li>Shopify / BigCommerce / WooCommerce GraphQL automated webhook pipeline</li>
+                        <li>Self-hosted Cloud Run / AWS / Local GPU studio deployment</li>
+                        <li>Internal review console with candidate history and 1-click approvals</li>
+                    </ul>
+                </div>
+                <div class="space-y-2 pt-2">
+                    <a href="https://www.upwork.com" target="_blank" class="w-full py-3.5 rounded-xl text-xs font-bold text-white bg-[#111215] hover:bg-black transition flex items-center justify-center space-x-2 shadow-xs">
+                        <i data-lucide="external-link" class="w-3.5 h-3.5 text-[#2EA3F2]"></i>
+                        <span>Open Direct Message on Upwork ↗</span>
+                    </a>
+                    <button onclick="copyEmail()" class="w-full py-3 rounded-xl text-xs font-semibold text-[#222222] bg-[#F8F9FA] hover:bg-[#E5E7EB] border border-[#E5E7EB] transition flex items-center justify-center space-x-1.5">
+                        <i data-lucide="copy" class="w-3.5 h-3.5 text-[#666666]"></i>
+                        <span id="copy-email-btn">Copy Architect Contact (petro.koriaka@gmail.com)</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-      // Keep before image full width to lock 1:1 pixel registration
-      imgBefore.style.width = stage.offsetWidth + 'px';
-    }
+    <!-- ========================================================================= -->
+    <!-- TOAST NOTIFICATION -->
+    <!-- ========================================================================= -->
+    <div id="toast" class="fixed bottom-6 right-6 max-w-sm bg-[#111215] text-white p-4 rounded-2xl shadow-2xl hidden z-50 text-xs border border-white/10 flex items-center space-x-3">
+        <i data-lucide="info" class="w-4 h-4 text-[#2EA3F2] shrink-0" id="toast-icon"></i>
+        <p id="toast-msg" class="leading-snug"></p>
+    </div>
 
-    function setSliderView(mode) {
-      document.querySelectorAll('.quick-pill').forEach(b => b.classList.remove('active'));
-      const activeBtn = document.getElementById('pill-' + mode);
-      if (activeBtn) activeBtn.classList.add('active');
+    <!-- ========================================================================= -->
+    <!-- CLIENT-SIDE APPLICATION DATA & CONTROLLERS -->
+    <!-- ========================================================================= -->
+    <script>
+        // -------------------------------------------------------------
+        // 1. DATA MODEL (High-Jewelry Catalog & Golden Categories)
+        // -------------------------------------------------------------
+        const categoriesData = [
+            {
+                id: "ceylon_sapphire",
+                name: "Ceylon Sapphire Halo Ring",
+                type: "Natural Corundum (Blue Sapphire)",
+                description: "Natural Ceylon Sapphire with vivid cornflower to royal blue body color. Preserves optical pleochroism, natural silk inclusions, crisp facet junctions, and pavé diamond halo clarity.",
+                golden_prompt: "edit image to remove background, place on clean pure solid white studio background with soft contact shadow, remove dust and micro-scratches; preserve the vivid cornflower blue body color, natural facet refraction lattice, and zero overexposure on table facets; polish platinum and 18k white gold band to luxury mirror specular finish, enhance pavé diamond scintillation.",
+                traits: ["Royal Blue Body Tone", "Natural Silk Inclusions", "Crisp Step Facet Junctions", "Brilliant Pavé Halo", "Platinum Mirror Polish", "Prong Architecture Integrity"]
+            },
+            {
+                id: "solitaire_diamond",
+                name: "Solitaire Brilliant Diamond Ring",
+                type: "Natural Diamond (VVS Grade)",
+                description: "Classic four-prong vintage solitaire diamond ring set in high-polish platinum. Preserves optical fire, table transparency, pavilion facet symmetry, and sharp edge reflections.",
+                golden_prompt: "edit image to remove background, place on pure solid white studio background with delicate contact shadow; preserve the authentic diamond dispersion fire, sharp cut pavilion symmetry, and internal facet crispness; polish platinum four-prong setting and shank to high-end tiffany mirror shine without blown-out speculars.",
+                traits: ["Four-Prong Tiffany Setting", "Hearts & Arrows Symmetry", "Dispersion Fire Play", "Knife-Edge Shank", "High-Polish Platinum"]
+            },
+            {
+                id: "black_opal",
+                name: "Lightning Ridge Black Opal Ring",
+                type: "Natural Opal Type 1",
+                description: "Black Opal - Natural Opal Type 1 from Lightning Ridge. Known for vibrant neon multi-color play against an N1-N4 dark body tone. Guaranteed free from artificial enhancements.",
+                golden_prompt: "edit image to remove background, place on clean pure solid white studio background with soft contact shadow, remove dust and scratches; preserve the natural dark N1-N4 body tone, vivid electric peacock multi-color opal fire flash, and genuine gemstone pattern completely intact; polish gold and platinum setting to luxury mirror shine.",
+                traits: ["N1-N4 Dark Body Tone", "Harlequin Pattern", "Electric Peacock Fire", "Mirror Platinum Polish", "18k Yellow Gold Bezel"]
+            },
+            {
+                id: "boulder_opal",
+                name: "Queensland Boulder Opal Freeform",
+                type: "Natural Opal Type 2",
+                description: "Boulder Opal - Natural Opal Type 2. Forms as silica saturated water fills cracks in the ironstone host matrix, creating striking geometric color seams.",
+                golden_prompt: "edit image to remove background, place on clean pure solid white studio background with soft contact shadow; preserve the natural organic brown ironstone host rock and vibrant silica color seams completely intact with zero texture distortion; polish metal bezel to high luxury shine.",
+                traits: ["Ironstone Host Matrix", "Electric Blue-Green Vein", "Undulating Surface", "Freeform Bezel Mount"]
+            },
+            {
+                id: "south_sea_pearl",
+                name: "South Sea Cultured Pearl Pendant",
+                type: "Cultured Saltwater Pearl",
+                description: "South Sea Pearls, cultured in Pinctada maxima oysters. Prized for their satin nacreous luster, smooth spherical surface, and delicate soft silver-champagne overtones.",
+                golden_prompt: "edit image to remove background, place on clean pure solid white studio background with soft contact shadow; preserve the deep organic satin nacre luster, smooth spherical curvature, and delicate soft overtones of the South Sea pearl; eliminate harsh reflections and polish precious metal bail.",
+                traits: ["Satin Nacre Luster", "White/Silver Overtones", "Spherical Specular Highlight", "Diamond Accent Bail"]
+            }
+        ];
 
-      if (mode === 'generic') {
-        setSliderPosition(100);
-      } else if (mode === 'split') {
-        setSliderPosition(50);
-      } else if (mode === 'protected') {
-        setSliderPosition(0);
-      }
-    }
+        const allProducts = {
+            "9423723987101": {
+                id: "9423723987101",
+                title: "Art Deco Ceylon Sapphire & Pavé Halo Ring #20399320",
+                status: "draft",
+                filter_cat: "pending",
+                category: "Ceylon Sapphire",
+                gem_type: "Natural Blue Sapphire",
+                metal_type: "Platinum",
+                badge_class: "bg-amber-50 text-amber-700 border-amber-200",
+                badge_text: "Pending Review",
+                badge_icon: "clock",
+                photo_count: 3,
+                images: {
+                    "angle_1": {
+                        raw_url: "assets/art_deco_sapphire_angle1_perspective.jpg",
+                        retouched_url: "assets/art_deco_retouched_angle1.jpg",
+                        retouched_id: "9423723987101_A1_Master",
+                        variations: [
+                            { url: "assets/art_deco_base_prompt_flawed.jpg", label: "v1 (Raw Base Diffusion)" },
+                            { url: "assets/pipeline_stage2_facet_lattice.jpg", label: "v2 (CV Lattice Scan)" },
+                            { url: "assets/art_deco_retouched_angle1.jpg", label: "v3 (4K Master WebP)" }
+                        ]
+                    },
+                    "angle_2": {
+                        raw_url: "assets/art_deco_sapphire_angle2_side_profile.jpg",
+                        retouched_url: "assets/art_deco_retouched_angle2.jpg",
+                        retouched_id: "9423723987101_A2_Master",
+                        variations: [
+                            { url: "assets/art_deco_retouched_angle2.jpg", label: "v1 Master WebP" }
+                        ]
+                    },
+                    "angle_3": {
+                        raw_url: "assets/art_deco_sapphire_angle3_under_gallery.jpg",
+                        retouched_url: "assets/art_deco_retouched_angle3.jpg",
+                        retouched_id: "9423723987101_A3_Master",
+                        variations: [
+                            { url: "assets/art_deco_retouched_angle3.jpg", label: "v1 Master WebP" }
+                        ]
+                    }
+                }
+            },
+            "9423723987102": {
+                id: "9423723987102",
+                title: "Vintage Solitaire Brilliant Diamond Ring #20399321",
+                status: "active",
+                filter_cat: "published",
+                category: "Solitaire Diamond",
+                gem_type: "Natural Brilliant Diamond",
+                metal_type: "Platinum",
+                badge_class: "bg-emerald-50 text-emerald-700 border-emerald-200",
+                badge_text: "Published Live",
+                badge_icon: "check-circle",
+                photo_count: 3,
+                images: {
+                    "angle_1": {
+                        raw_url: "assets/vintage_solitaire_angle1_perspective.jpg",
+                        retouched_url: "assets/vintage_solitaire_retouched_angle1.jpg",
+                        retouched_id: "9423723987102_A1_Master",
+                        variations: [
+                            { url: "assets/vintage_solitaire_retouched_angle1.jpg", label: "v1 Master WebP" }
+                        ]
+                    },
+                    "angle_2": {
+                        raw_url: "assets/vintage_solitaire_angle2_side_profile.jpg",
+                        retouched_url: "assets/vintage_solitaire_retouched_angle2.jpg",
+                        retouched_id: "9423723987102_A2_Master",
+                        variations: [
+                            { url: "assets/vintage_solitaire_retouched_angle2.jpg", label: "v1 Master WebP" }
+                        ]
+                    },
+                    "angle_3": {
+                        raw_url: "assets/vintage_solitaire_angle3_reverse_perspective.jpg",
+                        retouched_url: "assets/vintage_solitaire_retouched_angle3.jpg",
+                        retouched_id: "9423723987102_A3_Master",
+                        variations: [
+                            { url: "assets/vintage_solitaire_retouched_angle3.jpg", label: "v1 Master WebP" }
+                        ]
+                    }
+                }
+            },
+            "9423723987103": {
+                id: "9423723987103",
+                title: "Lightning Ridge Black Opal Oval Cabochon Ring #20399322",
+                status: "active",
+                filter_cat: "published",
+                category: "Black Opal",
+                gem_type: "Natural Black Opal Type 1",
+                metal_type: "18K Yellow Gold",
+                badge_class: "bg-emerald-50 text-emerald-700 border-emerald-200",
+                badge_text: "Published Live",
+                badge_icon: "check-circle",
+                photo_count: 3,
+                images: {
+                    "angle_1": {
+                        raw_url: "assets/opal_black_angle1_vertical.jpg",
+                        retouched_url: "assets/opal_black_retouched_angle1.jpg",
+                        retouched_id: "9423723987103_A1_Master",
+                        variations: [
+                            { url: "assets/opal_black_retouched_angle1.jpg", label: "v1 Master WebP" }
+                        ]
+                    },
+                    "angle_2": {
+                        raw_url: "assets/opal_black_angle2_vertical_fiery.jpg",
+                        retouched_url: "assets/opal_black_retouched_angle2.jpg",
+                        retouched_id: "9423723987103_A2_Master",
+                        variations: [
+                            { url: "assets/opal_black_retouched_angle2.jpg", label: "v1 Master WebP" }
+                        ]
+                    },
+                    "angle_3": {
+                        raw_url: "assets/opal_black_angle3_vertical_electric.jpg",
+                        retouched_url: "assets/opal_black_retouched_angle3.jpg",
+                        retouched_id: "9423723987103_A3_Master",
+                        variations: [
+                            { url: "assets/opal_black_retouched_angle3.jpg", label: "v1 Master WebP" }
+                        ]
+                    }
+                }
+            }
+        };
 
-    function updateSliderFromEvent(e) {
-      const rect = stage.getBoundingClientRect();
-      const clientX = e.clientX || (e.touches && e.touches[0].clientX);
-      const x = clientX - rect.left;
-      const pct = (x / rect.width) * 100;
-      setSliderPosition(pct);
-    }
+        // State trackers
+        let currentActiveTab = 'catalog';
+        let current_product_id = '9423723987101';
+        let current_image_id = 'angle_1';
+        let current_index = 0;
+        let activeCatId = categoriesData.length > 0 ? categoriesData[0].id : '';
+        let lastVisionAnalysis = null;
+        let activeVisionMetal = 'Platinum';
+        let currentCatalogFilter = 'all';
 
-    stage.addEventListener('mousedown', (e) => {
-      isDragging = true;
-      updateSliderFromEvent(e);
-    });
+        // -------------------------------------------------------------
+        // UI HELPERS
+        // -------------------------------------------------------------
+        function showToast(msg, isSuccess = false) {
+            const t = document.getElementById('toast');
+            const icon = document.getElementById('toast-icon');
+            document.getElementById('toast-msg').innerHTML = isSuccess ? '<span class="text-emerald-400 font-bold">✨ ' + msg + '</span>' : msg;
+            if (isSuccess) {
+                icon.className = "w-4 h-4 text-emerald-400 shrink-0";
+            } else {
+                icon.className = "w-4 h-4 text-[#2EA3F2] shrink-0";
+            }
+            t.classList.remove('hidden');
+            setTimeout(() => t.classList.add('hidden'), 4500);
+            if (window.lucide) window.lucide.createIcons();
+        }
 
-    window.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      updateSliderFromEvent(e);
-    });
+        // -------------------------------------------------------------
+        // TAB 1: CATALOG QUEUE CONTROLLER
+        // -------------------------------------------------------------
+        function renderCatalogGrid() {
+            const grid = document.getElementById('catalog-grid');
+            grid.innerHTML = '';
 
-    window.addEventListener('mouseup', () => { isDragging = false; });
+            const pKeys = Object.keys(allProducts);
+            pKeys.forEach(pId => {
+                const prod = allProducts[pId];
+                const rawImg = prod.images['angle_1'] ? prod.images['angle_1'].raw_url : '';
+                const masterImg = prod.images['angle_1'] ? prod.images['angle_1'].retouched_url : '';
+                
+                const card = document.createElement('div');
+                card.className = "product-card group bg-white border border-[#EAECEF] hover:border-[#111215] rounded-2xl p-4 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between";
+                card.setAttribute('data-category', prod.filter_cat);
+                card.setAttribute('data-title', prod.title.toLowerCase());
+                card.setAttribute('data-id', prod.id);
 
-    stage.addEventListener('touchstart', (e) => {
-      isDragging = true;
-      updateSliderFromEvent(e);
-    });
+                card.innerHTML = `
+                    <div>
+                        <!-- Card Header (ID on top, Status Pill, Dismiss Button) -->
+                        <div class="mb-3.5 pb-2.5 border-b border-[#F1F3F5] flex items-center justify-between">
+                            <div>
+                                <span class="text-[10px] font-mono text-[#888888] tracking-wider block mb-1">ID: #${prod.id}</span>
+                                <span class="inline-flex items-center text-[10px] font-semibold tracking-wide px-2.5 py-0.5 rounded-full border ${prod.badge_class}">
+                                    <i data-lucide="${prod.badge_icon}" class="w-3 h-3 mr-1.5"></i>
+                                    <span>${prod.badge_text}</span>
+                                </span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <span class="text-[9.5px] font-medium text-[#777777] bg-[#F8F9FA] px-2.5 py-1 rounded-lg border border-[#EAECEF]">
+                                    ${prod.photo_count} Angles
+                                </span>
+                                <button onclick="event.stopPropagation(); dismissProductCard('${prod.id}')" title="Remove draft from queue" class="p-1 text-[#999999] hover:text-rose-600 hover:bg-rose-50 rounded-lg transition">
+                                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                </button>
+                            </div>
+                        </div>
 
-    window.addEventListener('touchmove', (e) => {
-      if (!isDragging) return;
-      updateSliderFromEvent(e);
-    });
+                        <!-- Dual Showcase Image Frames (RAW vs 4K MASTER) -->
+                        <div class="grid grid-cols-2 gap-2.5 mb-3.5">
+                            <!-- Raw Photo Frame -->
+                            <div class="relative aspect-square bg-[#FAFBFD] rounded-xl border border-[#F1F3F5] overflow-hidden flex items-center justify-center p-2 group-hover:border-[#E5E7EB] transition">
+                                <img src="${rawImg}" alt="Raw" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300">
+                                <div class="absolute bottom-1.5 inset-x-1.5 flex justify-center">
+                                    <span class="bg-[#111215]/80 backdrop-blur-sm text-white text-[9px] font-medium tracking-wide px-2 py-0.5 rounded-full shadow-xs">
+                                        RAW (${prod.photo_count})
+                                    </span>
+                                </div>
+                            </div>
 
-    window.addEventListener('touchend', () => { isDragging = false; });
+                            <!-- 4K Retouched Master Frame -->
+                            <div class="relative aspect-square bg-[#FAFBFD] rounded-xl border border-[#F1F3F5] overflow-hidden flex items-center justify-center p-2 group-hover:border-emerald-200 transition">
+                                <img src="${masterImg}" alt="Master" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300">
+                                <div class="absolute bottom-1.5 inset-x-1.5 flex justify-center">
+                                    <span class="bg-emerald-700/90 backdrop-blur-sm text-white text-[9px] font-semibold tracking-wide px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1">
+                                        <i data-lucide="sparkles" class="w-2.5 h-2.5 text-amber-300"></i> MASTER
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
 
-    window.addEventListener('resize', () => {
-      imgBefore.style.width = stage.offsetWidth + 'px';
-    });
+                        <!-- Product Details -->
+                        <h3 class="text-xs font-bold text-[#111215] mb-1.5 line-clamp-2 leading-snug tracking-tight" title="${prod.title}">
+                            ${prod.title}
+                        </h3>
+                        
+                        <div class="flex items-center gap-1.5 mb-4">
+                            <span class="inline-flex items-center text-[10px] font-semibold text-[#444444] bg-[#F8F9FA] px-2 py-0.5 rounded-md border border-[#EAECEF]">
+                                <i data-lucide="gem" class="w-2.5 h-2.5 mr-1 text-[#2EA3F2]"></i>
+                                ${prod.category}
+                            </span>
+                        </div>
+                    </div>
 
-    // Accordion Toggle
-    function toggleAccordion() {
-      const btn = document.getElementById('accordion-btn');
-      const panel = document.getElementById('accordion-panel');
-      const isOpen = panel.classList.contains('open');
+                    <!-- Action Button -->
+                    <button onclick="loadAndSwitchToReview('${prod.id}')" class="w-full py-2.5 px-4 rounded-xl text-xs font-bold text-white bg-[#111215] hover:bg-black group-hover:shadow-md transition-all flex items-center justify-center space-x-1.5">
+                        <span>Studio Review</span>
+                        <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform"></i>
+                    </button>
+                `;
 
-      panel.classList.toggle('open');
-      btn.classList.toggle('open');
-    }
+                grid.appendChild(card);
+            });
 
-    // Toggle CV Wireframe Overlay in Viewer
-    function toggleWireframeOverlay() {
-      showingWireframe = !showingWireframe;
-      const btn = document.getElementById('btn-wireframe');
-      
-      if (showingWireframe) {
-        imgAfter.src = 'assets/pipeline_stage2_facet_lattice.jpg';
-        protectedBadge.textContent = 'CV Feature Extraction (32 Vertices & Prongs Locked)';
-        protectedBadge.style.color = '#2563EB';
-        btn.textContent = '✓ Showing CV Lattice (Click to restore Master)';
-        btn.style.background = '#1E3A8A';
-        btn.style.color = '#FFFFFF';
-      } else {
-        imgAfter.src = 'assets/art_deco_retouched_angle1.jpg';
-        protectedBadge.textContent = 'Geometry-Protected (0.00% Drift • Royal Sapphires)';
-        protectedBadge.style.color = '#1E3A8A';
-        btn.textContent = '👁️ Toggle CV Lattice Wireframe';
-        btn.style.background = '#FFFFFF';
-        btn.style.color = '#1E3A8A';
-      }
-    }
+            updateMetrics();
+            if (window.lucide) window.lucide.createIcons();
+        }
 
-    // Modal Handlers
-    function openContactModal() {
-      document.getElementById('contact-modal').classList.add('active');
-    }
+        function updateMetrics() {
+            const prods = Object.values(allProducts);
+            const total = prods.length;
+            const pending = prods.filter(p => p.filter_cat === 'pending').length;
+            const processing = prods.filter(p => p.filter_cat === 'processing').length;
+            const published = prods.filter(p => p.filter_cat === 'published').length;
 
-    function closeContactModal() {
-      document.getElementById('contact-modal').classList.remove('active');
-    }
+            document.getElementById('metric-total').innerText = total;
+            document.getElementById('metric-pending').innerText = pending;
+            document.getElementById('metric-processing').innerText = processing;
+            document.getElementById('metric-published').innerText = published;
+            document.getElementById('tab-catalog-badge').innerText = total;
 
-    function handleModalBackdrop(e) {
-      if (e.target.id === 'contact-modal') {
-        closeContactModal();
-      }
-    }
+            document.getElementById('cat-filter-all').innerText = `All Items (${total})`;
+            document.getElementById('cat-filter-pending').innerText = `In The Line (${pending})`;
+            document.getElementById('cat-filter-processing').innerText = `Processing (${processing})`;
+            document.getElementById('cat-filter-published').innerText = `Published Live (${published})`;
+        }
 
-    function copyInquiryText() {
-      const text = document.getElementById('inquiry-template').textContent.trim();
-      navigator.clipboard.writeText(text).then(() => {
-        const btn = document.getElementById('btn-copy-template');
-        const orig = btn.textContent;
-        btn.textContent = "✓ Copied!";
-        btn.style.borderColor = "var(--accent-emerald)";
-        btn.style.color = "var(--accent-emerald)";
-        setTimeout(() => {
-          btn.textContent = orig;
-          btn.style.borderColor = "";
-          btn.style.color = "";
-        }, 2000);
-      });
-    }
+        function filterCatalog(category) {
+            currentCatalogFilter = category;
+            document.querySelectorAll('.catalog-filter-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('cat-filter-' + category).classList.add('active');
+            applyFilters();
+        }
 
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeContactModal();
-    });
+        function searchCatalog() {
+            applyFilters();
+        }
 
-    // Initial Layout Sync
-    window.addEventListener('DOMContentLoaded', () => {
-      setSliderPosition(50);
-      setTimeout(() => {
-        setSliderPosition(50);
-      }, 60);
-    });
-  </script>
+        function applyFilters() {
+            const search = document.getElementById('search-input').value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.product-card');
+
+            cards.forEach(card => {
+                const cat = card.getAttribute('data-category');
+                const title = card.getAttribute('data-title');
+                const id = card.getAttribute('data-id');
+
+                const matchesTab = (currentCatalogFilter === 'all') || (cat === currentCatalogFilter);
+                const matchesSearch = !search || title.includes(search) || id.includes(search);
+
+                if (matchesTab && matchesSearch) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        function dismissProductCard(productId) {
+            if (!confirm(`Remove product #${productId} from the studio queue? (Raw photos remain saved in archive).`)) return;
+            delete allProducts[productId];
+            renderCatalogGrid();
+            syncProductDropdown();
+            showToast(`Product #${productId} removed from queue.`);
+        }
+
+        // -------------------------------------------------------------
+        // TAB SWITCHING
+        // -------------------------------------------------------------
+        function switchTab(tabName, prodId = null) {
+            currentActiveTab = tabName;
+            
+            // 1. Hide all panes
+            document.getElementById('pane-catalog').classList.add('hidden');
+            document.getElementById('pane-review').classList.add('hidden');
+            document.getElementById('pane-categories').classList.add('hidden');
+
+            // 2. Reset tab buttons
+            document.querySelectorAll('.nav-tab-btn').forEach(btn => btn.classList.remove('active'));
+
+            // 3. Activate selected pane & button
+            document.getElementById('pane-' + tabName).classList.remove('hidden');
+            document.getElementById('tab-btn-' + tabName).classList.add('active');
+
+            if (tabName === 'review') {
+                loadProductIntoReview(prodId || current_product_id);
+            } else if (tabName === 'categories') {
+                renderCategoryList();
+                if (activeCatId) selectCategoryToEdit(activeCatId);
+            }
+
+            if (window.lucide) window.lucide.createIcons();
+        }
+
+        function loadAndSwitchToReview(prodId) {
+            current_product_id = prodId;
+            switchTab('review', prodId);
+        }
+
+        // -------------------------------------------------------------
+        // TAB 2: STUDIO REVIEW CONTROLLER
+        // -------------------------------------------------------------
+        function syncProductDropdown() {
+            const picker = document.getElementById('review-product-picker');
+            picker.innerHTML = '';
+            Object.values(allProducts).forEach(p => {
+                const opt = document.createElement('option');
+                opt.value = p.id;
+                opt.innerText = `${p.title} (ID: ${p.id})`;
+                picker.appendChild(opt);
+            });
+        }
+
+        function loadProductIntoReview(prodId) {
+            if (!prodId || !allProducts[prodId]) prodId = Object.keys(allProducts)[0];
+            current_product_id = prodId;
+            const prod = allProducts[prodId];
+
+            document.getElementById('ai-learned-card').classList.add('hidden');
+
+            // Sync product selector dropdown
+            const picker = document.getElementById('review-product-picker');
+            if (picker) picker.value = prodId;
+
+            document.getElementById('review-title').innerText = prod.title;
+            document.getElementById('review-id-label').innerText = '#' + prod.id;
+            
+            const imgKeys = Object.keys(prod.images || {});
+            document.getElementById('review-photo-count').innerText = imgKeys.length;
+
+            // Update Status Badge
+            const badge = document.getElementById('review-status-badge');
+            if (prod.status === 'active') {
+                badge.className = 'inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-semibold border bg-emerald-50 text-emerald-700 border-emerald-200';
+                badge.innerHTML = '<i data-lucide="check-circle" class="w-3.5 h-3.5 mr-1.5 text-emerald-600"></i> Published Live';
+            } else {
+                badge.className = 'inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-semibold border bg-amber-50 text-amber-700 border-amber-200';
+                badge.innerHTML = '<i data-lucide="clock" class="w-3.5 h-3.5 mr-1.5"></i> In The Line (Pending)';
+            }
+
+            // Build Angle Thumbnails Bar
+            const thumbBar = document.getElementById('review-thumb-bar');
+            thumbBar.innerHTML = '<span class="text-xs font-semibold uppercase tracking-wider text-[#666666] mr-2">Product Angles:</span>';
+            
+            imgKeys.forEach((key, idx) => {
+                const rec = prod.images[key];
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.id = 'thumb-btn-' + key;
+                btn.className = 'thumb-btn ' + (idx === 0 ? 'ring-2 ring-[#2EA3F2] border-[#2EA3F2]' : 'border-[#E5E7EB]') + ' w-14 h-14 rounded-xl border bg-white p-1 overflow-hidden transition hover:scale-105 shrink-0';
+                btn.onclick = () => selectImage(key, idx);
+                btn.innerHTML = `<img src="${rec.raw_url}" alt="Angle ${idx+1}" class="w-full h-full object-contain">`;
+                thumbBar.appendChild(btn);
+            });
+
+            if (imgKeys.length > 0) {
+                selectImage(imgKeys[0], 0);
+            }
+
+            if (window.lucide) window.lucide.createIcons();
+        }
+
+        function selectImage(imgId, idx) {
+            current_image_id = imgId;
+            current_index = idx;
+            const prod = allProducts[current_product_id];
+            if (!prod || !prod.images[imgId]) return;
+            const rec = prod.images[imgId];
+
+            // 1. Raw photo update
+            document.getElementById('review-raw-img').src = rec.raw_url;
+            document.getElementById('review-raw-label').innerText = `Original Raw Photo (Angle ${idx + 1} — ID: ${imgId})`;
+
+            // 2. Thumbnail active state
+            document.querySelectorAll('.thumb-btn').forEach(btn => {
+                btn.classList.remove('ring-2', 'ring-[#2EA3F2]', 'border-[#2EA3F2]');
+                btn.classList.add('border-[#E5E7EB]');
+            });
+            const activeBtn = document.getElementById('thumb-btn-' + imgId);
+            if (activeBtn) {
+                activeBtn.classList.remove('border-[#E5E7EB]');
+                activeBtn.classList.add('ring-2', 'ring-[#2EA3F2]', 'border-[#2EA3F2]');
+            }
+
+            // 3. Retouched Master update
+            const rImg = document.getElementById('review-retouched-img');
+            const noCandBox = document.getElementById('no-candidate-box');
+            const retouchedLabel = document.getElementById('review-retouched-label');
+            const retouchedBadge = document.getElementById('review-retouched-badge');
+
+            if (retouchedLabel) {
+                retouchedLabel.innerHTML = `<i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Retouched Master (Angle ${idx + 1} — ID: ${rec.retouched_id || imgId + '_R'})`;
+            }
+            if (retouchedBadge) {
+                retouchedBadge.innerText = rec.retouched_id || (imgId + '_R');
+            }
+
+            if (rec.retouched_url) {
+                rImg.src = rec.retouched_url;
+                rImg.classList.remove('hidden');
+                noCandBox.classList.add('hidden');
+            } else {
+                rImg.src = '';
+                rImg.classList.add('hidden');
+                noCandBox.classList.remove('hidden');
+            }
+
+            // 4. Render Variations Gallery Tray
+            renderVariationsGallery(imgId, rec.variations || [], rec.retouched_url);
+
+            if (window.lucide) window.lucide.createIcons();
+        }
+
+        function renderVariationsGallery(imgId, variations, activeUrl) {
+            const strip = document.getElementById('variations-thumbs-bar');
+            const badge = document.getElementById('variations-count-badge');
+            strip.innerHTML = '';
+
+            let varList = variations;
+            if (!varList || varList.length === 0) {
+                if (activeUrl) {
+                    varList = [{ url: activeUrl, label: 'v1 Master WebP' }];
+                } else {
+                    varList = [];
+                }
+            }
+
+            badge.innerText = varList.length + ' ' + (varList.length === 1 ? 'Candidate' : 'Candidates');
+
+            if (varList.length === 0) {
+                strip.innerHTML = '<span class="text-[11px] text-[#999999] italic">No variations generated yet. Run a retouch below.</span>';
+                return;
+            }
+
+            varList.forEach((v, vIdx) => {
+                const isSelected = (v.url === activeUrl);
+                const statusClass = isSelected ? 'text-emerald-700 font-bold' : 'text-[#666666]';
+                const statusText = isSelected ? '● Active' : 'Click to Pick';
+                const card = document.createElement('div');
+                card.className = 'variation-card flex items-center space-x-2 p-1.5 rounded-xl border transition cursor-pointer shrink-0 ' + 
+                    (isSelected ? 'bg-emerald-50 border-emerald-500 ring-1 ring-emerald-500 shadow-xs' : 'bg-[#F8F9FA] border-[#E5E7EB] hover:border-[#2EA3F2]');
+                
+                card.onclick = () => selectActiveVariation(imgId, v.url);
+                card.innerHTML = `
+                    <div class="w-9 h-9 rounded-lg bg-white border border-[#E5E7EB] overflow-hidden shrink-0 flex items-center justify-center">
+                        <img src="${v.url}" alt="Var" class="w-full h-full object-contain">
+                    </div>
+                    <div class="pr-1.5">
+                        <span class="text-[10px] font-bold text-[#111215] block leading-tight">${v.label || 'v' + (vIdx + 1)}</span>
+                        <span class="text-[9px] ${statusClass} block">${statusText}</span>
+                    </div>
+                `;
+                strip.appendChild(card);
+            });
+        }
+
+        function selectActiveVariation(imgId, varUrl) {
+            const prod = allProducts[current_product_id];
+            if (!prod || !prod.images[imgId]) return;
+
+            // 1. Instantly update UI Master frame
+            document.getElementById('review-retouched-img').src = varUrl;
+            
+            // 2. Update local state
+            prod.images[imgId].retouched_url = varUrl;
+            renderVariationsGallery(imgId, prod.images[imgId].variations || [], varUrl);
+
+            showToast("Active retouched master swapped!", true);
+        }
+
+        function approveProduct() {
+            const prod = allProducts[current_product_id];
+            if (!prod) return;
+
+            prod.status = 'active';
+            prod.filter_cat = 'published';
+            prod.badge_class = 'bg-emerald-50 text-emerald-700 border-emerald-200';
+            prod.badge_text = 'Published Live';
+            prod.badge_icon = 'check-circle';
+
+            const badge = document.getElementById('review-status-badge');
+            badge.innerHTML = '<i data-lucide="check-circle" class="w-3.5 h-3.5 mr-1.5 text-emerald-600"></i> Published Live';
+            badge.className = 'inline-flex items-center px-3.5 py-1.5 rounded-full text-xs font-semibold border bg-emerald-50 text-emerald-700 border-emerald-200';
+            
+            updateMetrics();
+            renderCatalogGrid();
+            showToast(`Product #${prod.id} is now LIVE on Shopify! Unused candidate variations purged.`, true);
+            if (window.lucide) window.lucide.createIcons();
+        }
+
+        function reRollModel() {
+            const pill = document.getElementById('retouch-progress-pill');
+            const spinnerMsg = document.getElementById('spinner-msg');
+            spinnerMsg.innerText = `Re-rolling Angle ${current_index + 1}...`;
+            pill.classList.remove('hidden');
+
+            showToast(`Queued in-place retouch variation for Angle ${current_index + 1}...`);
+
+            setTimeout(() => {
+                pill.classList.add('hidden');
+                const prod = allProducts[current_product_id];
+                if (prod && prod.images[current_image_id]) {
+                    const rec = prod.images[current_image_id];
+                    const nextV = (rec.variations ? rec.variations.length : 0) + 1;
+                    const newVar = {
+                        url: rec.retouched_url,
+                        label: `v${nextV} (AI Re-roll)`
+                    };
+                    if (!rec.variations) rec.variations = [];
+                    rec.variations.push(newVar);
+                    renderVariationsGallery(current_image_id, rec.variations, rec.retouched_url);
+                }
+                showToast("Retouch completed! New variation added to candidate tray.", true);
+            }, 1200);
+        }
+
+        function dismissActiveAngle() {
+            const prod = allProducts[current_product_id];
+            if (!prod || !prod.images[current_image_id]) return;
+
+            if (!confirm(`Exclude Angle #${current_image_id} from the studio review workbench?`)) return;
+
+            delete prod.images[current_image_id];
+            const remainingKeys = Object.keys(prod.images);
+            prod.photo_count = remainingKeys.length;
+            document.getElementById('review-photo-count').innerText = remainingKeys.length;
+
+            loadProductIntoReview(current_product_id);
+            renderCatalogGrid();
+            showToast(`Angle #${current_image_id} excluded from console review.`);
+        }
+
+        // -------------------------------------------------------------
+        // MODAL 1: RETOUCH WITH CATEGORY
+        // -------------------------------------------------------------
+        function openCategoryRetouchModal() {
+            const sel = document.getElementById('cr-category-select');
+            sel.innerHTML = '';
+            categoriesData.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c.id;
+                opt.innerText = `${c.name} (${c.type})`;
+                sel.appendChild(opt);
+            });
+
+            document.getElementById('cat-retouch-modal').classList.remove('hidden');
+            if (sel.options.length > 0) {
+                onCategoryRetouchSelect(sel.options[0].value);
+            }
+            if (window.lucide) window.lucide.createIcons();
+        }
+
+        function closeCategoryRetouchModal() {
+            document.getElementById('cat-retouch-modal').classList.add('hidden');
+        }
+
+        function onCategoryRetouchSelect(catId) {
+            const cat = categoriesData.find(c => c.id === catId);
+            if (!cat) return;
+
+            document.getElementById('cr-gem-type').innerText = `${cat.name} (${cat.type})`;
+            document.getElementById('cr-gem-desc').innerText = cat.description || '';
+            document.getElementById('cr-prompt').value = cat.golden_prompt || '';
+
+            const traitsBox = document.getElementById('cr-gem-traits');
+            traitsBox.innerHTML = '';
+            (cat.traits || []).forEach(t => {
+                const chip = document.createElement('span');
+                chip.className = 'bg-white border border-[#E5E7EB] text-[#222222] px-2 py-0.5 rounded text-[10px] font-medium';
+                chip.innerText = t;
+                traitsBox.appendChild(chip);
+            });
+        }
+
+        function deployCategoryRetouch() {
+            const prompt = document.getElementById('cr-prompt').value;
+            if (!prompt) {
+                alert("Prompt directive cannot be empty.");
+                return;
+            }
+
+            closeCategoryRetouchModal();
+            showToast("Deploying in-place retouch with Category directive...");
+
+            const pill = document.getElementById('retouch-progress-pill');
+            const spinnerMsg = document.getElementById('spinner-msg');
+            spinnerMsg.innerText = "Applying Category Directive...";
+            pill.classList.remove('hidden');
+
+            setTimeout(() => {
+                pill.classList.add('hidden');
+                const prod = allProducts[current_product_id];
+                if (prod && prod.images[current_image_id]) {
+                    const rec = prod.images[current_image_id];
+                    const nextV = (rec.variations ? rec.variations.length : 0) + 1;
+                    const newVar = {
+                        url: rec.retouched_url,
+                        label: `v${nextV} (Category Refinement)`
+                    };
+                    if (!rec.variations) rec.variations = [];
+                    rec.variations.push(newVar);
+                    renderVariationsGallery(current_image_id, rec.variations, rec.retouched_url);
+                }
+                showToast("Category retouch complete! Refined master added.", true);
+            }, 1400);
+        }
+
+        // -------------------------------------------------------------
+        // MODAL 2: AI VISION RECOGNITION & ACTIVE LEARNING
+        // -------------------------------------------------------------
+        function openVisionModal() {
+            document.getElementById('vision-modal').classList.remove('hidden');
+            if (window.lucide) window.lucide.createIcons();
+        }
+
+        function closeVisionModal() {
+            document.getElementById('vision-modal').classList.add('hidden');
+        }
+
+        function setVisionMetal(metalName) {
+            activeVisionMetal = metalName;
+            document.getElementById('vision-metal-setting').innerText = `${metalName} • Micro-Pavé Prong Architecture`;
+
+            document.querySelectorAll('.metal-btn').forEach(btn => {
+                if (btn.innerText.includes(metalName)) {
+                    btn.className = 'metal-btn px-2.5 py-1 rounded-lg text-[10px] font-bold border bg-[#111215] text-white border-[#111215] shadow-xs';
+                } else {
+                    btn.className = 'metal-btn px-2.5 py-1 rounded-lg text-[10px] font-semibold border bg-white text-[#222222] border-[#E5E7EB] hover:border-[#2EA3F2] transition';
+                }
+            });
+
+            // Dynamically sync prompt with new metal type
+            const promptEl = document.getElementById('vision-prompt');
+            let p = promptEl.value;
+            const metals = ['sterling silver 925', 'sterling silver', 'platinum', '18k white gold', 'white gold', '18k yellow gold', 'yellow gold', '18k rose gold', 'rose gold'];
+            metals.forEach(m => {
+                const re = new RegExp('polish ' + m, 'gi');
+                p = p.replace(re, 'polish ' + metalName.toLowerCase());
+            });
+            if (!p.toLowerCase().includes('polish ' + metalName.toLowerCase())) {
+                p = p.replace(/polish [^,]+/i, 'polish ' + metalName.toLowerCase() + ' with mirror specular highlights');
+            }
+            promptEl.value = p;
+            showToast(`Switched metal alloy to ${metalName}`);
+        }
+
+        function startVisionScan(forceRefresh = false) {
+            openVisionModal();
+            const prod = allProducts[current_product_id];
+            
+            document.getElementById('vision-loading').classList.remove('hidden');
+            document.getElementById('vision-results').classList.add('hidden');
+
+            setTimeout(() => {
+                document.getElementById('vision-loading').classList.add('hidden');
+                document.getElementById('vision-results').classList.remove('hidden');
+
+                const gemType = prod ? prod.gem_type : 'Natural Corundum (Blue Sapphire)';
+                const metal = prod ? prod.metal_type : 'Platinum';
+                
+                document.getElementById('vision-gem').innerText = gemType;
+                document.getElementById('vision-metal-setting').innerText = `${metal} • Pavé Halo Architecture`;
+                document.getElementById('vision-cat-name').value = `${prod ? prod.category : 'Bespoke Jewelry'} Custom Model`;
+                document.getElementById('vision-prompt').value = `edit image to remove background, place on clean pure solid white studio background with soft contact shadow; preserve the authentic ${gemType.toLowerCase()} facet geometry and dispersion fire completely intact; polish ${metal.toLowerCase()} setting to mirror specular reflection, eliminate dust and finger oil.`;
+
+                setVisionMetal(metal);
+
+                const chipsBox = document.getElementById('vision-traits-chips');
+                chipsBox.innerHTML = '';
+                const traits = ["Natural Refraction Lattice", "Octagonal Step Crown", "Pavé Diamond Accents", "Under-Gallery Filigree", "Mirror Specular Shading"];
+                traits.forEach(t => {
+                    const chip = document.createElement('span');
+                    chip.className = 'bg-sky-50 text-sky-800 border border-sky-200 px-2.5 py-1 rounded-lg text-[10px] font-semibold flex items-center';
+                    chip.innerHTML = `<i data-lucide="tag" class="w-2.5 h-2.5 mr-1 text-[#2EA3F2]"></i> ${t}`;
+                    chipsBox.appendChild(chip);
+                });
+
+                lastVisionAnalysis = {
+                    gemstone_type: gemType,
+                    metal_type: metal,
+                    detected_traits: traits,
+                    suggested_category_name: `${prod ? prod.category : 'Bespoke Jewelry'} Custom Model`,
+                    tailored_prompt: document.getElementById('vision-prompt').value
+                };
+
+                if (window.lucide) window.lucide.createIcons();
+            }, 800);
+        }
+
+        function deployVisionRetouch() {
+            closeVisionModal();
+            showToast("Deploying retouch with AI Vision detected traits...");
+
+            const pill = document.getElementById('retouch-progress-pill');
+            const spinnerMsg = document.getElementById('spinner-msg');
+            spinnerMsg.innerText = "Applying Vision Micro-Traits...";
+            pill.classList.remove('hidden');
+
+            setTimeout(() => {
+                pill.classList.add('hidden');
+                const prod = allProducts[current_product_id];
+                if (prod && prod.images[current_image_id]) {
+                    const rec = prod.images[current_image_id];
+                    const nextV = (rec.variations ? rec.variations.length : 0) + 1;
+                    const newVar = {
+                        url: rec.retouched_url,
+                        label: `v${nextV} (AI Vision Scan)`
+                    };
+                    if (!rec.variations) rec.variations = [];
+                    rec.variations.push(newVar);
+                    renderVariationsGallery(current_image_id, rec.variations, rec.retouched_url);
+                }
+                document.getElementById('ai-learned-card').classList.remove('hidden');
+                showToast("AI Vision retouch deployed! Custom traits applied.", true);
+                if (window.lucide) window.lucide.createIcons();
+            }, 1400);
+        }
+
+        function saveLearnedCategory() {
+            if (!lastVisionAnalysis) return;
+            const catName = document.getElementById('vision-cat-name').value || lastVisionAnalysis.suggested_category_name;
+            const prompt = document.getElementById('vision-prompt').value || lastVisionAnalysis.tailored_prompt;
+
+            const newCat = {
+                id: 'learned_' + Date.now(),
+                name: catName,
+                type: lastVisionAnalysis.gemstone_type,
+                description: `AI-learned from product #${current_product_id} with ${activeVisionMetal} setting.`,
+                golden_prompt: prompt,
+                traits: lastVisionAnalysis.detected_traits
+            };
+
+            categoriesData.push(newCat);
+            document.getElementById('ai-learned-card').classList.add('hidden');
+            showToast(`Saved '${catName}' as a permanent Category in library!`, true);
+        }
+
+        // -------------------------------------------------------------
+        // TAB 3: CATEGORIES & PROMPTS CONTROLLER
+        // -------------------------------------------------------------
+        function renderCategoryList() {
+            const container = document.getElementById('cat-list-container');
+            const search = document.getElementById('cat-search').value.toLowerCase().trim();
+            container.innerHTML = '';
+
+            categoriesData.forEach(cat => {
+                if (!search || cat.name.toLowerCase().includes(search) || cat.id.includes(search)) {
+                    const isActive = cat.id === activeCatId;
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'w-full text-left p-2.5 rounded-xl transition flex flex-col ' + (isActive ? 'bg-[#111215] text-white' : 'bg-[#F8F9FA] hover:bg-[#E5E7EB] text-[#222222]');
+                    btn.onclick = () => selectCategoryToEdit(cat.id);
+                    btn.innerHTML = `
+                        <span class="text-xs font-bold">${cat.name}</span>
+                        <span class="text-[10px] ${isActive ? 'text-slate-400' : 'text-[#666666]'} truncate">${cat.type || 'Natural Gemstone'}</span>
+                    `;
+                    container.appendChild(btn);
+                }
+            });
+        }
+
+        function filterCategoriesList() {
+            renderCategoryList();
+        }
+
+        function initNewCategoryForm() {
+            activeCatId = 'new_' + Date.now();
+            document.getElementById('edit-cat-name').value = '';
+            document.getElementById('edit-cat-type').value = 'Natural Gemstone';
+            document.getElementById('edit-cat-desc').value = '';
+            document.getElementById('edit-cat-prompt').value = 'edit image to remove background, place on clean pure solid white studio background with soft contact shadow, remove surface dust and micro-scratches, preserve natural gemstone fire and body tone, high-end luxury jewelry catalog photography, 4k ultra-detailed';
+            document.getElementById('edit-cat-traits').value = '';
+            document.getElementById('cat-save-msg').innerText = '';
+            document.getElementById('prompt-tag-badge').innerText = 'New Category Prompt';
+            document.getElementById('save-cat-btn-text').innerText = 'Create Category & Save';
+            document.getElementById('edit-cat-name').focus();
+            renderCategoryList();
+        }
+
+        function selectCategoryToEdit(catId) {
+            activeCatId = catId;
+            const cat = categoriesData.find(c => c.id === catId);
+            if (!cat) return;
+
+            document.getElementById('edit-cat-name').value = cat.name || '';
+            document.getElementById('edit-cat-type').value = cat.type || '';
+            document.getElementById('edit-cat-desc').value = cat.description || '';
+            document.getElementById('edit-cat-prompt').value = cat.golden_prompt || '';
+            document.getElementById('edit-cat-traits').value = (cat.traits || []).join(', ');
+            document.getElementById('cat-save-msg').innerText = '';
+            document.getElementById('prompt-tag-badge').innerText = 'Live Active Prompt';
+            document.getElementById('save-cat-btn-text').innerText = 'Save Category Changes';
+
+            renderCategoryList();
+        }
+
+        function saveActiveCategory() {
+            const name = document.getElementById('edit-cat-name').value.trim();
+            const prompt = document.getElementById('edit-cat-prompt').value.trim();
+            if (!name || !prompt) {
+                alert("Please enter category name and prompt directive.");
+                return;
+            }
+
+            let cat = categoriesData.find(c => c.id === activeCatId);
+            const isNew = !cat || activeCatId.startsWith('new_');
+
+            if (isNew) {
+                cat = {
+                    id: 'cat_' + Date.now(),
+                    name: name,
+                    type: document.getElementById('edit-cat-type').value.trim(),
+                    description: document.getElementById('edit-cat-desc').value.trim(),
+                    golden_prompt: prompt,
+                    traits: document.getElementById('edit-cat-traits').value.split(',').map(t => t.trim()).filter(Boolean)
+                };
+                categoriesData.push(cat);
+                activeCatId = cat.id;
+            } else {
+                cat.name = name;
+                cat.type = document.getElementById('edit-cat-type').value.trim();
+                cat.description = document.getElementById('edit-cat-desc').value.trim();
+                cat.golden_prompt = prompt;
+                cat.traits = document.getElementById('edit-cat-traits').value.split(',').map(t => t.trim()).filter(Boolean);
+            }
+
+            document.getElementById('cat-save-msg').innerText = "✓ Saved to live library";
+            document.getElementById('save-cat-btn-text').innerText = 'Save Category Changes';
+            document.getElementById('prompt-tag-badge').innerText = 'Live Active Prompt';
+            renderCategoryList();
+            showToast(`Category '${name}' saved successfully!`, true);
+            setTimeout(() => document.getElementById('cat-save-msg').innerText = '', 3000);
+        }
+
+        // -------------------------------------------------------------
+        // UTILITY MODALS (Shopify & Contact)
+        // -------------------------------------------------------------
+        function openShopifyModal() {
+            document.getElementById('shopify-modal').classList.remove('hidden');
+            if (window.lucide) window.lucide.createIcons();
+        }
+
+        function closeShopifyModal() {
+            document.getElementById('shopify-modal').classList.add('hidden');
+        }
+
+        function openContactModal() {
+            document.getElementById('contact-modal').classList.remove('hidden');
+            if (window.lucide) window.lucide.createIcons();
+        }
+
+        function closeContactModal() {
+            document.getElementById('contact-modal').classList.add('hidden');
+        }
+
+        function copyEmail() {
+            navigator.clipboard.writeText('petro.koriaka@gmail.com');
+            const btn = document.getElementById('copy-email-btn');
+            btn.innerText = "✓ Copied to clipboard!";
+            setTimeout(() => btn.innerText = "Copy Architect Contact (petro.koriaka@gmail.com)", 2500);
+        }
+
+        // -------------------------------------------------------------
+        // INITIALIZATION
+        // -------------------------------------------------------------
+        window.addEventListener('DOMContentLoaded', () => {
+            renderCatalogGrid();
+            syncProductDropdown();
+            switchTab('catalog', '9423723987101');
+            if (window.lucide) window.lucide.createIcons();
+        });
+    </script>
 </body>
 </html>
