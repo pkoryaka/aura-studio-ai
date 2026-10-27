@@ -559,7 +559,7 @@
                         <label class="font-semibold text-[#222222] uppercase tracking-wider text-[10px]">Tailored Golden Retouch Directive</label>
                         <span class="text-[9px] font-mono text-[#059669] bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">Live Synced</span>
                     </div>
-                    <textarea id="vision-prompt" rows="3" class="w-full bg-[#111215] text-[#F8F9FA] font-mono text-xs rounded-xl p-3 focus:outline-none focus:ring-1 focus:ring-[#2EA3F2] leading-relaxed"></textarea>
+                    <textarea id="vision-prompt" rows="4" class="w-full bg-[#111215] text-[#F8F9FA] font-mono text-xs rounded-xl p-3.5 focus:outline-none focus:ring-1 focus:ring-[#2EA3F2] leading-relaxed resize-none"></textarea>
                 </div>
 
                 <div class="pt-4 border-t border-[#F1F3F5] flex space-x-3">
@@ -729,6 +729,15 @@
                 category: "Ceylon Sapphire",
                 gem_type: "Natural Blue Sapphire",
                 metal_type: "Platinum",
+                architecture: "Octagonal Geometric Pavé Halo Architecture",
+                traits: [
+                    "Natural Refraction Lattice",
+                    "Octagonal Step Crown",
+                    "French-Cut Baguette Accents",
+                    "Under-Gallery Milgrain Filigree",
+                    "Mirror Specular Shading"
+                ],
+                tailored_prompt: "edit image to remove background, place on clean pure solid white studio background with soft contact shadow; preserve authentic natural sapphire step-facet geometry, deep royal blue color saturation, and dispersion fire completely intact; polish platinum setting to mirror specular reflection, eliminate workshop dust and finger oil.",
                 badge_class: "bg-amber-50 text-amber-700 border-amber-200",
                 badge_text: "Pending Review",
                 badge_icon: "clock",
@@ -770,6 +779,15 @@
                 category: "Solitaire Diamond",
                 gem_type: "Natural Brilliant Diamond",
                 metal_type: "Platinum",
+                architecture: "Vintage 4-Prong Solitaire Architecture",
+                traits: [
+                    "58-Facet Scintillation Fire",
+                    "High Crown & Open Culet",
+                    "Hand-Carved Wheat Shank",
+                    "Pierced Under-Gallery Scrollwork",
+                    "Specular Chrome Reflections"
+                ],
+                tailored_prompt: "edit image to remove background, place on clean pure solid white studio background with soft contact shadow; preserve authentic natural brilliant diamond dispersion fire, table brilliance, and sharp facet junctions completely intact; polish platinum band and vintage filigree to crisp mirror sheen, eliminate studio sensor dust.",
                 badge_class: "bg-emerald-50 text-emerald-700 border-emerald-200",
                 badge_text: "Published Live",
                 badge_icon: "check-circle",
@@ -811,6 +829,15 @@
                 category: "Black Opal",
                 gem_type: "Natural Black Opal Type 1",
                 metal_type: "18K Yellow Gold",
+                architecture: "Solid Bezel & Tapered Shank Architecture",
+                traits: [
+                    "Spectral Play-of-Color (Red & Green Fire)",
+                    "Dark Potch Base (Tone N2)",
+                    "High-Dome Oval Cabochon Curvature",
+                    "Zero-Facet Optical Diffusion",
+                    "Warm Gold Diffuse Specularity"
+                ],
+                tailored_prompt: "edit image to remove background, place on clean pure solid white studio background with soft contact shadow; strictly preserve authentic spectral play-of-color diffraction fire without color gamut clipping; polish 18k yellow gold setting to rich warm mirror luster, eliminate wax and handling smudges.",
                 badge_class: "bg-emerald-50 text-emerald-700 border-emerald-200",
                 badge_text: "Published Live",
                 badge_icon: "check-circle",
@@ -1395,7 +1422,9 @@
 
         function setVisionMetal(metalName) {
             activeVisionMetal = metalName;
-            document.getElementById('vision-metal-setting').innerText = `${metalName} • Micro-Pavé Prong Architecture`;
+            const prod = allProducts[current_product_id];
+            const arch = (prod && prod.architecture) || "Bespoke Setting Architecture";
+            document.getElementById('vision-metal-setting').innerText = `${metalName} • ${arch}`;
 
             document.querySelectorAll('.metal-btn').forEach(btn => {
                 if (btn.innerText.includes(metalName)) {
@@ -1433,17 +1462,21 @@
 
                 const gemType = prod ? prod.gem_type : 'Natural Corundum (Blue Sapphire)';
                 const metal = prod ? prod.metal_type : 'Platinum';
+                const arch = (prod && prod.architecture) || 'Bespoke Setting Architecture';
+                const traits = (prod && prod.traits) ? prod.traits : ["Natural Refraction Lattice", "Octagonal Step Crown", "Pavé Diamond Accents", "Under-Gallery Filigree", "Mirror Specular Shading"];
                 
                 document.getElementById('vision-gem').innerText = gemType;
-                document.getElementById('vision-metal-setting').innerText = `${metal} • Pavé Halo Architecture`;
+                document.getElementById('vision-metal-setting').innerText = `${metal} • ${arch}`;
                 document.getElementById('vision-cat-name').value = `${prod ? prod.category : 'Bespoke Jewelry'} Custom Model`;
-                document.getElementById('vision-prompt').value = `edit image to remove background, place on clean pure solid white studio background with soft contact shadow; preserve the authentic ${gemType.toLowerCase()} facet geometry and dispersion fire completely intact; polish ${metal.toLowerCase()} setting to mirror specular reflection, eliminate dust and finger oil.`;
+                
+                const promptEl = document.getElementById('vision-prompt');
+                promptEl.value = (prod && prod.tailored_prompt) ? prod.tailored_prompt : `edit image to remove background, place on clean pure solid white studio background with soft contact shadow; preserve the authentic ${gemType.toLowerCase()} facet geometry and dispersion fire completely intact; polish ${metal.toLowerCase()} setting to mirror specular reflection, eliminate dust and finger oil.`;
+                promptEl.scrollTop = 0;
 
                 setVisionMetal(metal);
 
                 const chipsBox = document.getElementById('vision-traits-chips');
                 chipsBox.innerHTML = '';
-                const traits = ["Natural Refraction Lattice", "Octagonal Step Crown", "Pavé Diamond Accents", "Under-Gallery Filigree", "Mirror Specular Shading"];
                 traits.forEach(t => {
                     const chip = document.createElement('span');
                     chip.className = 'bg-sky-50 text-sky-800 border border-sky-200 px-2.5 py-1 rounded-lg text-[10px] font-semibold flex items-center';
@@ -1456,7 +1489,7 @@
                     metal_type: metal,
                     detected_traits: traits,
                     suggested_category_name: `${prod ? prod.category : 'Bespoke Jewelry'} Custom Model`,
-                    tailored_prompt: document.getElementById('vision-prompt').value
+                    tailored_prompt: promptEl.value
                 };
 
                 if (window.lucide) window.lucide.createIcons();
