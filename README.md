@@ -58,10 +58,11 @@ graph LR
 
 ---
 
-## Live Access
+## Live Access & Documentation
 
-* **Interactive Studio Console:** [index.html](https://pkoryaka.github.io/aura-studio-ai/)
-* **Executive Presentation Deck:** [deck.html](https://pkoryaka.github.io/aura-studio-ai/deck.html)
+* **Interactive Studio Console:** [https://pkoryaka.github.io/aura-studio-ai/](https://pkoryaka.github.io/aura-studio-ai/)
+* **Production Walkthrough & Case Study:** [WALKTHROUGH.md](WALKTHROUGH.md)
+* **Executive Presentation Deck:** [https://pkoryaka.github.io/aura-studio-ai/deck.html](https://pkoryaka.github.io/aura-studio-ai/deck.html)
 
 ---
 
