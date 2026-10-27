@@ -61,6 +61,7 @@ graph LR
 ## Live Access & Documentation
 
 * **Interactive Studio Console:** [https://pkoryaka.github.io/aura-studio-ai/](https://pkoryaka.github.io/aura-studio-ai/)
+* **Master 1080p Video Walkthrough:** [aura_studio_production_walkthrough_hd.mp4](aura_studio_production_walkthrough_hd.mp4)
 * **Production Walkthrough & Case Study:** [WALKTHROUGH.md](WALKTHROUGH.md)
 * **Executive Presentation Deck:** [https://pkoryaka.github.io/aura-studio-ai/deck.html](https://pkoryaka.github.io/aura-studio-ai/deck.html)
 

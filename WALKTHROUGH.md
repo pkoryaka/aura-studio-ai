@@ -1,6 +1,7 @@
 # Aura Studio AI — Production Walkthrough & Case Study
 
 > **Live Interactive Console:** [https://pkoryaka.github.io/aura-studio-ai/](https://pkoryaka.github.io/aura-studio-ai/)  
+> **Master 1080p Video Walkthrough:** [aura_studio_production_walkthrough_hd.mp4](aura_studio_production_walkthrough_hd.mp4) *(16.6 MB, Full 1080p HD with Neural Voiceover)*  
 > **Source Repository:** [https://github.com/pkoryaka/aura-studio-ai](https://github.com/pkoryaka/aura-studio-ai)  
 > **Role:** AI Automation Architect & Lead Systems Engineer  
 
