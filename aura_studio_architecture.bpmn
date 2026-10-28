@@ -1,0 +1,876 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0"
+                  xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0"
+                  xmlns:zeebe="http://camunda.org/schema/zeebe/1.0"
+                  xmlns:modeler="http://camunda.org/schema/modeler/1.0"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  id="Definitions_UnifiedRetouchArchitecture"
+                  targetNamespace="http://bpmn.io/schema/bpmn"
+                  exporter="Camunda Modeler"
+                  exporterVersion="5.20.0"
+                  modeler:executionPlatform="Camunda Cloud"
+                  modeler:executionPlatformVersion="8.5.0">
+
+  <bpmn:error id="Error_ZeroPhotos" name="Error_ZeroPhotos" errorCode="ERR_ZERO_PHOTOS" />
+  <bpmn:dataStore id="DataStore_GCS_WAL_KG" name="GCS Bucket, SQLite WAL &amp; Knowledge Graph" />
+
+  <bpmn:collaboration id="Collaboration_Studio">
+    <bpmn:participant id="Participant_Studio" name="Aura Studio AI — Autonomous Jewelry Retouch &amp; Shopify Publishing Architecture" processRef="Process_StudioLifecycle" />
+  </bpmn:collaboration>
+
+  <bpmn:process id="Process_StudioLifecycle" name="Aura Studio AI End-to-End Retouch &amp; Storefront Lifecycle" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_Studio">
+      <bpmn:lane id="Lane_Shopify" name="Shopify Cloud &amp; Storefront CDN">
+        <bpmn:flowNodeRef>StartEvent_DraftCreated</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_IngestMedia</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_LiveImageSwap</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_PromoteActive</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_StorefrontLive</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_FastAPI" name="FastAPI Server, Webhook Gateway &amp; Async Orchestrator">
+        <bpmn:flowNodeRef>Task_VerifyWebhook</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_ValidMedia</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_InvalidPurge</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_SafeDraftRule</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_IsNewDraft</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_StageHistorical</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_ParallelPublish</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_InstantHttp200</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_BackgroundFinalize</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_AsyncSplit</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_PurgeVariations</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_VariationsPurged</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Operator" name="Studio Operator Review Workbench (UI)">
+        <bpmn:flowNodeRef>Gateway_MergeToCatalog</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_CatalogQueue</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_CatalogAction</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_DraftDismissed</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ReviewWorkbench</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_PassQA</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_SelectVariation</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_JoinApproved</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ClickPublish</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_AutoAdvance</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_QueueAdvanced</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_AIEngine" name="Multi-Stage Anti-Hallucination AI Engine &amp; 3-Tier Escalation">
+        <bpmn:flowNodeRef>Task_GemstoneMask</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_SpectralPolish</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_AutoCenter4K</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_StageGCSWal</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_BroadcastSSE</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_EscalationTier</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Tier1Reroll</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Tier2Category</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Tier3VisionScan</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_AlloyAndLearn</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_MergeEscalation</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ExecuteEscalated</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+
+    <bpmn:dataStoreReference id="DataStore_StudioVault" name="GCS Bucket, SQLite WAL
+&amp; Knowledge Graph" dataStoreRef="DataStore_GCS_WAL_KG" />
+
+    <bpmn:startEvent id="StartEvent_DraftCreated" name="Product Draft
+Created on Shopify">
+      <bpmn:outgoing>Flow_Start_Ingest</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Task_IngestMedia" name="Ingest Raw Media
+&amp; Product URLs">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="shopify-ingest-media" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_Start_Ingest</bpmn:incoming>
+      <bpmn:outgoing>Flow_Ingest_Verify</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_LiveImageSwap" name="1-to-1 In-Place
+Shopify CDN Swap">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="shopify-1to1-image-swap" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_Split_ToShopifySwap</bpmn:incoming>
+      <bpmn:outgoing>Flow_Swap_ToPromote</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_PromoteActive" name="Promote Draft to
+Active on Store">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="shopify-promote-active" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_Swap_ToPromote</bpmn:incoming>
+      <bpmn:outgoing>Flow_Promote_ToLiveEnd</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="EndEvent_StorefrontLive" name="Product Live
+on Storefront">
+      <bpmn:incoming>Flow_Promote_ToLiveEnd</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:scriptTask id="Task_VerifyWebhook" name="Verify HMAC
+&amp; SSRF Guard">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="verify-hmac-ssrf" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_Ingest_Verify</bpmn:incoming>
+      <bpmn:outgoing>Flow_Verify_ValidGate</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:exclusiveGateway id="Gateway_ValidMedia" name="&gt;= 1 Valid Photos?" default="Flow_ValidMedia_Yes">
+      <bpmn:incoming>Flow_Verify_ValidGate</bpmn:incoming>
+      <bpmn:outgoing>Flow_ValidMedia_No</bpmn:outgoing>
+      <bpmn:outgoing>Flow_ValidMedia_Yes</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="EndEvent_InvalidPurge" name="0-Image / Orphan
+Asset Purged">
+      <bpmn:incoming>Flow_ValidMedia_No</bpmn:incoming>
+      <bpmn:errorEventDefinition id="EndEvent_InvalidPurge_errDef" errorRef="Error_ZeroPhotos" />
+    </bpmn:endEvent>
+    <bpmn:businessRuleTask id="Task_SafeDraftRule" name="Safe Draft Rule:
+New vs Historical">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="evaluate-safe-draft-rule" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_ValidMedia_Yes</bpmn:incoming>
+      <bpmn:outgoing>Flow_SafeRule_Gate</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:exclusiveGateway id="Gateway_IsNewDraft" name="New Store Draft?" default="Flow_NewDraft_Yes">
+      <bpmn:incoming>Flow_SafeRule_Gate</bpmn:incoming>
+      <bpmn:outgoing>Flow_NewDraft_No</bpmn:outgoing>
+      <bpmn:outgoing>Flow_NewDraft_Yes</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Task_StageHistorical" name="Stage Raw Draft
+(0 Compute Spent)">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="stage-historical-draft" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_NewDraft_No</bpmn:incoming>
+      <bpmn:outgoing>Flow_Historical_ToCatalog</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:parallelGateway id="Gateway_ParallelPublish">
+      <bpmn:incoming>Flow_Publish_ToParallel</bpmn:incoming>
+      <bpmn:outgoing>Flow_Parallel_ToHttp200</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Parallel_ToBgTask</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:sendTask id="Task_InstantHttp200" name="Return HTTP 200
+(&lt;200ms) + SSE">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="send-instant-http200-sse" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_Parallel_ToHttp200</bpmn:incoming>
+      <bpmn:outgoing>Flow_Http200_ToAdvance</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:serviceTask id="Task_BackgroundFinalize" name="Async Background
+Shopify Finalize">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="background-finalize-live" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_Parallel_ToBgTask</bpmn:incoming>
+      <bpmn:outgoing>Flow_BgTask_ToSplit</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:parallelGateway id="Gateway_AsyncSplit">
+      <bpmn:incoming>Flow_BgTask_ToSplit</bpmn:incoming>
+      <bpmn:outgoing>Flow_Split_ToPurge</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Split_ToShopifySwap</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:serviceTask id="Task_PurgeVariations" name="Purge Unselected
+GCS Variations">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="purge-unselected-variations" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_Split_ToPurge</bpmn:incoming>
+      <bpmn:outgoing>Flow_Purge_ToEnd</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="EndEvent_VariationsPurged" name="Temp Variations
+Purged">
+      <bpmn:incoming>Flow_Purge_ToEnd</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Task_GemstoneMask" name="Gem No-Fly Mask
+&amp; Alpha Cutout">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="subpixel-alpha-gem-mask" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_NewDraft_Yes</bpmn:incoming>
+      <bpmn:outgoing>Flow_CV_1_To_2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_SpectralPolish" name="LAB Spectral Lock
+&amp; Metal Polish">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="spectral-lock-metal-polish" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_CV_1_To_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_CV_2_To_3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:scriptTask id="Task_AutoCenter4K" name="BBox Auto-Center
+&amp; 4K WebP Master">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="bbox-autocenter-4k-webp" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_CV_2_To_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_CV_3_To_4</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:serviceTask id="Task_StageGCSWal" name="Stage 4K Master
+to GCS &amp; SQLite">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="stage-gcs-sqlite-wal" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_CV_3_To_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_CV_4_To_5</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sendTask id="Task_BroadcastSSE" name="Push Live SSE
+Event to Studio">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="broadcast-sse-retouch" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_CV_4_To_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_SSE_ToCatalog</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:exclusiveGateway id="Gateway_MergeToCatalog">
+      <bpmn:incoming>Flow_Historical_ToCatalog</bpmn:incoming>
+      <bpmn:incoming>Flow_SSE_ToCatalog</bpmn:incoming>
+      <bpmn:outgoing>Flow_Merge_ToCatalog</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Task_CatalogQueue" name="Dual-Tile Queue
+(Raw vs Master)">
+      <bpmn:extensionElements>
+        <zeebe:userTask />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_Merge_ToCatalog</bpmn:incoming>
+      <bpmn:outgoing>Flow_Catalog_ToGate</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_CatalogAction" name="Card Action?" default="Flow_Catalog_Review">
+      <bpmn:incoming>Flow_Catalog_ToGate</bpmn:incoming>
+      <bpmn:outgoing>Flow_Catalog_Dismiss</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Catalog_Review</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="EndEvent_DraftDismissed" name="Hidden from Queue
+(Safe on Shopify)">
+      <bpmn:incoming>Flow_Catalog_Dismiss</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Task_ReviewWorkbench" name="Symmetrical Bench
+Multi-Angle QA">
+      <bpmn:extensionElements>
+        <zeebe:userTask />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_Catalog_Review</bpmn:incoming>
+      <bpmn:outgoing>Flow_Bench_ToQAGate</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_PassQA" name="Baseline Passes QA?" default="Flow_QA_Pass">
+      <bpmn:incoming>Flow_Bench_ToQAGate</bpmn:incoming>
+      <bpmn:outgoing>Flow_QA_Pass</bpmn:outgoing>
+      <bpmn:outgoing>Flow_QA_Escalate</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="Gateway_EscalationTier" name="Escalation Tier?" default="Flow_Tier2_Category">
+      <bpmn:incoming>Flow_QA_Escalate</bpmn:incoming>
+      <bpmn:outgoing>Flow_Tier1_Reroll</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Tier2_Category</bpmn:outgoing>
+      <bpmn:outgoing>Flow_Tier3_Vision</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Task_Tier1Reroll" name="Tier 1 RE-ROLL:
+Fresh Seed Pass">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="reroll-fresh-seed" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_Tier1_Reroll</bpmn:incoming>
+      <bpmn:outgoing>Flow_Join_Tier1</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:businessRuleTask id="Task_Tier2Category" name="Tier 2 Category:
+Matrix Rules">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="apply-category-optical-formula" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_Tier2_Category</bpmn:incoming>
+      <bpmn:outgoing>Flow_Join_Tier2</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:serviceTask id="Task_Tier3VisionScan" name="Tier 3 AI Vision
+&amp; KG Ground Lock">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="gemini-vision-kg-lock" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_Tier3_Vision</bpmn:incoming>
+      <bpmn:outgoing>Flow_Vision_ToAlloy</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Task_AlloyAndLearn" name="Alloy Switcher &amp;
+Save Category">
+      <bpmn:extensionElements>
+        <zeebe:userTask />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_Vision_ToAlloy</bpmn:incoming>
+      <bpmn:outgoing>Flow_Join_Tier3</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_MergeEscalation">
+      <bpmn:incoming>Flow_Join_Tier1</bpmn:incoming>
+      <bpmn:incoming>Flow_Join_Tier2</bpmn:incoming>
+      <bpmn:incoming>Flow_Join_Tier3</bpmn:incoming>
+      <bpmn:outgoing>Flow_Escalated_ToRender</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Task_ExecuteEscalated" name="Render Variation
+to Studio Tray">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="execute-grounded-retouch" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_Escalated_ToRender</bpmn:incoming>
+      <bpmn:outgoing>Flow_Render_ToSelect</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Task_SelectVariation" name="Select Candidate
+in Tray">
+      <bpmn:extensionElements>
+        <zeebe:userTask />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_Render_ToSelect</bpmn:incoming>
+      <bpmn:outgoing>Flow_Select_ToApproved</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_JoinApproved">
+      <bpmn:incoming>Flow_QA_Pass</bpmn:incoming>
+      <bpmn:incoming>Flow_Select_ToApproved</bpmn:incoming>
+      <bpmn:outgoing>Flow_Approved_ToPublish</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Task_ClickPublish" name="Click PUBLISH
+(Confirm Master)">
+      <bpmn:extensionElements>
+        <zeebe:userTask />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_Approved_ToPublish</bpmn:incoming>
+      <bpmn:outgoing>Flow_Publish_ToParallel</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_AutoAdvance" name="Auto-Advance UI
+Queue (&lt;0.5s)">
+      <bpmn:extensionElements>
+        <zeebe:userTask />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_Http200_ToAdvance</bpmn:incoming>
+      <bpmn:outgoing>Flow_Advance_ToEnd</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="EndEvent_QueueAdvanced" name="Workbench Ready
+for Next SKU">
+      <bpmn:incoming>Flow_Advance_ToEnd</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:sequenceFlow id="Flow_Start_Ingest" sourceRef="StartEvent_DraftCreated" targetRef="Task_IngestMedia" />
+    <bpmn:sequenceFlow id="Flow_Ingest_Verify" sourceRef="Task_IngestMedia" targetRef="Task_VerifyWebhook" />
+    <bpmn:sequenceFlow id="Flow_Verify_ValidGate" sourceRef="Task_VerifyWebhook" targetRef="Gateway_ValidMedia" />
+    <bpmn:sequenceFlow id="Flow_ValidMedia_No" name="0 Photos" sourceRef="Gateway_ValidMedia" targetRef="EndEvent_InvalidPurge">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=photosCount = 0</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_ValidMedia_Yes" name="Valid" sourceRef="Gateway_ValidMedia" targetRef="Task_SafeDraftRule" />
+    <bpmn:sequenceFlow id="Flow_SafeRule_Gate" sourceRef="Task_SafeDraftRule" targetRef="Gateway_IsNewDraft" />
+    <bpmn:sequenceFlow id="Flow_NewDraft_No" name="Historical" sourceRef="Gateway_IsNewDraft" targetRef="Task_StageHistorical">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=isHistoricalDraft = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_NewDraft_Yes" name="New Draft (Auto)" sourceRef="Gateway_IsNewDraft" targetRef="Task_GemstoneMask" />
+    <bpmn:sequenceFlow id="Flow_Historical_ToCatalog" sourceRef="Task_StageHistorical" targetRef="Gateway_MergeToCatalog" />
+    <bpmn:sequenceFlow id="Flow_CV_1_To_2" sourceRef="Task_GemstoneMask" targetRef="Task_SpectralPolish" />
+    <bpmn:sequenceFlow id="Flow_CV_2_To_3" sourceRef="Task_SpectralPolish" targetRef="Task_AutoCenter4K" />
+    <bpmn:sequenceFlow id="Flow_CV_3_To_4" sourceRef="Task_AutoCenter4K" targetRef="Task_StageGCSWal" />
+    <bpmn:sequenceFlow id="Flow_CV_4_To_5" sourceRef="Task_StageGCSWal" targetRef="Task_BroadcastSSE" />
+    <bpmn:sequenceFlow id="Flow_SSE_ToCatalog" sourceRef="Task_BroadcastSSE" targetRef="Gateway_MergeToCatalog" />
+    <bpmn:sequenceFlow id="Flow_Merge_ToCatalog" sourceRef="Gateway_MergeToCatalog" targetRef="Task_CatalogQueue" />
+    <bpmn:sequenceFlow id="Flow_Catalog_ToGate" sourceRef="Task_CatalogQueue" targetRef="Gateway_CatalogAction" />
+    <bpmn:sequenceFlow id="Flow_Catalog_Dismiss" name="Dismiss" sourceRef="Gateway_CatalogAction" targetRef="EndEvent_DraftDismissed">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=action = "dismiss"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_Catalog_Review" name="Review" sourceRef="Gateway_CatalogAction" targetRef="Task_ReviewWorkbench" />
+    <bpmn:sequenceFlow id="Flow_Bench_ToQAGate" sourceRef="Task_ReviewWorkbench" targetRef="Gateway_PassQA" />
+    <bpmn:sequenceFlow id="Flow_QA_Pass" name="Yes (~80% Pass)" sourceRef="Gateway_PassQA" targetRef="Gateway_JoinApproved" />
+    <bpmn:sequenceFlow id="Flow_QA_Escalate" name="No (Escalate)" sourceRef="Gateway_PassQA" targetRef="Gateway_EscalationTier">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=passesQA = false</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_Tier1_Reroll" name="RE-ROLL" sourceRef="Gateway_EscalationTier" targetRef="Task_Tier1Reroll">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=escalationTier = "reroll"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_Tier2_Category" name="Category" sourceRef="Gateway_EscalationTier" targetRef="Task_Tier2Category" />
+    <bpmn:sequenceFlow id="Flow_Tier3_Vision" name="AI Vision" sourceRef="Gateway_EscalationTier" targetRef="Task_Tier3VisionScan">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=escalationTier = "vision"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_Vision_ToAlloy" sourceRef="Task_Tier3VisionScan" targetRef="Task_AlloyAndLearn" />
+    <bpmn:sequenceFlow id="Flow_Join_Tier1" sourceRef="Task_Tier1Reroll" targetRef="Gateway_MergeEscalation" />
+    <bpmn:sequenceFlow id="Flow_Join_Tier2" sourceRef="Task_Tier2Category" targetRef="Gateway_MergeEscalation" />
+    <bpmn:sequenceFlow id="Flow_Join_Tier3" sourceRef="Task_AlloyAndLearn" targetRef="Gateway_MergeEscalation" />
+    <bpmn:sequenceFlow id="Flow_Escalated_ToRender" sourceRef="Gateway_MergeEscalation" targetRef="Task_ExecuteEscalated" />
+    <bpmn:sequenceFlow id="Flow_Render_ToSelect" sourceRef="Task_ExecuteEscalated" targetRef="Task_SelectVariation" />
+    <bpmn:sequenceFlow id="Flow_Select_ToApproved" sourceRef="Task_SelectVariation" targetRef="Gateway_JoinApproved" />
+    <bpmn:sequenceFlow id="Flow_Approved_ToPublish" sourceRef="Gateway_JoinApproved" targetRef="Task_ClickPublish" />
+    <bpmn:sequenceFlow id="Flow_Publish_ToParallel" sourceRef="Task_ClickPublish" targetRef="Gateway_ParallelPublish" />
+    <bpmn:sequenceFlow id="Flow_Parallel_ToHttp200" sourceRef="Gateway_ParallelPublish" targetRef="Task_InstantHttp200" />
+    <bpmn:sequenceFlow id="Flow_Http200_ToAdvance" sourceRef="Task_InstantHttp200" targetRef="Task_AutoAdvance" />
+    <bpmn:sequenceFlow id="Flow_Advance_ToEnd" sourceRef="Task_AutoAdvance" targetRef="EndEvent_QueueAdvanced" />
+    <bpmn:sequenceFlow id="Flow_Parallel_ToBgTask" sourceRef="Gateway_ParallelPublish" targetRef="Task_BackgroundFinalize" />
+    <bpmn:sequenceFlow id="Flow_BgTask_ToSplit" sourceRef="Task_BackgroundFinalize" targetRef="Gateway_AsyncSplit" />
+    <bpmn:sequenceFlow id="Flow_Split_ToPurge" sourceRef="Gateway_AsyncSplit" targetRef="Task_PurgeVariations" />
+    <bpmn:sequenceFlow id="Flow_Purge_ToEnd" sourceRef="Task_PurgeVariations" targetRef="EndEvent_VariationsPurged" />
+    <bpmn:sequenceFlow id="Flow_Split_ToShopifySwap" sourceRef="Gateway_AsyncSplit" targetRef="Task_LiveImageSwap" />
+    <bpmn:sequenceFlow id="Flow_Swap_ToPromote" sourceRef="Task_LiveImageSwap" targetRef="Task_PromoteActive" />
+    <bpmn:sequenceFlow id="Flow_Promote_ToLiveEnd" sourceRef="Task_PromoteActive" targetRef="EndEvent_StorefrontLive" />
+
+    <bpmn:textAnnotation id="Annotation_CostROI">
+      <bpmn:text>Verified ROI: $5.00 &amp; 30m Manual -> ~$0.05 &amp; &lt;25s AI (-99% OPEX) | Native Shopify Sync</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Assoc_Annotation_CostROI" sourceRef="Task_IngestMedia" targetRef="Annotation_CostROI" />
+    <bpmn:textAnnotation id="Annotation_AntiHallucination">
+      <bpmn:text>Anti-Hallucination Know-How: Rigid Gemstone No-Fly Mask + Spectral Lock + Hallmark Preservation</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Assoc_Annotation_AntiHallucination" sourceRef="Task_GemstoneMask" targetRef="Annotation_AntiHallucination" />
+    <bpmn:textAnnotation id="Annotation_NonBlockingPublish">
+      <bpmn:text>Sub-200ms Non-Blocking Publish: Instant UI Auto-Advance + Atomic 1-to-1 Shopify Image Swap</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Assoc_Annotation_NonBlockingPublish" sourceRef="Task_LiveImageSwap" targetRef="Annotation_NonBlockingPublish" />
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_Studio">
+      <bpmndi:BPMNShape id="Participant_Studio_di" bpmnElement="Participant_Studio" isHorizontal="true" bioc:stroke="#0F172A" bioc:fill="#FFFFFF" color:border-color="#0F172A" color:background-color="#FFFFFF">
+        <dc:Bounds x="20" y="60" width="3400" height="1120" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Shopify_di" bpmnElement="Lane_Shopify" isHorizontal="true" bioc:stroke="#059669" bioc:fill="#F0FDF4" color:border-color="#059669" color:background-color="#F0FDF4">
+        <dc:Bounds x="50" y="60" width="3370" height="210" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_FastAPI_di" bpmnElement="Lane_FastAPI" isHorizontal="true" bioc:stroke="#7C3AED" bioc:fill="#F5F3FF" color:border-color="#7C3AED" color:background-color="#F5F3FF">
+        <dc:Bounds x="50" y="270" width="3370" height="240" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Operator_di" bpmnElement="Lane_Operator" isHorizontal="true" bioc:stroke="#D97706" bioc:fill="#FFFBEB" color:border-color="#D97706" color:background-color="#FFFBEB">
+        <dc:Bounds x="50" y="510" width="3370" height="280" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_AIEngine_di" bpmnElement="Lane_AIEngine" isHorizontal="true" bioc:stroke="#2563EB" bioc:fill="#EFF6FF" color:border-color="#2563EB" color:background-color="#EFF6FF">
+        <dc:Bounds x="50" y="790" width="3370" height="390" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_DraftCreated_di" bpmnElement="StartEvent_DraftCreated" bioc:stroke="#059669" bioc:fill="#C8E6C9" color:border-color="#059669" color:background-color="#C8E6C9">
+        <dc:Bounds x="110" y="147" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="82" y="190" width="96" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_IngestMedia_di" bpmnElement="Task_IngestMedia" bioc:stroke="#059669" bioc:fill="#C8E6C9" color:border-color="#059669" color:background-color="#C8E6C9">
+        <dc:Bounds x="190" y="133" width="120" height="64" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_LiveImageSwap_di" bpmnElement="Task_LiveImageSwap" bioc:stroke="#059669" bioc:fill="#C8E6C9" color:border-color="#059669" color:background-color="#C8E6C9">
+        <dc:Bounds x="3030" y="133" width="120" height="64" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_PromoteActive_di" bpmnElement="Task_PromoteActive" bioc:stroke="#059669" bioc:fill="#C8E6C9" color:border-color="#059669" color:background-color="#C8E6C9">
+        <dc:Bounds x="3185" y="133" width="120" height="64" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_StorefrontLive_di" bpmnElement="EndEvent_StorefrontLive" bioc:stroke="#059669" bioc:fill="#C8E6C9" color:border-color="#059669" color:background-color="#C8E6C9">
+        <dc:Bounds x="3340" y="147" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3318" y="190" width="82" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_VerifyWebhook_di" bpmnElement="Task_VerifyWebhook" bioc:stroke="#F57C00" bioc:fill="#FFE0B2" color:border-color="#F57C00" color:background-color="#FFE0B2">
+        <dc:Bounds x="190" y="358" width="120" height="64" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_ValidMedia_di" bpmnElement="Gateway_ValidMedia" isMarkerVisible="true" bioc:stroke="#FB8C00" bioc:fill="#FFE0B2" color:border-color="#FB8C00" color:background-color="#FFE0B2">
+        <dc:Bounds x="350" y="365" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="330" y="335" width="92" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_InvalidPurge_di" bpmnElement="EndEvent_InvalidPurge" bioc:stroke="#E53935" bioc:fill="#FFCDD2" color:border-color="#E53935" color:background-color="#FFCDD2">
+        <dc:Bounds x="357" y="450" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="402" y="454" width="92" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_SafeDraftRule_di" bpmnElement="Task_SafeDraftRule" bioc:stroke="#7B1FA2" bioc:fill="#E1BEE7" color:border-color="#7B1FA2" color:background-color="#E1BEE7">
+        <dc:Bounds x="450" y="358" width="120" height="64" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_IsNewDraft_di" bpmnElement="Gateway_IsNewDraft" isMarkerVisible="true" bioc:stroke="#FB8C00" bioc:fill="#FFE0B2" color:border-color="#FB8C00" color:background-color="#FFE0B2">
+        <dc:Bounds x="610" y="365" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="590" y="335" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_StageHistorical_di" bpmnElement="Task_StageHistorical" bioc:stroke="#1E88E5" bioc:fill="#BBDEFB" color:border-color="#1E88E5" color:background-color="#BBDEFB">
+        <dc:Bounds x="730" y="358" width="120" height="64" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_ParallelPublish_di" bpmnElement="Gateway_ParallelPublish" bioc:stroke="#7C3AED" bioc:fill="#E1BEE7" color:border-color="#7C3AED" color:background-color="#E1BEE7">
+        <dc:Bounds x="2710" y="365" width="50" height="50" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_InstantHttp200_di" bpmnElement="Task_InstantHttp200" bioc:stroke="#00796B" bioc:fill="#B2DFDB" color:border-color="#00796B" color:background-color="#B2DFDB">
+        <dc:Bounds x="2810" y="425" width="120" height="64" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_BackgroundFinalize_di" bpmnElement="Task_BackgroundFinalize" bioc:stroke="#7C3AED" bioc:fill="#E1BEE7" color:border-color="#7C3AED" color:background-color="#E1BEE7">
+        <dc:Bounds x="2810" y="295" width="120" height="64" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_AsyncSplit_di" bpmnElement="Gateway_AsyncSplit" bioc:stroke="#7C3AED" bioc:fill="#E1BEE7" color:border-color="#7C3AED" color:background-color="#E1BEE7">
+        <dc:Bounds x="2960" y="302" width="50" height="50" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_PurgeVariations_di" bpmnElement="Task_PurgeVariations" bioc:stroke="#E53935" bioc:fill="#FFCDD2" color:border-color="#E53935" color:background-color="#FFCDD2">
+        <dc:Bounds x="3050" y="295" width="120" height="64" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_VariationsPurged_di" bpmnElement="EndEvent_VariationsPurged" bioc:stroke="#64748B" bioc:fill="#E2E8F0" color:border-color="#64748B" color:background-color="#E2E8F0">
+        <dc:Bounds x="3210" y="309" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3188" y="352" width="82" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_GemstoneMask_di" bpmnElement="Task_GemstoneMask" bioc:stroke="#1E88E5" bioc:fill="#BBDEFB" color:border-color="#1E88E5" color:background-color="#BBDEFB">
+        <dc:Bounds x="610" y="868" width="120" height="64" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_SpectralPolish_di" bpmnElement="Task_SpectralPolish" bioc:stroke="#1E88E5" bioc:fill="#BBDEFB" color:border-color="#1E88E5" color:background-color="#BBDEFB">
+        <dc:Bounds x="765" y="868" width="120" height="64" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_AutoCenter4K_di" bpmnElement="Task_AutoCenter4K" bioc:stroke="#F57C00" bioc:fill="#FFE0B2" color:border-color="#F57C00" color:background-color="#FFE0B2">
+        <dc:Bounds x="920" y="868" width="120" height="64" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_StageGCSWal_di" bpmnElement="Task_StageGCSWal" bioc:stroke="#1E88E5" bioc:fill="#BBDEFB" color:border-color="#1E88E5" color:background-color="#BBDEFB">
+        <dc:Bounds x="1075" y="868" width="120" height="64" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_BroadcastSSE_di" bpmnElement="Task_BroadcastSSE" bioc:stroke="#00796B" bioc:fill="#B2DFDB" color:border-color="#00796B" color:background-color="#B2DFDB">
+        <dc:Bounds x="1230" y="868" width="120" height="64" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_MergeToCatalog_di" bpmnElement="Gateway_MergeToCatalog" isMarkerVisible="true" bioc:stroke="#FB8C00" bioc:fill="#FFE0B2" color:border-color="#FB8C00" color:background-color="#FFE0B2">
+        <dc:Bounds x="1365" y="625" width="50" height="50" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CatalogQueue_di" bpmnElement="Task_CatalogQueue" bioc:stroke="#1E88E5" bioc:fill="#BBDEFB" color:border-color="#1E88E5" color:background-color="#BBDEFB">
+        <dc:Bounds x="1445" y="618" width="120" height="64" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_CatalogAction_di" bpmnElement="Gateway_CatalogAction" isMarkerVisible="true" bioc:stroke="#FB8C00" bioc:fill="#FFE0B2" color:border-color="#FB8C00" color:background-color="#FFE0B2">
+        <dc:Bounds x="1595" y="625" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1580" y="685" width="80" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_DraftDismissed_di" bpmnElement="EndEvent_DraftDismissed" bioc:stroke="#64748B" bioc:fill="#E2E8F0" color:border-color="#64748B" color:background-color="#E2E8F0">
+        <dc:Bounds x="1602" y="535" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1646" y="539" width="98" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ReviewWorkbench_di" bpmnElement="Task_ReviewWorkbench" bioc:stroke="#1E88E5" bioc:fill="#BBDEFB" color:border-color="#1E88E5" color:background-color="#BBDEFB">
+        <dc:Bounds x="1685" y="618" width="120" height="64" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_PassQA_di" bpmnElement="Gateway_PassQA" isMarkerVisible="true" bioc:stroke="#FB8C00" bioc:fill="#FFE0B2" color:border-color="#FB8C00" color:background-color="#FFE0B2">
+        <dc:Bounds x="1835" y="625" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1805" y="595" width="110" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_EscalationTier_di" bpmnElement="Gateway_EscalationTier" isMarkerVisible="true" bioc:stroke="#FB8C00" bioc:fill="#FFE0B2" color:border-color="#FB8C00" color:background-color="#FFE0B2">
+        <dc:Bounds x="1835" y="955" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1740" y="970" width="86" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Tier1Reroll_di" bpmnElement="Task_Tier1Reroll" bioc:stroke="#1E88E5" bioc:fill="#BBDEFB" color:border-color="#1E88E5" color:background-color="#BBDEFB">
+        <dc:Bounds x="1940" y="810" width="120" height="64" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Tier2Category_di" bpmnElement="Task_Tier2Category" bioc:stroke="#7B1FA2" bioc:fill="#E1BEE7" color:border-color="#7B1FA2" color:background-color="#E1BEE7">
+        <dc:Bounds x="1940" y="948" width="120" height="64" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Tier3VisionScan_di" bpmnElement="Task_Tier3VisionScan" bioc:stroke="#1E88E5" bioc:fill="#BBDEFB" color:border-color="#1E88E5" color:background-color="#BBDEFB">
+        <dc:Bounds x="1940" y="1085" width="120" height="64" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_AlloyAndLearn_di" bpmnElement="Task_AlloyAndLearn" bioc:stroke="#1E88E5" bioc:fill="#BBDEFB" color:border-color="#1E88E5" color:background-color="#BBDEFB">
+        <dc:Bounds x="2090" y="1085" width="120" height="64" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_MergeEscalation_di" bpmnElement="Gateway_MergeEscalation" isMarkerVisible="true" bioc:stroke="#FB8C00" bioc:fill="#FFE0B2" color:border-color="#FB8C00" color:background-color="#FFE0B2">
+        <dc:Bounds x="2240" y="955" width="50" height="50" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ExecuteEscalated_di" bpmnElement="Task_ExecuteEscalated" bioc:stroke="#1E88E5" bioc:fill="#BBDEFB" color:border-color="#1E88E5" color:background-color="#BBDEFB">
+        <dc:Bounds x="2320" y="948" width="120" height="64" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_SelectVariation_di" bpmnElement="Task_SelectVariation" bioc:stroke="#1E88E5" bioc:fill="#BBDEFB" color:border-color="#1E88E5" color:background-color="#BBDEFB">
+        <dc:Bounds x="2445" y="700" width="120" height="64" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_JoinApproved_di" bpmnElement="Gateway_JoinApproved" isMarkerVisible="true" bioc:stroke="#FB8C00" bioc:fill="#FFE0B2" color:border-color="#FB8C00" color:background-color="#FFE0B2">
+        <dc:Bounds x="2590" y="625" width="50" height="50" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ClickPublish_di" bpmnElement="Task_ClickPublish" bioc:stroke="#059669" bioc:fill="#C8E6C9" color:border-color="#059669" color:background-color="#C8E6C9">
+        <dc:Bounds x="2675" y="618" width="120" height="64" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_AutoAdvance_di" bpmnElement="Task_AutoAdvance" bioc:stroke="#059669" bioc:fill="#C8E6C9" color:border-color="#059669" color:background-color="#C8E6C9">
+        <dc:Bounds x="2970" y="618" width="120" height="64" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_QueueAdvanced_di" bpmnElement="EndEvent_QueueAdvanced" bioc:stroke="#059669" bioc:fill="#C8E6C9" color:border-color="#059669" color:background-color="#C8E6C9">
+        <dc:Bounds x="3130" y="632" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3105" y="675" width="90" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStore_StudioVault_di" bpmnElement="DataStore_StudioVault" bioc:stroke="#0288D1" bioc:fill="#B3E5FC" color:border-color="#0288D1" color:background-color="#B3E5FC">
+        <dc:Bounds x="1110" y="965" width="50" height="45" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1075" y="1018" width="120" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Annotation_CostROI_di" bpmnElement="Annotation_CostROI" bioc:stroke="#475569" bioc:fill="#F8FAFC" color:border-color="#475569" color:background-color="#F8FAFC">
+        <dc:Bounds x="360" y="145" width="380" height="40" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Annotation_AntiHallucination_di" bpmnElement="Annotation_AntiHallucination" bioc:stroke="#475569" bioc:fill="#F8FAFC" color:border-color="#475569" color:background-color="#F8FAFC">
+        <dc:Bounds x="610" y="1065" width="420" height="40" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Annotation_NonBlockingPublish_di" bpmnElement="Annotation_NonBlockingPublish" bioc:stroke="#475569" bioc:fill="#F8FAFC" color:border-color="#475569" color:background-color="#F8FAFC">
+        <dc:Bounds x="2530" y="145" width="410" height="40" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_Start_Ingest_di" bpmnElement="Flow_Start_Ingest" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="146" y="165" />
+        <di:waypoint x="190" y="165" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Ingest_Verify_di" bpmnElement="Flow_Ingest_Verify" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="250" y="197" />
+        <di:waypoint x="250" y="358" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Verify_ValidGate_di" bpmnElement="Flow_Verify_ValidGate" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="310" y="390" />
+        <di:waypoint x="350" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ValidMedia_No_di" bpmnElement="Flow_ValidMedia_No" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="375" y="415" />
+        <di:waypoint x="375" y="450" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="382" y="422" width="52" height="16" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ValidMedia_Yes_di" bpmnElement="Flow_ValidMedia_Yes" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="400" y="390" />
+        <di:waypoint x="450" y="390" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="408" y="370" width="34" height="16" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_SafeRule_Gate_di" bpmnElement="Flow_SafeRule_Gate" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="570" y="390" />
+        <di:waypoint x="610" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_NewDraft_No_di" bpmnElement="Flow_NewDraft_No" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="660" y="390" />
+        <di:waypoint x="730" y="390" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="665" y="370" width="58" height="16" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_NewDraft_Yes_di" bpmnElement="Flow_NewDraft_Yes" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="635" y="415" />
+        <di:waypoint x="635" y="868" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="642" y="465" width="95" height="16" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Historical_ToCatalog_di" bpmnElement="Flow_Historical_ToCatalog" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="850" y="390" />
+        <di:waypoint x="1390" y="390" />
+        <di:waypoint x="1390" y="625" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_CV_1_To_2_di" bpmnElement="Flow_CV_1_To_2" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="730" y="900" />
+        <di:waypoint x="765" y="900" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_CV_2_To_3_di" bpmnElement="Flow_CV_2_To_3" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="885" y="900" />
+        <di:waypoint x="920" y="900" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_CV_3_To_4_di" bpmnElement="Flow_CV_3_To_4" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="1040" y="900" />
+        <di:waypoint x="1075" y="900" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_CV_4_To_5_di" bpmnElement="Flow_CV_4_To_5" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="1195" y="900" />
+        <di:waypoint x="1230" y="900" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_SSE_ToCatalog_di" bpmnElement="Flow_SSE_ToCatalog" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="1350" y="900" />
+        <di:waypoint x="1358" y="900" />
+        <di:waypoint x="1358" y="650" />
+        <di:waypoint x="1365" y="650" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Merge_ToCatalog_di" bpmnElement="Flow_Merge_ToCatalog" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="1415" y="650" />
+        <di:waypoint x="1445" y="650" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Catalog_ToGate_di" bpmnElement="Flow_Catalog_ToGate" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="1565" y="650" />
+        <di:waypoint x="1595" y="650" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Catalog_Dismiss_di" bpmnElement="Flow_Catalog_Dismiss" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="1620" y="625" />
+        <di:waypoint x="1620" y="571" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1565" y="592" width="48" height="16" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Catalog_Review_di" bpmnElement="Flow_Catalog_Review" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="1645" y="650" />
+        <di:waypoint x="1685" y="650" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1646" y="630" width="38" height="16" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Bench_ToQAGate_di" bpmnElement="Flow_Bench_ToQAGate" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="1805" y="650" />
+        <di:waypoint x="1835" y="650" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_QA_Pass_di" bpmnElement="Flow_QA_Pass" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="1885" y="650" />
+        <di:waypoint x="2590" y="650" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1900" y="630" width="95" height="16" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_QA_Escalate_di" bpmnElement="Flow_QA_Escalate" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="1860" y="675" />
+        <di:waypoint x="1860" y="955" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1866" y="730" width="80" height="16" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Tier1_Reroll_di" bpmnElement="Flow_Tier1_Reroll" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="1860" y="955" />
+        <di:waypoint x="1860" y="842" />
+        <di:waypoint x="1940" y="842" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1868" y="822" width="60" height="16" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Tier2_Category_di" bpmnElement="Flow_Tier2_Category" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="1885" y="980" />
+        <di:waypoint x="1940" y="980" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1886" y="960" width="52" height="16" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Tier3_Vision_di" bpmnElement="Flow_Tier3_Vision" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="1860" y="1005" />
+        <di:waypoint x="1860" y="1117" />
+        <di:waypoint x="1940" y="1117" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1868" y="1097" width="56" height="16" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Vision_ToAlloy_di" bpmnElement="Flow_Vision_ToAlloy" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="2060" y="1117" />
+        <di:waypoint x="2090" y="1117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Join_Tier1_di" bpmnElement="Flow_Join_Tier1" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="2060" y="842" />
+        <di:waypoint x="2265" y="842" />
+        <di:waypoint x="2265" y="955" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Join_Tier2_di" bpmnElement="Flow_Join_Tier2" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="2060" y="980" />
+        <di:waypoint x="2240" y="980" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Join_Tier3_di" bpmnElement="Flow_Join_Tier3" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="2210" y="1117" />
+        <di:waypoint x="2265" y="1117" />
+        <di:waypoint x="2265" y="1005" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Escalated_ToRender_di" bpmnElement="Flow_Escalated_ToRender" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="2290" y="980" />
+        <di:waypoint x="2320" y="980" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Render_ToSelect_di" bpmnElement="Flow_Render_ToSelect" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="2440" y="980" />
+        <di:waypoint x="2505" y="980" />
+        <di:waypoint x="2505" y="764" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Select_ToApproved_di" bpmnElement="Flow_Select_ToApproved" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="2565" y="732" />
+        <di:waypoint x="2615" y="732" />
+        <di:waypoint x="2615" y="675" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Approved_ToPublish_di" bpmnElement="Flow_Approved_ToPublish" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="2640" y="650" />
+        <di:waypoint x="2675" y="650" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Publish_ToParallel_di" bpmnElement="Flow_Publish_ToParallel" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="2735" y="618" />
+        <di:waypoint x="2735" y="415" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Parallel_ToHttp200_di" bpmnElement="Flow_Parallel_ToHttp200" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="2760" y="390" />
+        <di:waypoint x="2785" y="390" />
+        <di:waypoint x="2785" y="457" />
+        <di:waypoint x="2810" y="457" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Http200_ToAdvance_di" bpmnElement="Flow_Http200_ToAdvance" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="2930" y="457" />
+        <di:waypoint x="2950" y="457" />
+        <di:waypoint x="2950" y="650" />
+        <di:waypoint x="2970" y="650" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Advance_ToEnd_di" bpmnElement="Flow_Advance_ToEnd" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="3090" y="650" />
+        <di:waypoint x="3130" y="650" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Parallel_ToBgTask_di" bpmnElement="Flow_Parallel_ToBgTask" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="2735" y="365" />
+        <di:waypoint x="2735" y="327" />
+        <di:waypoint x="2810" y="327" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_BgTask_ToSplit_di" bpmnElement="Flow_BgTask_ToSplit" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="2930" y="327" />
+        <di:waypoint x="2960" y="327" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Split_ToPurge_di" bpmnElement="Flow_Split_ToPurge" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="3010" y="327" />
+        <di:waypoint x="3050" y="327" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Purge_ToEnd_di" bpmnElement="Flow_Purge_ToEnd" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="3170" y="327" />
+        <di:waypoint x="3210" y="327" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Split_ToShopifySwap_di" bpmnElement="Flow_Split_ToShopifySwap" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="2985" y="302" />
+        <di:waypoint x="2985" y="165" />
+        <di:waypoint x="3030" y="165" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Swap_ToPromote_di" bpmnElement="Flow_Swap_ToPromote" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="3150" y="165" />
+        <di:waypoint x="3185" y="165" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Promote_ToLiveEnd_di" bpmnElement="Flow_Promote_ToLiveEnd" bioc:stroke="#334155" color:border-color="#334155">
+        <di:waypoint x="3305" y="165" />
+        <di:waypoint x="3340" y="165" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Assoc_Annotation_CostROI_di" bpmnElement="Assoc_Annotation_CostROI" bioc:stroke="#64748B" color:border-color="#64748B">
+        <di:waypoint x="310" y="165" />
+        <di:waypoint x="360" y="165" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Assoc_Annotation_AntiHallucination_di" bpmnElement="Assoc_Annotation_AntiHallucination" bioc:stroke="#64748B" color:border-color="#64748B">
+        <di:waypoint x="670" y="932" />
+        <di:waypoint x="670" y="1065" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Assoc_Annotation_NonBlockingPublish_di" bpmnElement="Assoc_Annotation_NonBlockingPublish" bioc:stroke="#64748B" color:border-color="#64748B">
+        <di:waypoint x="2940" y="165" />
+        <di:waypoint x="3030" y="165" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
